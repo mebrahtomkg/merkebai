@@ -1,0 +1,46 @@
+import { User } from '@/types';
+import { del } from '@/api';
+import { useMutation } from '@tanstack/react-query';
+import queryClient from '@/queryClient';
+import { QUERY_KEY_BLOCKED_USERS } from '@/constants';
+import useAbortController from './useAbortController';
+
+const useUnblockUser = (user: User) => {
+  const { prepareAbortController, getSignal, abort } = useAbortController();
+
+  const { mutate, ...rest } = useMutation({
+    mutationFn: () => {
+      prepareAbortController();
+      return del(`/blocked-users/${user.id}`, { signal: getSignal() });
+    },
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: [QUERY_KEY_BLOCKED_USERS] });
+      const prevBlockedUsers = queryClient.getQueryData([
+        QUERY_KEY_BLOCKED_USERS,
+      ]);
+      queryClient.setQueryData([QUERY_KEY_BLOCKED_USERS], (oldBlockedUsers) =>
+        Array.isArray(oldBlockedUsers)
+          ? oldBlockedUsers.filter((blockedUser) => blockedUser.id !== user.id)
+          : [],
+      );
+      return { prevBlockedUsers };
+    },
+    onError: (_err, _vars, context) => {
+      queryClient.setQueryData(
+        [QUERY_KEY_BLOCKED_USERS],
+        context?.prevBlockedUsers,
+      );
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_BLOCKED_USERS] });
+    },
+  });
+
+  return {
+    unblockUser: mutate,
+    abort,
+    ...rest,
+  };
+};
+
+export default useUnblockUser;

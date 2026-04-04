@@ -1,0 +1,46 @@
+import { css } from 'styled-components';
+
+const lightThemeVars = css`
+  --fg-primary: #0f172a;
+  --fg-secondary: #475569;
+  --fg-muted: #94a3b8;
+  --fg-icon: #334155;
+  --fg-border: #c4cedb;
+  --fg-error: #ef4444;
+  --fg-msg-sent: #ffffff;
+  --fg-msg-received: #0f172a;
+  --fg-msg-sent-time: #e9d5ff;
+  --fg-msg-received-time: #64748b;
+  --fg-msg-sent-parent-sender: #ffffff;
+  --fg-msg-received-parent-sender: #5e00ff;
+  --fg-msg-sent-parent-type: #e4deff;
+  --fg-msg-received-parent-type: #005ada;
+  --fg-action: #7c3aed;
+  --fg-user-status: #10b981;
+  --fg-tab: #5e00ff;
+  --bg-page: #f8fafc;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f1f5f9;
+  --bg-secondary-hover: #e2e8f0;
+  --bg-action: #7c3aed;
+  --bg-action-hover: #6d28d9;
+  --bg-action-disabled: #c4b5fd;
+  --bg-hover: #f1f5f9;
+  --bg-msg-sent: #8842ff;
+  --bg-msg-received: #e5ecf2;
+  --bg-msg-sent-parent: #510bbe;
+  --bg-msg-received-parent: #d0d8e3;
+  --bg-scrollbar: rgba(148, 163, 184, 0.2);
+  --bg-scrollbar-thumb: #cbd5e1;
+  --bg-avatar-0: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  --bg-avatar-1: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+  --bg-avatar-2: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+  --bg-avatar-3: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+  --bg-avatar-4: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  --bg-avatar-5: linear-gradient(135deg, #ef4444 0%, #db2777 100%);
+  --bg-avatar-6: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+  --bg-avatar-7: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
+  --bg-unseen-msg-count: #7c3aed;
+`;
+
+export default lightThemeVars;

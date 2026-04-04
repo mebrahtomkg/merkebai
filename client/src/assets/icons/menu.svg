@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="menu.svg"
+   fill="#aaa"
+   stroke-width="0"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="19.8"
+     inkscape:cx="16.338384"
+     inkscape:cy="11.919192"
+     inkscape:window-width="1280"
+     inkscape:window-height="721"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1"
+     showgrid="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid523" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <linearGradient
+       id="swatch32"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop32" />
+    </linearGradient>
+    <inkscape:path-effect
+       effect="fill_between_many"
+       method="originald"
+       linkedpaths="#path26,0,1|"
+       id="path-effect30" />
+  </defs>
+  <path
+     d="M -0.01978084,2 H 24.001039 l 0.01874,3 H 0.00398059 Z"
+     id="path508"
+     sodipodi:nodetypes="ccccc"
+     inkscape:transform-center-x="0.3295097"
+     inkscape:transform-center-y="-5.631353"
+     style="stroke-width:0" />
+  <use
+     x="0"
+     y="0"
+     xlink:href="#path508"
+     inkscape:transform-center-x="0.3295097"
+     inkscape:transform-center-y="-4.4442255"
+     id="use535"
+     transform="translate(-1.25e-7,8.4329332)" />
+  <use
+     x="0"
+     y="0"
+     xlink:href="#path508"
+     inkscape:transform-center-x="0.3295097"
+     inkscape:transform-center-y="-5.631353"
+     id="use537"
+     transform="translate(-0.00754948,16.925606)" />
+</svg>
