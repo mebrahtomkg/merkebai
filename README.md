@@ -1,8 +1,8 @@
-# ⛵ MerkebAI
+# ⛵ TheAiService
 
 **Bridging the gap between users and advanced AI intelligence.**
 
-MerkebAI is a streamlined web application designed to provide a seamless interface for interacting with various Artificial Intelligence models. Whether for research, productivity, or creative exploration, MerkebAI aims to make AI more accessible through a clean, intuitive UI.
+TheAiService is a streamlined web application designed to provide a seamless interface for interacting with various Artificial Intelligence models. Whether for research, productivity, or creative exploration, TheAiService aims to make AI more accessible through a clean, intuitive UI.
 
 ---
 
