@@ -1,4 +1,4 @@
-const SW_VERSION = 'v28';
+const SW_VERSION = 'v29';
 
 const CACHEABLE_REQUEST_URLS = [
   `${self.API_URL}/messages/file/`,
