@@ -70,7 +70,8 @@ export interface Message {
 }
 
 export interface Chat {
-  partner: User;
+  id: number;
+  title: string;
   lastMessage?: Message;
   unseenMessagesCount?: number;
 }

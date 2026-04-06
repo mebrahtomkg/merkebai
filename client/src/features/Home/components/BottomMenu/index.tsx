@@ -9,7 +9,6 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { ANIMATION_DIALOG_FAST, WithAnimation } from '@/Animation';
 import { toggleTheme, useAppStateStore, useThemeStore } from '@/store';
 import {
-  ContactsIcon,
   LogoutIcon,
   MenuIcon,
   MoonIcon,
@@ -28,7 +27,6 @@ const BottomMenu = () => {
   const openMenu = useCallback(() => setIsMenuVisible(true), []);
   const closeMenu = useCallback(() => setIsMenuVisible(false), []);
 
-  const openContactsModal = useAppStateStore((s) => s.openContactsModal);
   const openSettingsModal = useAppStateStore((s) => s.openSettingsModal);
   const openProfileModal = useAppStateStore((s) => s.openProfileModal);
   const theme = useThemeStore();
@@ -37,11 +35,6 @@ const BottomMenu = () => {
 
   const openProfile = useCallback(() => {
     action.current = 'openProfile';
-    closeMenu();
-  }, [closeMenu]);
-
-  const openSettings = useCallback(() => {
-    action.current = 'openSettings';
     closeMenu();
   }, [closeMenu]);
 
@@ -62,10 +55,9 @@ const BottomMenu = () => {
   const menuItems: PopupMenuItemProps[] = useMemo(
     () => [
       { onClick: openProfile, icon: <ProfileIcon />, label: 'My Profile' },
-      { onClick: openSettings, icon: <SettingsIcon />, label: 'Settings' },
       { onClick: logout, icon: <LogoutIcon />, label: 'Log out' },
     ],
-    [openProfile, openSettings, logout],
+    [openProfile, logout],
   );
 
   return (
@@ -77,11 +69,11 @@ const BottomMenu = () => {
           </IconContainer>
         </MenuItemButton>
 
-        <MenuItemButton type="button" onClick={openContactsModal}>
+        <MenuItemButton type="button" onClick={openSettingsModal}>
           <IconContainer>
-            <ContactsIcon />
+            <SettingsIcon />
           </IconContainer>
-          <MenuItemLabel>Contacts</MenuItemLabel>
+          <MenuItemLabel>Settings</MenuItemLabel>
         </MenuItemButton>
 
         <MenuItemButton type="button" onClick={toggleTheme}>

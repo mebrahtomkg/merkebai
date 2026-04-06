@@ -6,15 +6,13 @@ import {
   ClockIconContainer,
   MessagePreviewContainer,
   MessageStatusContainer,
-  Name,
   NameContainer,
   TickIconContainer,
   UnseenMessagesCount,
 } from './styles';
-import { useAccount, useUserInfo } from '@/hooks';
+import { useAccount } from '@/hooks';
 import { Chat } from '@/types';
 import useChatItemInfo from './useChatItemInfo';
-import Avatar from '@/components/Avatar';
 import MessagePreview from './MessagePreview';
 import { ClockIcon, DoubleTickIcon, TickIcon } from '@/components/icons';
 import { useMessageStatus } from '@/features/Chat/hooks';
@@ -25,7 +23,7 @@ interface ChatItemProps {
   index: number;
 }
 
-const ChatItem: FC<ChatItemProps> = ({ chat, index }) => {
+const ChatItem: FC<ChatItemProps> = ({ chat }) => {
   const navigate = useNavigate();
 
   const lastMessage = chat.lastMessage;
@@ -34,10 +32,6 @@ const ChatItem: FC<ChatItemProps> = ({ chat, index }) => {
 
   const { id: selfId } = useAccount();
 
-  // const { fullName, nameInitials, photoUrl, isOnline } = useUserInfo(
-  //   chat.partner,
-  // );
-
   const { dateTime } = useChatItemInfo(chat);
 
   const unseenMessagesCount = chat.unseenMessagesCount || 0;
@@ -45,7 +39,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, index }) => {
   const isLastMessageOutgoing = lastMessage && lastMessage.senderId === selfId;
 
   const handleClick = () => {
-    navigate(`/chat/${chat.partner.id}`);
+    navigate(`/chat/${chat.id}`);
   };
 
   return (

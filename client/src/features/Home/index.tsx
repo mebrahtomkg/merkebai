@@ -1,45 +1,23 @@
 import { ChatListContainer, HeaderContainer, HomeStyled } from './styles';
-import useEnoughChats from './useEnoughChats';
-import { useAppStateStore } from '@/store';
-import Contacts from '../Contacts';
-import { SearchInput } from '@/components';
-import useSearch from './useSearch';
 import { ChatItem } from './components';
 import BottomMenu from './components/BottomMenu';
-import { ANIMATION_SLIDE_IN, WithAnimation } from '@/Animation';
+import { useChats } from '@/hooks';
 
 const Home = () => {
-  const isContactsModalVisible = useAppStateStore(
-    (state) => state.isContactsModalVisible,
-  );
+  const chats = useChats();
 
-  const chats = useEnoughChats();
-
-  // const { handleSearchInputChange, isSearchMode, searchResults } = useSearch();
-
-  const chatsToShow = chats;
-
-  // TODO: after the searchinput is focused show examples of how to search below the search bar
   return (
-    <>
-      <WithAnimation
-        isVisible={isContactsModalVisible}
-        options={ANIMATION_SLIDE_IN}
-        render={(style) => <Contacts animationStyle={style} />}
-      />
+    <HomeStyled>
+      <HeaderContainer></HeaderContainer>
 
-      <HomeStyled>
-        <HeaderContainer></HeaderContainer>
+      <ChatListContainer>
+        {chats.map((chat, index) => (
+          <ChatItem key={`${chat.id}`} chat={chat} index={index} />
+        ))}
+      </ChatListContainer>
 
-        <ChatListContainer>
-          {chatsToShow.map((chat, index) => (
-            <ChatItem key={`${chat.id}`} chat={chat} index={index} />
-          ))}
-        </ChatListContainer>
-
-        <BottomMenu />
-      </HomeStyled>
-    </>
+      <BottomMenu />
+    </HomeStyled>
   );
 };
 
