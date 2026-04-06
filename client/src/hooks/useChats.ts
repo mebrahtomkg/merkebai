@@ -28,7 +28,7 @@ const useChats = (): Chat[] => {
     const map = new Map<number, Chat>();
 
     serverChats.forEach((chat) => {
-      map.set(chat.partner.id, chat);
+      map.set(chat.id, chat);
     });
 
     msgSendRequests.forEach((req) => {

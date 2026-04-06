@@ -11,19 +11,11 @@ import Message from './Message';
 
 class Chat extends Model<InferAttributes<Chat>, InferCreationAttributes<Chat>> {
   declare id: CreationOptional<number>;
-  declare user1Id: number;
-  declare user2Id: number;
+  declare userId: number;
+  declare lastMessageId: number | null;
 
-  // By making lastMessageIdForUser1 and lastMessageIdForUser2 optional, we allow one
-  // sided message soft deletion and the other user keep accessing the messages.
-  declare lastMessageIdForUser1: number | null;
-  declare lastMessageIdForUser2: number | null;
-
-  // Associations
-  declare user1?: User;
-  declare user2?: User;
-  declare lastMessageForUser1?: Message;
-  declare lastMessageForUser2?: Message;
+  declare user?: User;
+  declare lastMessage?: Message;
 }
 
 Chat.init(
@@ -35,22 +27,12 @@ Chat.init(
       autoIncrement: true,
     },
 
-    user1Id: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
 
-    user2Id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-
-    lastMessageIdForUser1: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-
-    lastMessageIdForUser2: {
+    lastMessageId: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },

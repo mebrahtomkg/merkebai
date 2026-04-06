@@ -1,18 +1,16 @@
 import { useMemo } from 'react';
 import { calculateFullName, calculateNameInitials } from '@/utils';
-import { useBlockedUsers, useChats, useContacts, useUsersSuggestion } from '.';
+import { useBlockedUsers, useChats, useContacts } from '.';
 
 const useUser = (userId?: number) => {
   const realChats = useChats();
   const blockedUsers = useBlockedUsers();
   const contacts = useContacts();
-  const usersSuggestion = useUsersSuggestion();
 
   const [user] = [
     ...realChats.map((chat) => chat.partner),
     ...blockedUsers,
     ...contacts,
-    ...usersSuggestion,
   ].filter((user) => user.id === userId);
 
   const fullName = useMemo(

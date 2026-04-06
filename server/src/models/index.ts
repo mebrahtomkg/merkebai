@@ -19,28 +19,12 @@ Message.belongsTo(Attachment, {
   as: 'attachment',
 });
 
-// Self-referencing association for message replies
-Message.belongsTo(Message, {
-  foreignKey: 'parentMessageId',
-  as: 'parentMessage',
-  onDelete: 'SET NULL',
-});
-
-User.hasMany(Chat, { foreignKey: 'user1Id', as: 'chatsWithUser2' });
-Chat.belongsTo(User, { foreignKey: 'user1Id', as: 'user1' });
-
-User.hasMany(Chat, { foreignKey: 'user2Id', as: 'chatsWithUser1' });
-Chat.belongsTo(User, { foreignKey: 'user2Id', as: 'user2' });
+User.hasMany(Chat, { foreignKey: 'userId', as: 'chats' });
+Chat.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 Chat.belongsTo(Message, {
-  foreignKey: 'lastMessageIdForUser1',
-  as: 'lastMessageForUser1',
-  onDelete: 'SET NULL',
-});
-
-Chat.belongsTo(Message, {
-  foreignKey: 'lastMessageIdForUser2',
-  as: 'lastMessageForUser2',
+  foreignKey: 'lastMessageId',
+  as: 'lastMessage',
   onDelete: 'SET NULL',
 });
 
@@ -130,20 +114,5 @@ Message.addScope('withAttachment', {
     model: Attachment,
     as: 'attachment',
     required: false,
-  },
-});
-
-Message.addScope('withParentMessage', {
-  include: {
-    model: Message,
-    as: 'parentMessage',
-    required: false,
-    include: [
-      {
-        model: Attachment,
-        as: 'attachment',
-        required: false,
-      },
-    ],
   },
 });

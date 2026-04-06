@@ -15,9 +15,9 @@ const Home = () => {
 
   const chats = useEnoughChats();
 
-  const { handleSearchInputChange, isSearchMode, searchResults } = useSearch();
+  // const { handleSearchInputChange, isSearchMode, searchResults } = useSearch();
 
-  const chatsToShow = isSearchMode ? searchResults : chats;
+  const chatsToShow = chats;
 
   // TODO: after the searchinput is focused show examples of how to search below the search bar
   return (
@@ -29,16 +29,11 @@ const Home = () => {
       />
 
       <HomeStyled>
-        <HeaderContainer>
-          <SearchInput
-            placeholder="Search people"
-            onChange={handleSearchInputChange}
-          />
-        </HeaderContainer>
+        <HeaderContainer></HeaderContainer>
 
         <ChatListContainer>
           {chatsToShow.map((chat, index) => (
-            <ChatItem key={`${chat.partner.id}`} chat={chat} index={index} />
+            <ChatItem key={`${chat.id}`} chat={chat} index={index} />
           ))}
         </ChatListContainer>
 

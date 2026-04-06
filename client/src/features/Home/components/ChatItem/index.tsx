@@ -34,9 +34,9 @@ const ChatItem: FC<ChatItemProps> = ({ chat, index }) => {
 
   const { id: selfId } = useAccount();
 
-  const { fullName, nameInitials, photoUrl, isOnline } = useUserInfo(
-    chat.partner,
-  );
+  // const { fullName, nameInitials, photoUrl, isOnline } = useUserInfo(
+  //   chat.partner,
+  // );
 
   const { dateTime } = useChatItemInfo(chat);
 
@@ -50,17 +50,8 @@ const ChatItem: FC<ChatItemProps> = ({ chat, index }) => {
 
   return (
     <ChatItemStyled type="button" onClick={handleClick}>
-      <Avatar
-        initials={nameInitials}
-        itemIndex={index}
-        imageUrl={photoUrl}
-        isOnline={isOnline}
-      />
-
       <ChatItemInfoContainer>
         <NameContainer>
-          <Name>{fullName}</Name>
-
           {dateTime && <ChatItemDateTime>{dateTime}</ChatItemDateTime>}
         </NameContainer>
 

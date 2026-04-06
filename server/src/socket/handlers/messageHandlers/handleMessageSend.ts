@@ -8,7 +8,7 @@ import handleSocketError from '@/socket/handleSocketError';
 interface MessageSendPayload {
   receiverId: number;
   content: string;
-  parentMessageId?: number;
+  chatId?: number;
 }
 
 const handleMessageSend = async (
@@ -24,7 +24,7 @@ const handleMessageSend = async (
       });
     }
 
-    const { receiverId, content, parentMessageId } = payload;
+    const { receiverId, content, chatId } = payload;
 
     const userId = socket.userId as number;
 
@@ -42,22 +42,18 @@ const handleMessageSend = async (
       });
     }
 
-    if (
-      parentMessageId !== undefined &&
-      !isPositiveInteger(payload.parentMessageId)
-    ) {
+    if (chatId !== undefined && !isPositiveInteger(chatId)) {
       return acknowledgement({
         status: 'error',
-        message: 'Invalid parent message id.',
+        message: 'Invalid chat id.',
       });
     }
 
-    const { message, sender } = await sendMessage({
+    const { message } = await sendMessage({
       messageType: 'text',
       userId,
-      receiverId,
       content,
-      parentMessageId,
+      chatId,
     });
 
     acknowledgement({
@@ -66,7 +62,7 @@ const handleMessageSend = async (
       data: message,
     });
 
-    emitToUser(receiverId, 'message_received', { message, sender });
+    emitToUser(receiverId, 'message_received', { message });
   } catch (err) {
     if (err instanceof MessageSendError) {
       acknowledgement({

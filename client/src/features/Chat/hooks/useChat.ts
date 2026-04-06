@@ -5,7 +5,7 @@ const useChat = (partnerId: number) => {
   const chats = useChats();
 
   const chat = useMemo(
-    () => chats.find((chat) => chat.partner.id === partnerId),
+    () => chats.find((chat) => chat.id === partnerId),
     [chats, partnerId],
   );
 

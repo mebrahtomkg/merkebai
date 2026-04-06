@@ -19,16 +19,12 @@ class Message extends Model<
   declare content: string | null;
   declare attachmentId: number | null;
   declare chatId: number;
-  declare parentMessageId: number | null;
   declare isSeen: CreationOptional<boolean>;
-  declare isDeletedBySender: CreationOptional<boolean>;
-  declare isDeletedByReceiver: CreationOptional<boolean>;
+  declare isDeleted: CreationOptional<boolean>;
   declare createdAt: CreationOptional<number>;
-  declare editedAt: CreationOptional<number>;
 
   declare chat?: Chat;
   declare attachment?: Attachment;
-  declare parentMessage?: Message;
 }
 
 Message.init(
@@ -55,11 +51,6 @@ Message.init(
       allowNull: false,
     },
 
-    parentMessageId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-
     content: {
       type: DataTypes.TEXT,
       allowNull: true,
@@ -76,13 +67,7 @@ Message.init(
       defaultValue: false,
     },
 
-    isDeletedBySender: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-
-    isDeletedByReceiver: {
+    isDeleted: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
@@ -94,16 +79,6 @@ Message.init(
       defaultValue: () => Date.now(),
       get() {
         const value = this.getDataValue('createdAt');
-        return value === null ? null : Number.parseInt(`${value}`, 10);
-      },
-    },
-
-    editedAt: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      defaultValue: () => Date.now(),
-      get() {
-        const value = this.getDataValue('editedAt');
         return value === null ? null : Number.parseInt(`${value}`, 10);
       },
     },
