@@ -12,18 +12,18 @@ const getMessagePartnerId = (message: Message) => {
 };
 
 const setCache = (
-  partnerId: number,
+  chatId: number,
   setterFn: (messages: Message[]) => Message[],
 ) => {
   queryClient.setQueryData<Message[]>(
-    [QUERY_KEY_MESSAGES, partnerId],
+    [QUERY_KEY_MESSAGES, chatId],
     (oldMessages) => {
       const messages = setterFn(oldMessages || []);
 
       // Update last message of the target chat.
       queryClient.setQueryData<Chat[]>([QUERY_KEY_CHATS], (chats) =>
         chats?.map((chat) =>
-          chat.partner.id === partnerId
+          chat.id === chatId
             ? {
                 ...chat,
                 lastMessage: messages[messages.length - 1],
@@ -38,23 +38,24 @@ const setCache = (
 };
 
 const messagesCache = {
-  add: (message: Message, partner: User) => {
-    const isReceivedMessage = message.senderId === partner.id;
-    const chatExists = !!chatsCache.getChat(partner.id);
+  add: (message: Message) => {
+    const { chatId } = message;
+    const chatExists = !!chatsCache.getChat(chatId);
 
-    if (isReceivedMessage && chatExists) {
-      chatsCache.incrementChatUnseenMessagesCount(partner.id);
+    if (message.isAiMessage && chatExists) {
+      chatsCache.incrementChatUnseenMessagesCount(chatId);
     }
 
     if (!chatExists) {
       chatsCache.add({
-        partner,
+        id: 11999,
+        title: 'New chat',
         lastMessage: message,
-        unseenMessagesCount: isReceivedMessage ? 1 : 0,
+        unseenMessagesCount: message.isAiMessage ? 1 : 0,
       });
     }
 
-    setCache(partner.id, (messages: Message[]) => [...messages, message]);
+    setCache(chatId, (messages: Message[]) => [...messages, message]);
   },
 
   update: (message: Message) => {

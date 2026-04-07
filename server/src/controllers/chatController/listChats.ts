@@ -28,7 +28,7 @@ const listChats = async (req: Request, res: Response, next: NextFunction) => {
       Message.findAll({
         attributes: ['chatId'],
         where: {
-          receiverId: userId,
+          isAiMessage: true,
           isSeen: false,
         },
       }),

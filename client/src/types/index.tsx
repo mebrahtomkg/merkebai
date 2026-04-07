@@ -31,9 +31,8 @@ export interface Attachment {
 
 export interface Message {
   id: number;
-  senderId: number;
-  receiverId: number;
-  chatId?: number;
+  isAiMessage?: boolean;
+  chatId: number;
   content: string | null;
   isSeen: boolean;
   createdAt: number;

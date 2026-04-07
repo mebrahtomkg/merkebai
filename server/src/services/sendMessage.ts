@@ -94,11 +94,10 @@ const sendMessage = async (payload: MessageSendPayload) => {
 
     const message = await Message.create(
       {
-        senderId,
+        isAiMessage: false,
         chatId: chat.id,
         content,
         attachmentId: attachment?.id || null,
-        receiverId: 0,
       },
       { transaction },
     );

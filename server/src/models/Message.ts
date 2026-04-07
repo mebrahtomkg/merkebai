@@ -14,13 +14,11 @@ class Message extends Model<
   InferCreationAttributes<Message>
 > {
   declare id: CreationOptional<number>;
-  declare senderId: number;
-  declare receiverId: number;
+  declare chatId: number;
+  declare isAiMessage: boolean;
   declare content: string | null;
   declare attachmentId: number | null;
-  declare chatId: number;
   declare isSeen: CreationOptional<boolean>;
-  declare isDeleted: CreationOptional<boolean>;
   declare createdAt: CreationOptional<number>;
 
   declare chat?: Chat;
@@ -36,19 +34,15 @@ Message.init(
       primaryKey: true,
     },
 
-    senderId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-
-    receiverId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-
     chatId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+
+    isAiMessage: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
 
     content: {
@@ -62,12 +56,6 @@ Message.init(
     },
 
     isSeen: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-
-    isDeleted: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,

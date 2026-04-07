@@ -24,8 +24,8 @@ const MessageRequestsProcessor = () => {
       switch (requestType) {
         case 'TEXT_MESSAGE_SEND':
           return emitWithAck<Message>('send_text_message', {
-            receiverId: payload.receiver.id,
             content: payload.content,
+            chatId: payload.chatId,
           });
 
         case 'MESSAGE_UPDATE':
@@ -72,7 +72,7 @@ const MessageRequestsProcessor = () => {
 
       switch (requestType) {
         case 'TEXT_MESSAGE_SEND':
-          messagesCache.add(data as Message, payload.receiver);
+          messagesCache.add(data as Message);
           break;
 
         case 'MESSAGE_UPDATE':

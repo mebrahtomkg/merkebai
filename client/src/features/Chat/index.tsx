@@ -53,7 +53,7 @@ const Chat: FC = () => {
           <Gap />
 
           <ChatMessages
-            partnerId={chatId}
+            chatId={chatId}
             intersectionObserverRootRef={messagesListContainerRef}
           />
 

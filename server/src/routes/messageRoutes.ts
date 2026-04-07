@@ -7,7 +7,7 @@ import {
 
 const router = express.Router();
 
-router.get('/:chatPartnerId', listChatMessages);
+router.get('/:chatId', listChatMessages);
 router.get('/file/:fileName', readFile);
 // router.get('/file-download/:id', ...implement it with readfile with downlod query);
 

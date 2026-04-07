@@ -1,4 +1,3 @@
-import { Op } from 'sequelize';
 import { Request, Response, NextFunction } from 'express';
 import { filterMessageData, isPositiveInteger } from '@/utils';
 import { Message } from '@/models';
@@ -9,39 +8,23 @@ const listChatMessages = async (
   next: NextFunction,
 ) => {
   try {
-    const chatPartnerId = parseInt(
-      typeof req.params.chatPartnerId === 'string'
-        ? req.params.chatPartnerId.trim()
-        : '',
+    const chatId = parseInt(
+      typeof req.params.chatId === 'string' ? req.params.chatId.trim() : '',
       10,
     );
 
-    if (!isPositiveInteger(chatPartnerId)) {
+    if (!isPositiveInteger(chatId)) {
       res.status(400).json({
-        message: 'Invalid chat partner id.',
+        message: 'Invalid chat id.',
       });
       return;
     }
 
     const userId = req.userId as number;
 
-    const messages = await Message.scope([
-      'withAttachment',
-      'withParentMessage',
-    ]).findAll({
+    const messages = await Message.scope(['withAttachment']).findAll({
       where: {
-        [Op.or]: [
-          {
-            senderId: userId,
-            receiverId: chatPartnerId,
-            isDeletedBySender: false,
-          },
-          {
-            senderId: chatPartnerId,
-            receiverId: userId,
-            isDeletedByReceiver: false,
-          },
-        ],
+        chatId,
       },
     });
 

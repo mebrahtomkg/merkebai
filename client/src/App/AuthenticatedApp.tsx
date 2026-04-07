@@ -35,7 +35,7 @@ const AuthenticatedApp = () => {
 
       <Routes>
         <Route index element={isMobile ? <Home /> : null} />
-        <Route path="/chat/:chatPartnerId" element={<Chat />} />
+        <Route path="/chat/:chatId" element={<Chat />} />
       </Routes>
 
       <WithAnimation

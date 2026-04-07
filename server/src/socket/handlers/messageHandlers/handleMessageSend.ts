@@ -6,7 +6,6 @@ import { MessageSendError } from '@/services/sendMessage';
 import handleSocketError from '@/socket/handleSocketError';
 
 interface MessageSendPayload {
-  receiverId: number;
   content: string;
   chatId?: number;
 }
@@ -24,16 +23,9 @@ const handleMessageSend = async (
       });
     }
 
-    const { receiverId, content, chatId } = payload;
+    const { content, chatId } = payload;
 
     const userId = socket.userId as number;
-
-    if (!isPositiveInteger(receiverId)) {
-      return acknowledgement({
-        status: 'error',
-        message: 'Invalid receiver id.',
-      });
-    }
 
     if (typeof content !== 'string') {
       return acknowledgement({
@@ -42,12 +34,12 @@ const handleMessageSend = async (
       });
     }
 
-    if (chatId !== undefined && !isPositiveInteger(chatId)) {
-      return acknowledgement({
-        status: 'error',
-        message: 'Invalid chat id.',
-      });
-    }
+    // if (chatId !== undefined && !isPositiveInteger(chatId)) {
+    //   return acknowledgement({
+    //     status: 'error',
+    //     message: 'Invalid chat id.',
+    //   });
+    // }
 
     const { message } = await sendMessage({
       messageType: 'text',
@@ -62,7 +54,7 @@ const handleMessageSend = async (
       data: message,
     });
 
-    emitToUser(receiverId, 'message_received', { message });
+    // emitToUser(receiverId, 'message_received', { message });
   } catch (err) {
     if (err instanceof MessageSendError) {
       acknowledgement({

@@ -13,10 +13,10 @@ const chatsCache = {
     setCache((chats) => [...chats, chat]);
   },
 
-  incrementChatUnseenMessagesCount: (partnerId: number) => {
+  incrementChatUnseenMessagesCount: (chatId: number) => {
     setCache((chats) =>
       chats.map((chat) =>
-        chat.partner.id === partnerId
+        chat.id === chatId
           ? {
               ...chat,
               unseenMessagesCount: (chat.unseenMessagesCount || 0) + 1,
@@ -26,10 +26,10 @@ const chatsCache = {
     );
   },
 
-  updateChatLastMessage: (partnerId: number) => {
+  updateChatLastMessage: (chatId: number) => {
     const messages = queryClient.getQueryData<Message[]>([
       QUERY_KEY_MESSAGES,
-      partnerId,
+      chatId,
     ]);
 
     const lastMessage =
@@ -39,63 +39,27 @@ const chatsCache = {
 
     setCache((chats) =>
       chats.map((chat) =>
-        chat.partner.id === partnerId ? { ...chat, lastMessage } : chat,
+        chat.id === chatId ? { ...chat, lastMessage } : chat,
       ),
     );
   },
 
-  setChatUnseenMessagesCount: (
-    partnerId: number,
-    unseenMessagesCount: number,
-  ) => {
+  setChatUnseenMessagesCount: (chatId: number, unseenMessagesCount: number) => {
     setCache((chats) =>
       chats.map((chat) =>
-        chat.partner.id === partnerId ? { ...chat, unseenMessagesCount } : chat,
+        chat.id === chatId ? { ...chat, unseenMessagesCount } : chat,
       ),
     );
   },
 
-  getChat: (partnerId: number) => {
+  getChat: (chatId: number) => {
     return queryClient
       .getQueryData<Chat[]>([QUERY_KEY_CHATS])
-      ?.find((chat) => chat.partner.id === partnerId);
+      ?.find((chat) => chat.id === chatId);
   },
 
   getAllChats: (): Chat[] =>
     queryClient.getQueryData<Chat[]>([QUERY_KEY_CHATS]) || [],
-
-  handlePartnerConnect: (partnerId: number) => {
-    setCache((chats) =>
-      chats.map((chat) =>
-        chat.partner.id === partnerId
-          ? {
-              ...chat,
-              partner: {
-                ...chat.partner,
-                isOnline: true,
-              },
-            }
-          : chat,
-      ),
-    );
-  },
-
-  handlePartnerDisconnect: (partnerId: number, lastSeenTime?: number) => {
-    setCache((chats) =>
-      chats.map((chat) =>
-        chat.partner.id === partnerId
-          ? {
-              ...chat,
-              partner: {
-                ...chat.partner,
-                isOnline: false,
-                lastSeenAt: lastSeenTime,
-              },
-            }
-          : chat,
-      ),
-    );
-  },
 };
 
 export default chatsCache;

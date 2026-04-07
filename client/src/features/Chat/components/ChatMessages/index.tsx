@@ -3,15 +3,15 @@ import BaseMessage from '../BaseMessage';
 import { useChatMessages } from '../../hooks';
 
 interface ChatMessagesProps {
-  partnerId: number;
+  chatId: number;
   intersectionObserverRootRef: RefObject<HTMLDivElement | null>;
 }
 
 const ChatMessages: FC<ChatMessagesProps> = ({
-  partnerId,
+  chatId,
   intersectionObserverRootRef,
 }) => {
-  const messages = useChatMessages(partnerId);
+  const messages = useChatMessages(chatId);
 
   const messagesInComponent = useMemo(() => {
     return messages.map((message, index) => (
@@ -20,7 +20,7 @@ const ChatMessages: FC<ChatMessagesProps> = ({
         message={message}
         isLastInGroup={
           messages[index + 1] &&
-          messages[index + 1].senderId !== message.senderId
+          messages[index + 1].isAiMessage !== message.isAiMessage
         }
         intersectionObserverRootRef={intersectionObserverRootRef}
       />
