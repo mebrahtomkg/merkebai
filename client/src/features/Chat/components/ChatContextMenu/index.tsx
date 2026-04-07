@@ -4,27 +4,13 @@ import {
   WithAnimation,
 } from '@/Animation';
 import { MoreButton } from '@/components/buttons';
-import {
-  AddContactIcon,
-  BlockUserIcon,
-  DeleteIcon,
-  RemoveContactIcon,
-  UnblockUserIcon,
-} from '@/components/icons';
+import { DeleteIcon } from '@/components/icons';
 import ContextMenu, {
   IMenuItem,
   MenuItem,
   useContextMenu,
 } from '@/components/ContextMenu';
-import {
-  useAddContact,
-  useBlockUser,
-  useRemoveContact,
-  useUnblockUser,
-  useUserInfo,
-} from '@/hooks';
 import { addChatDeleteRequest } from '@/store/useMessageRequestsStore';
-import { User } from '@/types';
 import { FC, useCallback, useMemo, useState } from 'react';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import CheckBox from '@/components/Checkbox';
@@ -32,10 +18,10 @@ import CheckBox from '@/components/Checkbox';
 type ActiveConfirmDialog = 'delete-chat' | 'block-user' | 'none';
 
 interface ChatContextMenuProps {
-  chatPartner: User;
+  chatId: number;
 }
 
-const ChatContextMenu: FC<ChatContextMenuProps> = ({ chatPartner }) => {
+const ChatContextMenu: FC<ChatContextMenuProps> = ({ chatId }) => {
   const {
     isContextMenuVisible,
     handleMoreButtonClick,
@@ -58,31 +44,19 @@ const ChatContextMenu: FC<ChatContextMenuProps> = ({ chatPartner }) => {
     [],
   );
 
-  const { isContact, isBlocked } = useUserInfo(chatPartner);
-
-  const { blockUser } = useBlockUser(chatPartner);
-  const { unblockUser } = useUnblockUser(chatPartner);
-  const { addContact } = useAddContact(chatPartner);
-  const { removeContact } = useRemoveContact(chatPartner);
-
   const deleteChat = useCallback(
     () =>
       addChatDeleteRequest({
-        chatPartnerId: chatPartner.id,
+        chatId,
         deleteForReceiver: isDeleteForReceiver,
       }),
-    [chatPartner.id, isDeleteForReceiver],
+    [chatId, isDeleteForReceiver],
   );
 
   const startDeleteChatFlow = useCallback(() => {
     setIsDeleteForReceiver(false);
     setActiveConfirmDialog('delete-chat');
   }, []);
-
-  const startBlockUserFlow = useCallback(
-    () => setActiveConfirmDialog('block-user'),
-    [],
-  );
 
   const menuItemsList = useMemo(() => {
     const menuItems: IMenuItem[] = [
@@ -95,61 +69,8 @@ const ChatContextMenu: FC<ChatContextMenuProps> = ({ chatPartner }) => {
       />,
     ];
 
-    if (isContact) {
-      menuItems.push(
-        <MenuItem
-          key={'remove-contact'}
-          icon={<RemoveContactIcon />}
-          label="Remove contact"
-          action={removeContact}
-          onClose={closeContextMenu}
-        />,
-      );
-    } else {
-      menuItems.push(
-        <MenuItem
-          key={'add-contact'}
-          icon={<AddContactIcon />}
-          label="Add contact"
-          action={addContact}
-          onClose={closeContextMenu}
-        />,
-      );
-    }
-
-    if (isBlocked) {
-      menuItems.push(
-        <MenuItem
-          key={'unblock-user'}
-          icon={<UnblockUserIcon />}
-          label="Unblock user"
-          action={unblockUser}
-          onClose={closeContextMenu}
-        />,
-      );
-    } else {
-      menuItems.push(
-        <MenuItem
-          key={'block-user'}
-          icon={<BlockUserIcon />}
-          label="Block user"
-          action={startBlockUserFlow}
-          onClose={closeContextMenu}
-        />,
-      );
-    }
-
     return menuItems;
-  }, [
-    startDeleteChatFlow,
-    isContact,
-    isBlocked,
-    addContact,
-    startBlockUserFlow,
-    removeContact,
-    unblockUser,
-    closeContextMenu,
-  ]);
+  }, [startDeleteChatFlow, closeContextMenu]);
 
   return (
     <>
@@ -185,20 +106,6 @@ const ChatContextMenu: FC<ChatContextMenuProps> = ({ chatPartner }) => {
               label="Also delete for receiver"
             />
           </ConfirmDialog>
-        )}
-      />
-
-      <WithAnimation
-        isVisible={activeConfirmDialog === 'block-user'}
-        options={ANIMATION_DIALOG_FAST}
-        render={(style) => (
-          <ConfirmDialog
-            title="Block User"
-            message="Are you sure to block the user?"
-            onConfirm={blockUser}
-            onClose={closeConfirmDialog}
-            animationStyle={style}
-          />
         )}
       />
     </>

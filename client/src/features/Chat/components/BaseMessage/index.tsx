@@ -20,7 +20,6 @@ import {
 import { Message } from '@/types';
 import { useMessageActions, useMessageInfo } from '../../hooks';
 import useMarkMessageAsRead from './useMarkMessageAsRead';
-import ParentMessage from '../ParentMessage';
 import ContextMenu, {
   IMenuItem,
   MenuItem,
@@ -170,13 +169,6 @@ const BaseMessage: FC<BaseMessageProps> = ({
         onClick={handleMessageClick}
         onContextMenu={handleMessageContextMenu}
       >
-        {message.parentMessage && (
-          <ParentMessage
-            message={message.parentMessage}
-            isParentOfOutgoingMessage={isOutgoing}
-          />
-        )}
-
         {messageComponent}
 
         <WithAnimation

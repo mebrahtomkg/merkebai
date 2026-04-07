@@ -12,39 +12,11 @@ export type VisibilityOption = 'everybody' | 'contacts' | 'nobody';
 
 export type MessageType = 'text' | 'photo' | 'audio' | 'video' | 'file';
 
-export interface ProfilePhoto {
-  id: number;
-  userId: number;
-  name: string;
-  size: number;
-  createdAt: number;
-}
-
 export interface Account {
   id: number;
   email: string;
   firstName: string;
   lastName: string;
-  username: string;
-  bio: string;
-  emailVisibility: VisibilityOption;
-  lastSeenVisibility: VisibilityOption;
-  profilePhotosVisibility: VisibilityOption;
-  messageSender: VisibilityOption;
-  profilePhoto?: ProfilePhoto;
-}
-
-export interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  username: string;
-  bio: string;
-  acceptsMessage: boolean; // The user could disallowed message via privacy
-  isOnline: boolean;
-  email?: string; // Could be privacy protected
-  profilePhoto?: ProfilePhoto; // Could be privacy protected
-  lastSeenAt?: number; // Could be privacy protected
 }
 
 export interface Attachment {

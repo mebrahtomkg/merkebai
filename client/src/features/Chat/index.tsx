@@ -2,7 +2,12 @@ import BackLink from '@/components/BackLink';
 import { useIsMobile } from '@/hooks';
 import { type FC, useRef, useCallback } from 'react';
 import { useParams } from 'react-router';
-import { MessageInput, PendingMessages, ChatMessages } from './components';
+import {
+  MessageInput,
+  PendingMessages,
+  ChatMessages,
+  ChatContextMenu,
+} from './components';
 import {
   ChatFooter,
   ChatHeader,
@@ -40,7 +45,7 @@ const Chat: FC = () => {
 
         {chat && <ChatInfo chat={chat} />}
 
-        {/*{chatPartner && <ChatContextMenu chatPartner={chatPartner} />}*/}
+        {chatId && <ChatContextMenu chatId={chatId} />}
       </ChatHeader>
 
       <ChatMessagesListContainer ref={messagesListContainerRef}>

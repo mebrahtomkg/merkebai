@@ -1,7 +1,6 @@
 import { BackButton } from '@/components/buttons';
 import { useAccountInfo } from '@/hooks';
 import { useState, type CSSProperties, type FC } from 'react';
-import ProfilePhotoSettings from './components/ProfilePhotoSettings';
 import {
   NavMenuContainer,
   SettingsCategoryContainer,
@@ -10,8 +9,6 @@ import {
 } from './styles';
 import { useAppStateStore } from '@/store';
 import NameSettings from './components/NameSettings';
-import UsernameSettings from './components/UsernameSettings';
-import BioSettings from './components/BioSettings';
 import SettingsItem from './components/SettingsItem';
 import TabButton from './components/TabButton';
 
@@ -28,7 +25,7 @@ const Profile: FC<ProfileProps> = ({ animationStyle }) => {
     (state) => state.closeProfileModal,
   );
 
-  const [category, setCategory] = useState<ProfileCategory>('profilePhoto');
+  const [category, setCategory] = useState<ProfileCategory>('account');
 
   return (
     <SettingsModal style={animationStyle}>
@@ -37,24 +34,16 @@ const Profile: FC<ProfileProps> = ({ animationStyle }) => {
 
         <TabbedMenu>
           <TabButton
-            text="Profile Photo"
-            isActive={category === 'profilePhoto'}
-            onClick={() => setCategory('profilePhoto')}
-          />
-          <TabButton
             text="Account"
             isActive={category === 'account'}
             onClick={() => setCategory('account')}
           />
         </TabbedMenu>
       </NavMenuContainer>
-      {category === 'profilePhoto' && <ProfilePhotoSettings />}
       {category === 'account' && (
         <SettingsCategoryContainer>
           <NameSettings />
-          <UsernameSettings />
           <SettingsItem value={email} label="Email" />
-          <BioSettings />
         </SettingsCategoryContainer>
       )}
     </SettingsModal>

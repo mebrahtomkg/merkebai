@@ -15,7 +15,6 @@ import {
 import { LoadingError, PhotoViewerModal, ProgressContainer } from './styles';
 import { usePhotoNavigation, useAccountInfo, useImageLoader } from '@/hooks';
 import { isImage } from '../../utils';
-import useUser from '@/hooks/useUserPro';
 import {
   useChatMessages,
   useMessageActions,
@@ -107,9 +106,8 @@ const PhotoViewer: FC<PhotoViewerProps> = ({
     [reply, downloadFile, deleteMessage, closeContextMenu],
   );
 
-  const { fullName: partnerFullName } = useUser(chatPartnerId);
   const { fullName: selfFullName } = useAccountInfo();
-  const senderFullName = isOutgoing ? selfFullName : partnerFullName;
+  const senderFullName = isOutgoing ? selfFullName : 'partnerFullName';
 
   return (
     <PhotoViewerModal aria-modal="true" aria-label="Photo Viewer">

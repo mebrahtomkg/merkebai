@@ -1,11 +1,9 @@
 import { useMemo } from 'react';
 import { calculateFullName, calculateNameInitials } from '../utils';
-import { useAccount, useProfilePhotos } from '.';
+import { useAccount } from '.';
 
 const useAccountInfo = () => {
   const account = useAccount();
-
-  const { profilePhotos } = useProfilePhotos();
 
   const { firstName, lastName } = account;
 
@@ -19,16 +17,10 @@ const useAccountInfo = () => {
     [firstName, lastName],
   );
 
-  const photoUrl = useMemo(() => {
-    const photoName = profilePhotos[0]?.name;
-    return photoName ? `/profile-photos/file/${photoName}` : undefined;
-  }, [profilePhotos]);
-
   return {
     ...account,
     fullName,
     nameInitials,
-    photoUrl,
   };
 };
 

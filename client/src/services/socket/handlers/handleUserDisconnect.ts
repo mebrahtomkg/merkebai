@@ -1,4 +1,4 @@
-import { chatsCache, contactsCache } from '@/queryClient';
+import { chatsCache } from '@/queryClient';
 
 interface UserDisconnectPayload {
   userId: number; // User id who is disconnected
@@ -10,7 +10,6 @@ const handleUserDisconnect = ({
   lastSeenTime,
 }: UserDisconnectPayload) => {
   chatsCache.handlePartnerDisconnect(userId, lastSeenTime);
-  contactsCache.handleContactDisconnect(userId);
 };
 
 export default handleUserDisconnect;

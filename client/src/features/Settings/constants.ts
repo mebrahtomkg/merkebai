@@ -2,9 +2,9 @@ import { AnimationOptions } from '@/Animation';
 import { VisibilityOption } from '@/types';
 
 export const VISIBILITY_OPTION_LABELS: Record<VisibilityOption, string> = {
-  everybody: 'Everybody',
-  contacts: 'My Contacts',
-  nobody: 'Only Me',
+  everybody: 'Yes',
+  contacts: 'Never',
+  nobody: 'Only temproray',
 };
 
 export const ANIMATION_EDITOR_MODAL: AnimationOptions = {

@@ -9,7 +9,6 @@ import {
 import { useAppStateStore } from '@/store';
 import PrivacySettings from './components/PrivacySettings';
 import PasswordSettings from './components/PasswordSettings';
-import BlockedUsers from './components/BlockedUsers';
 import TabButton from './components/TabButton';
 
 type SettingsCategory = 'security' | 'privacy';
@@ -49,7 +48,6 @@ const Settings: FC<SettingsProps> = ({ animationStyle }) => {
       {category === 'security' && (
         <SettingsCategoryContainer>
           <PasswordSettings />
-          <BlockedUsers />
         </SettingsCategoryContainer>
       )}
       {category === 'privacy' && (
