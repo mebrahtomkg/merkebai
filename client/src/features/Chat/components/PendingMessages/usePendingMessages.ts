@@ -3,16 +3,16 @@ import { Message, MessageRequest } from '@/types';
 import { useCallback, useMemo } from 'react';
 import { createPendingMessage } from '@/utils';
 
-const usePendingMessages = (receiverId: number) => {
+const usePendingMessages = (chatId: number) => {
   const selector = useCallback(
     (requests: MessageRequest[]) =>
       requests.filter(
         (req) =>
           (req.requestType === 'TEXT_MESSAGE_SEND' ||
             req.requestType === 'FILE_MESSAGE_SEND') &&
-          req.payload.receiver.id === receiverId,
+          req.payload.chatId === chatId,
       ),
-    [receiverId],
+    [chatId],
   );
 
   const requests = useMessageRequests(selector);

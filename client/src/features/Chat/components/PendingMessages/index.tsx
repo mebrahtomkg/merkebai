@@ -3,17 +3,17 @@ import BaseMessage from '../BaseMessage';
 import usePendingMessages from './usePendingMessages';
 
 interface PendingMessagesProps {
-  receiverId: number;
+  chatId: number;
   intersectionObserverRootRef: RefObject<HTMLDivElement | null>;
   scrollMessagesListToBottom: () => void;
 }
 
 const PendingMessages: FC<PendingMessagesProps> = ({
-  receiverId,
+  chatId,
   intersectionObserverRootRef,
   scrollMessagesListToBottom,
 }) => {
-  const messages = usePendingMessages(receiverId);
+  const messages = usePendingMessages(chatId);
 
   const messagesInComponent = useMemo(() => {
     return messages.map((message) => (

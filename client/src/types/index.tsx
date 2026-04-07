@@ -61,17 +61,17 @@ export interface Message {
   id: number;
   senderId: number;
   receiverId: number;
+  chatId?: number;
   content: string | null;
   isSeen: boolean;
   createdAt: number;
   editedAt: number;
   attachment?: Attachment;
-  parentMessage?: Message;
 }
 
 export interface Chat {
   id: number;
-  title: string;
+  title?: string;
   lastMessage?: Message;
   unseenMessagesCount?: number;
 }
@@ -92,9 +92,8 @@ export interface TextMessageSendRequest extends BaseMessageRequest {
   requestType: 'TEXT_MESSAGE_SEND';
   timestamp: number;
   payload: {
-    receiver: User;
     content: string;
-    parentMessageId?: number;
+    chatId?: number;
   };
 }
 
@@ -102,8 +101,8 @@ export interface FileMessageSendRequest extends BaseMessageRequest {
   requestType: 'FILE_MESSAGE_SEND';
   timestamp: number;
   payload: {
-    receiver: User;
     fileId: number;
+    chatId?: number;
     caption?: string;
     width?: number;
     height?: number;
@@ -129,7 +128,7 @@ export interface MessageDeleteRequest extends BaseMessageRequest {
 export interface ChatDeleteRequest extends BaseMessageRequest {
   requestType: 'CHAT_DELETE';
   payload: {
-    chatPartnerId: number;
+    chatId: number;
     deleteForReceiver?: boolean;
   };
 }

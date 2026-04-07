@@ -17,15 +17,12 @@ import {
   addMessageUpdateRequest,
   addTextMessageSendRequest,
 } from '@/store/useMessageRequestsStore';
-import { User } from '@/types';
-import ParentMessage from './ParentMessage';
-import { ANIMATION_DIALOG_FAST, WithAnimation } from '@/Animation';
 
 interface MessageInputProps {
-  chatPartner: User;
+  chatId?: number;
 }
 
-const MessageInput: FC<MessageInputProps> = ({ chatPartner }) => {
+const MessageInput: FC<MessageInputProps> = ({ chatId }) => {
   const { textAreaRef, value, setValue, handleInput, focusTextArea } =
     useMessageTextArea();
 
@@ -45,7 +42,7 @@ const MessageInput: FC<MessageInputProps> = ({ chatPartner }) => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <reset message input state>
   useEffect(() => {
     resetMessageInputState();
-  }, [chatPartner.id]);
+  }, [chatId]);
 
   const handleSend = useCallback(() => {
     const trimmedValue = value.trim();
@@ -58,20 +55,12 @@ const MessageInput: FC<MessageInputProps> = ({ chatPartner }) => {
         newContent: trimmedValue,
       });
     } else {
-      if (savedInputState.mode === 'reply') {
-        addTextMessageSendRequest({
-          receiver: chatPartner,
-          content: trimmedValue,
-          parentMessageId: savedInputState.message.id,
-        });
-      } else {
-        addTextMessageSendRequest({
-          receiver: chatPartner,
-          content: trimmedValue,
-        });
-      }
+      addTextMessageSendRequest({
+        content: trimmedValue,
+        chatId,
+      });
     }
-  }, [value, messageInputState, chatPartner]);
+  }, [value, messageInputState, chatId]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -105,20 +94,6 @@ const MessageInput: FC<MessageInputProps> = ({ chatPartner }) => {
 
   return (
     <MessageInputContainer>
-      {messageInputState.mode === 'reply' && (
-        <WithAnimation
-          isVisible={true}
-          options={ANIMATION_DIALOG_FAST}
-          render={(style) => (
-            <ParentMessage
-              message={messageInputState.message}
-              chatPartner={chatPartner}
-              animationStyle={style}
-            />
-          )}
-        />
-      )}
-
       <MessageInputStyled onClick={handleMessageInputClick}>
         <GrowingTextArea
           rows={1}
@@ -145,7 +120,7 @@ const MessageInput: FC<MessageInputProps> = ({ chatPartner }) => {
         {isFileSelectorVisible && (
           <FileSelector
             files={selectedFiles}
-            chatPartner={chatPartner}
+            chatId={chatId}
             onClose={closeFileSelector}
           />
         )}

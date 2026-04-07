@@ -3,8 +3,8 @@ import { calculateFullName, calculateNameInitials } from '@/utils';
 import { User } from '@/types';
 import useBlockedUsers from './useBlockedUsers';
 import useContacts from './useContacts';
-import formatLastseenTimestamp from '@/features/Chat/components/ChatPartner/formatLastseenTimestamp';
 import useCurrentDateTime from './useCurrentDateTime';
+import formatLastseenTimestamp from '@/features/Chat/components/ChatInfo/formatLastseenTimestamp';
 
 const useUserInfo = (user: User) => {
   const blockedUsers = useBlockedUsers();

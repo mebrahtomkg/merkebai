@@ -41,7 +41,7 @@ const listChats = async (req: Request, res: Response, next: NextFunction) => {
     // #3 Calculate and assign number of unseen messages for each chat.
     const transformedChats = chats
       .map((chat) => {
-        const { id } = chat;
+        const { id, title } = chat;
 
         if (!chat.lastMessage) {
           throw new Error('Invalid lastMessage of a chat!');
@@ -49,7 +49,7 @@ const listChats = async (req: Request, res: Response, next: NextFunction) => {
 
         const lastMessage = filterMessageData(chat.lastMessage);
 
-        return { id, lastMessage };
+        return { id, lastMessage, title };
       })
       .sort((a, b) => b.lastMessage.createdAt - a.lastMessage.createdAt)
       .map((chat) => ({

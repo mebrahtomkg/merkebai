@@ -12,6 +12,7 @@ import Message from './Message';
 class Chat extends Model<InferAttributes<Chat>, InferCreationAttributes<Chat>> {
   declare id: CreationOptional<number>;
   declare userId: number;
+  declare title: string | null;
   declare lastMessageId: number | null;
 
   declare user?: User;
@@ -30,6 +31,11 @@ Chat.init(
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+
+    title: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
 
     lastMessageId: {

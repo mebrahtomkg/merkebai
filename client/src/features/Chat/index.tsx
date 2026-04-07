@@ -1,14 +1,8 @@
 import BackLink from '@/components/BackLink';
-import { useIsMobile, useUserFetcher } from '@/hooks';
+import { useIsMobile } from '@/hooks';
 import { type FC, useRef, useCallback } from 'react';
 import { useParams } from 'react-router';
-import {
-  MessageInput,
-  ChatPartner,
-  ChatContextMenu,
-  PendingMessages,
-  ChatMessages,
-} from './components';
+import { MessageInput, PendingMessages, ChatMessages } from './components';
 import {
   ChatFooter,
   ChatHeader,
@@ -18,23 +12,18 @@ import {
   Gap,
 } from './styles';
 import { useChat } from './hooks';
+import ChatInfo from './components/ChatInfo';
 
 const Chat: FC = () => {
   const params = useParams();
 
-  const chatPartnerId = params?.chatPartnerId
-    ? Number.parseInt(params.chatPartnerId, 10)
-    : 0;
+  const chatId = params?.chatId ? Number.parseInt(params.chatId, 10) : 0;
 
   const messagesListContainerRef = useRef<HTMLDivElement>(null);
 
   const isMobile = useIsMobile();
 
-  const chat = useChat(chatPartnerId);
-
-  const user = useUserFetcher(chatPartnerId);
-
-  const chatPartner = chat?.partner || user;
+  const chat = useChat(chatId);
 
   const scrollMessagesListToBottom = useCallback(() => {
     const messagesListContainer = messagesListContainerRef.current;
@@ -49,9 +38,9 @@ const Chat: FC = () => {
       <ChatHeader>
         {isMobile && <BackLink />}
 
-        {chatPartner && <ChatPartner user={chatPartner} />}
+        {chat && <ChatInfo chat={chat} />}
 
-        {chatPartner && <ChatContextMenu chatPartner={chatPartner} />}
+        {/*{chatPartner && <ChatContextMenu chatPartner={chatPartner} />}*/}
       </ChatHeader>
 
       <ChatMessagesListContainer ref={messagesListContainerRef}>
@@ -59,12 +48,12 @@ const Chat: FC = () => {
           <Gap />
 
           <ChatMessages
-            partnerId={chatPartnerId}
+            partnerId={chatId}
             intersectionObserverRootRef={messagesListContainerRef}
           />
 
           <PendingMessages
-            receiverId={chatPartnerId}
+            chatId={chatId}
             intersectionObserverRootRef={messagesListContainerRef}
             scrollMessagesListToBottom={scrollMessagesListToBottom}
           />
@@ -74,7 +63,7 @@ const Chat: FC = () => {
       </ChatMessagesListContainer>
 
       <ChatFooter>
-        {chatPartner && <MessageInput chatPartner={chatPartner} />}
+        <MessageInput chatId={chatId} />
       </ChatFooter>
     </ChatStyled>
   );

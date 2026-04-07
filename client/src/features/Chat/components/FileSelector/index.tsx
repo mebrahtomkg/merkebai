@@ -15,19 +15,14 @@ import OrdinaryFile from './OrdinaryFile';
 import AddButton from './AddButton';
 import { useFilesSelector } from '../../hooks';
 import useFilesProcessor from './useFilesProcessor';
-import { User } from '@/types';
 
 interface FileSelectorProps {
   files: File[];
-  chatPartner: User;
   onClose: () => void;
+  chatId?: number;
 }
 
-const FileSelector: FC<FileSelectorProps> = ({
-  files,
-  chatPartner,
-  onClose,
-}) => {
+const FileSelector: FC<FileSelectorProps> = ({ files, chatId, onClose }) => {
   const {
     attachments,
     selectionInfo,
@@ -36,7 +31,7 @@ const FileSelector: FC<FileSelectorProps> = ({
     addFiles,
     sendAttachments,
     handleImageLoad,
-  } = useFilesProcessor(files, chatPartner, onClose);
+  } = useFilesProcessor(files, onClose, chatId);
 
   const attachmentComponents = useMemo(
     () =>

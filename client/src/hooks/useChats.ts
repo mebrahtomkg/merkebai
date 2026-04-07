@@ -32,8 +32,8 @@ const useChats = (): Chat[] => {
     });
 
     msgSendRequests.forEach((req) => {
-      map.set(req.payload.receiver.id, {
-        partner: req.payload.receiver,
+      map.set(req.requestId, {
+        id: req.requestId,
         lastMessage: createPendingMessage(req),
       });
     });

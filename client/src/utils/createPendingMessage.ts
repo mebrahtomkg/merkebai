@@ -16,12 +16,13 @@ const createPendingMessage = (req: MessageRequest) => {
 
   const account = accountCache.get();
 
-  const receiverId = req.payload.receiver.id;
+  const chatId = req.payload.chatId;
 
   const message: Message = {
     // Use negative number to avoid id conflict with the persisted in server messages
     id: -1 * req.requestId,
-    receiverId: receiverId,
+    chatId: chatId,
+    receiverId: 0,
     senderId: account.id,
     content:
       req.requestType === 'TEXT_MESSAGE_SEND' ? req.payload.content : null,
