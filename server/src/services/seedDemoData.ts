@@ -1,6 +1,6 @@
 import sequelize from '@/config/db';
 import { demoUsers } from '@/config/demoData';
-import { createNewUser, createProfilePhoto } from '@/services';
+import { createNewUser } from '@/services';
 
 const seedDemoData = async () => {
   console.log('Starting demo data seeding...');
@@ -12,19 +12,7 @@ const seedDemoData = async () => {
     for (const demoUser of demoUsers) {
       const { photos, ...rest } = demoUser;
 
-      const user = await createNewUser({ ...rest, transaction });
-
-      if (!(photos && photos.length > 0)) continue;
-
-      for (const photo of photos) {
-        await createProfilePhoto({
-          userId: user.id,
-          name: photo,
-          originalname: photo,
-          size: 0,
-          transaction,
-        });
-      }
+      await createNewUser({ ...rest, transaction });
     }
 
     await transaction.commit();

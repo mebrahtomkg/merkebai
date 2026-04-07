@@ -14,7 +14,7 @@ const readMyAccount = async (
       });
     }
 
-    const user = await User.scope('withProfilePhoto').findByPk(req.userId);
+    const user = await User.findByPk(req.userId);
 
     if (!user) {
       return res.status(404).json({

@@ -2,11 +2,8 @@ import { authGuard, errorHandler, performAuth } from '@/middlewares';
 import {
   adminRoutes,
   authRoutes,
-  blockedUserRoutes,
   chatRoutes,
-  contactRoutes,
   messageRoutes,
-  profilePhotoRoutes,
   rootRoutes,
   userRoutes,
 } from '@/routes';
@@ -40,11 +37,8 @@ app.use('/', rootRoutes);
 app.use('/admin', adminRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', authGuard, userRoutes);
-app.use('/api/profile-photos', authGuard, profilePhotoRoutes);
 app.use('/api/chats', authGuard, chatRoutes);
 app.use('/api/messages', authGuard, messageRoutes);
-app.use('/api/contacts', authGuard, contactRoutes);
-app.use('/api/blocked-users', authGuard, blockedUserRoutes);
 app.use(errorHandler);
 
 export default app;
