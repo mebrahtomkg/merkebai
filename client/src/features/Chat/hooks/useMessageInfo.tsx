@@ -1,4 +1,3 @@
-import { useAccount } from '@/hooks';
 import { Message, MessageType } from '@/types';
 import { useMemo } from 'react';
 import {
@@ -12,11 +11,9 @@ import { API_BASE_URL } from '@/constants';
 import { getFileExtension } from '@/utils';
 
 const useMessageInfo = (message: Message) => {
-  const { id: selfId } = useAccount();
+  const isOutgoing = !message.isAiMessage;
 
-  const isOutgoing = message.senderId === selfId;
-
-  const chatPartnerId = isOutgoing ? message.receiverId : message.senderId;
+  const chatPartnerId = message.chatId;
 
   const time = useMemo(
     () => (message.createdAt ? formatTime(message.createdAt) : '??'),

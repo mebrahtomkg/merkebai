@@ -1,4 +1,5 @@
 import {
+  ActionButtonsContainer,
   ChatListContainer,
   HeaderContainer,
   HomeStyled,
@@ -8,6 +9,7 @@ import { ChatItem } from './components';
 import BottomMenu from './components/BottomMenu';
 import { useChats } from '@/hooks';
 import { useNavigate } from 'react-router';
+import Logo from './components/Logo';
 
 const Home = () => {
   const chats = useChats();
@@ -21,10 +23,14 @@ const Home = () => {
   return (
     <HomeStyled>
       <HeaderContainer>
+        <Logo />
+      </HeaderContainer>
+
+      <ActionButtonsContainer>
         <NewChatButton type="button" onClick={openNewChat}>
           New Chat
         </NewChatButton>
-      </HeaderContainer>
+      </ActionButtonsContainer>
 
       <ChatListContainer>
         {chats.map((chat, index) => (

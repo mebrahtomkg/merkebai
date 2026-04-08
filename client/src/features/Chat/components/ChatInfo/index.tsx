@@ -1,7 +1,6 @@
 import { FC } from 'react';
-import { Name, NameContainer, ProfileLink, UserContainer } from './styles';
+import { Title, TitleContainer, ChatInfoStyled, UserContainer } from './styles';
 import { Chat } from '@/types';
-import Avatar from '@/components/Avatar';
 
 interface ChatInfoProps {
   chat: Chat;
@@ -9,15 +8,13 @@ interface ChatInfoProps {
 
 const ChatInfo: FC<ChatInfoProps> = ({ chat }) => {
   return (
-    <ProfileLink role="button">
+    <ChatInfoStyled>
       <UserContainer>
-        <Avatar initials={'GM'} isSmall={true} />
-
-        <NameContainer>
-          <Name>{'Gemini-3-pro'}</Name>
-        </NameContainer>
+        <TitleContainer>
+          <Title>Title of chat</Title>
+        </TitleContainer>
       </UserContainer>
-    </ProfileLink>
+    </ChatInfoStyled>
   );
 };
 

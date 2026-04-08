@@ -26,13 +26,13 @@ export const ChatItemInfoContainer = styled.div`
   justify-content: center;
 `;
 
-export const NameContainer = styled.div`
+export const TitleContainer = styled.div`
   margin-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
 `;
 
-export const Name = styled.h3`
+export const Title = styled.h3`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

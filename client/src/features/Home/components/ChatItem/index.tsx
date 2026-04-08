@@ -6,11 +6,11 @@ import {
   ClockIconContainer,
   MessagePreviewContainer,
   MessageStatusContainer,
-  NameContainer,
+  Title,
+  TitleContainer,
   TickIconContainer,
   UnseenMessagesCount,
 } from './styles';
-import { useAccount } from '@/hooks';
 import { Chat } from '@/types';
 import useChatItemInfo from './useChatItemInfo';
 import MessagePreview from './MessagePreview';
@@ -30,13 +30,11 @@ const ChatItem: FC<ChatItemProps> = ({ chat }) => {
 
   const lastMessageStatus = useMessageStatus(lastMessage?.id || 0);
 
-  const { id: selfId } = useAccount();
-
   const { dateTime } = useChatItemInfo(chat);
 
   const unseenMessagesCount = chat.unseenMessagesCount || 0;
 
-  const isLastMessageOutgoing = lastMessage && lastMessage.senderId === selfId;
+  const isLastMessageOutgoing = lastMessage && !lastMessage.isAiMessage;
 
   const handleClick = () => {
     navigate(`/chat/${chat.id}`);
@@ -45,9 +43,10 @@ const ChatItem: FC<ChatItemProps> = ({ chat }) => {
   return (
     <ChatItemStyled type="button" onClick={handleClick}>
       <ChatItemInfoContainer>
-        <NameContainer>
+        <TitleContainer>
+          <Title>Title</Title>
           {dateTime && <ChatItemDateTime>{dateTime}</ChatItemDateTime>}
-        </NameContainer>
+        </TitleContainer>
 
         <MessagePreviewContainer>
           {lastMessage && <MessagePreview message={lastMessage} />}

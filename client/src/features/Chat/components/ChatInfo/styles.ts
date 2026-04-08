@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 
-export const ProfileLink = styled.div`
+export const ChatInfoStyled = styled.div`
   flex-grow: 2;
-  margin-left: 3rem;
+  margin-left: 2rem;
 
   @media (min-width: 768px) {
     margin-left: 1rem;
@@ -16,11 +16,9 @@ export const UserContainer = styled.div`
   cursor: pointer;
 `;
 
-export const NameContainer = styled.div`
-  margin-left: 0.9rem;
-`;
+export const TitleContainer = styled.div``;
 
-export const Name = styled.h3`
+export const Title = styled.h3`
   line-height: 1;
   margin-bottom: 0.3rem;
   color: var(--fg-primary);

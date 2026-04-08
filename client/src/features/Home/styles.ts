@@ -20,6 +20,17 @@ export const HeaderContainer = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 `;
 
+export const ActionButtonsContainer = styled.div`
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid;
+  border-color: var(--fg-border);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+`;
+
 export const ChatListContainer = styled.div`
   height: 100vh;
   padding-bottom: calc(var(--bottom-menu-height) + 6rem);
