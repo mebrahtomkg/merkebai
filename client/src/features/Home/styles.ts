@@ -41,3 +41,9 @@ export const MenuButton = styled.button`
   height: 2.2rem;
   padding: 0.4rem;
 `;
+
+export const NewChatButton = styled.button`
+  background-color: var(--bg-action);
+  padding: 0.4rem 0.9rem;
+  border-radius: 5px;
+`;

@@ -14,14 +14,15 @@ import { addChatDeleteRequest } from '@/store/useMessageRequestsStore';
 import { FC, useCallback, useMemo, useState } from 'react';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import CheckBox from '@/components/Checkbox';
+import { Chat } from '@/types';
 
 type ActiveConfirmDialog = 'delete-chat' | 'block-user' | 'none';
 
 interface ChatContextMenuProps {
-  chatId: number;
+  chat: Chat;
 }
 
-const ChatContextMenu: FC<ChatContextMenuProps> = ({ chatId }) => {
+const ChatContextMenu: FC<ChatContextMenuProps> = ({ chat }) => {
   const {
     isContextMenuVisible,
     handleMoreButtonClick,
@@ -47,10 +48,10 @@ const ChatContextMenu: FC<ChatContextMenuProps> = ({ chatId }) => {
   const deleteChat = useCallback(
     () =>
       addChatDeleteRequest({
-        chatId,
+        chatId: chat.id,
         deleteForReceiver: isDeleteForReceiver,
       }),
-    [chatId, isDeleteForReceiver],
+    [chat.id, isDeleteForReceiver],
   );
 
   const startDeleteChatFlow = useCallback(() => {

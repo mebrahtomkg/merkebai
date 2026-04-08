@@ -48,7 +48,7 @@ const messagesCache = {
 
     if (!chatExists) {
       chatsCache.add({
-        id: 11999,
+        id: message.chatId,
         title: 'New chat',
         lastMessage: message,
         unseenMessagesCount: message.isAiMessage ? 1 : 0,

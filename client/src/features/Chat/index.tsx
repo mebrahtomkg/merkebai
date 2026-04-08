@@ -22,7 +22,9 @@ import ChatInfo from './components/ChatInfo';
 const Chat: FC = () => {
   const params = useParams();
 
-  const chatId = params?.chatId ? Number.parseInt(params.chatId, 10) : 0;
+  const chatId = params?.chatId
+    ? Number.parseInt(params.chatId, 10)
+    : undefined;
 
   const messagesListContainerRef = useRef<HTMLDivElement>(null);
 
@@ -45,23 +47,27 @@ const Chat: FC = () => {
 
         {chat && <ChatInfo chat={chat} />}
 
-        {chatId && <ChatContextMenu chatId={chatId} />}
+        {chat && <ChatContextMenu chat={chat} />}
       </ChatHeader>
 
       <ChatMessagesListContainer ref={messagesListContainerRef}>
         <ChatMessagesList>
           <Gap />
 
-          <ChatMessages
-            chatId={chatId}
-            intersectionObserverRootRef={messagesListContainerRef}
-          />
+          {chatId && (
+            <ChatMessages
+              chatId={chatId}
+              intersectionObserverRootRef={messagesListContainerRef}
+            />
+          )}
 
-          <PendingMessages
-            chatId={chatId}
-            intersectionObserverRootRef={messagesListContainerRef}
-            scrollMessagesListToBottom={scrollMessagesListToBottom}
-          />
+          {chatId && (
+            <PendingMessages
+              chatId={chatId}
+              intersectionObserverRootRef={messagesListContainerRef}
+              scrollMessagesListToBottom={scrollMessagesListToBottom}
+            />
+          )}
 
           <Gap />
         </ChatMessagesList>

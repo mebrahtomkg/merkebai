@@ -6,6 +6,7 @@ import { emitWithAck, SocketResponseError } from '@/services/socket';
 import queryClient, { chatsCache, messagesCache } from '@/queryClient';
 import { QUERY_KEY_MESSAGES } from '@/constants';
 import { deleteMessageRequest } from '@/store/useMessageRequestsStore';
+import { useNavigate } from 'react-router';
 
 // Selects the first request from the request Queue of messageRequests
 // File message sending requests are filtering out.
@@ -14,6 +15,8 @@ const selectFirstRequest = (requests: MessageRequest[]) =>
 
 const MessageRequestsProcessor = () => {
   const request = useStableValue(useMessageRequests(selectFirstRequest));
+
+  const navigate = useNavigate();
 
   const { getMessagePartnerId } = useMessageUtils();
 
@@ -71,9 +74,17 @@ const MessageRequestsProcessor = () => {
       const { requestType, payload } = req;
 
       switch (requestType) {
-        case 'TEXT_MESSAGE_SEND':
-          messagesCache.add(data as Message);
+        case 'TEXT_MESSAGE_SEND': {
+          const message = data as Message;
+          const chatExists = !!chatsCache.getChat(message.chatId);
+          messagesCache.add(message);
+
+          // It means new chat created. so navigate to it.
+          if (!chatExists) {
+            navigate(`/chat/${message.chatId}`);
+          }
           break;
+        }
 
         case 'MESSAGE_UPDATE':
           messagesCache.update(data as Message);
