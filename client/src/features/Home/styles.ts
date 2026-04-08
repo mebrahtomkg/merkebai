@@ -17,18 +17,6 @@ export const HeaderContainer = styled.div`
   background-color: var(--bg-secondary);
   border-bottom: 1px solid;
   border-color: var(--fg-border);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-`;
-
-export const ActionButtonsContainer = styled.div`
-  height: 4rem;
-  display: flex;
-  align-items: center;
-  padding: 0 1rem;
-  background-color: var(--bg-primary);
-  border-bottom: 1px solid;
-  border-color: var(--fg-border);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 `;
 
 export const ChatListContainer = styled.div`
@@ -51,10 +39,4 @@ export const MenuButton = styled.button`
   width: 2.2rem;
   height: 2.2rem;
   padding: 0.4rem;
-`;
-
-export const NewChatButton = styled.button`
-  background-color: var(--bg-action);
-  padding: 0.4rem 0.9rem;
-  border-radius: 5px;
 `;

@@ -7,7 +7,7 @@ export const LogoStyled = styled.div`
 `;
 
 export const LogoIconContainer = styled.div`
-  width: 3.9rem;
+  width: 3.6rem;
   aspect-ratio: 1/1;
   margin-right: 0.4rem;
 `;

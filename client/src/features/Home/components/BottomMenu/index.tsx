@@ -4,11 +4,13 @@ import {
   IconContainer,
   MenuItemButton,
   MenuItemLabel,
+  NewChatButton,
 } from './styles';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { ANIMATION_DIALOG_FAST, WithAnimation } from '@/Animation';
 import { toggleTheme, useAppStateStore, useThemeStore } from '@/store';
 import {
+  AddIcon,
   LogoutIcon,
   MenuIcon,
   MoonIcon,
@@ -17,6 +19,7 @@ import {
   SunIcon,
 } from '@/components/icons';
 import PopupMenu, { PopupMenuItemProps } from '../PopupMenu';
+import { useNavigate } from 'react-router';
 
 type Action = 'openProfile' | 'openSettings' | 'openContacts';
 
@@ -38,6 +41,11 @@ const BottomMenu = () => {
     closeMenu();
   }, [closeMenu]);
 
+  const openSettings = useCallback(() => {
+    action.current = 'openSettings';
+    closeMenu();
+  }, [closeMenu]);
+
   const runAction = useCallback(() => {
     const actionValue = action.current;
     action.current = null;
@@ -55,10 +63,17 @@ const BottomMenu = () => {
   const menuItems: PopupMenuItemProps[] = useMemo(
     () => [
       { onClick: openProfile, icon: <ProfileIcon />, label: 'My Profile' },
+      { onClick: openSettings, icon: <SettingsIcon />, label: 'Settings' },
       { onClick: logout, icon: <LogoutIcon />, label: 'Log out' },
     ],
-    [openProfile, logout],
+    [openProfile, openSettings, logout],
   );
+
+  const navigate = useNavigate();
+
+  const openNewChat = () => {
+    navigate(`/chat`);
+  };
 
   return (
     <>
@@ -69,12 +84,12 @@ const BottomMenu = () => {
           </IconContainer>
         </MenuItemButton>
 
-        <MenuItemButton type="button" onClick={openSettingsModal}>
+        <NewChatButton type="button" onClick={openNewChat}>
           <IconContainer>
-            <SettingsIcon />
+            <AddIcon />
           </IconContainer>
-          <MenuItemLabel>Settings</MenuItemLabel>
-        </MenuItemButton>
+          <MenuItemLabel>New Chat</MenuItemLabel>
+        </NewChatButton>
 
         <MenuItemButton type="button" onClick={toggleTheme}>
           <IconContainer>

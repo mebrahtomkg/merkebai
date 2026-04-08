@@ -26,6 +26,19 @@ export const MenuItemButton = styled.button`
   }
 `;
 
+export const NewChatButton = styled.button`
+  padding: 0.6rem 1.1rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  border: 1px solid;
+  border-color: var(--fg-border);
+
+  &:hover {
+    background-color: var(--bg-hover);
+  }
+`;
+
 export const IconContainer = styled.div`
   width: 1.2rem;
   height: 1.2rem;
