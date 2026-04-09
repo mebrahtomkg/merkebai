@@ -1,6 +1,7 @@
 import sequelize from '@/config/db';
 import { Attachment, Chat, Message, User } from '@/models';
 import { filterMessageData } from '@/utils';
+import doAiApiCall from './doAiApiCall';
 
 export class MessageSendError extends Error {
   status: number;
@@ -121,6 +122,16 @@ const sendMessage = async (payload: MessageSendPayload) => {
     const filteredMessage = filterMessageData(sentMessage);
 
     await transaction.commit();
+
+    try {
+      doAiApiCall({
+        userId,
+        chatId: chat.id,
+        content: content as string,
+      });
+    } catch (err) {
+      console.log(err);
+    }
 
     return {
       message: filteredMessage,
