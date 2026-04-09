@@ -67,8 +67,8 @@ const messagesCache = {
     );
   },
 
-  remove: (partnerId: number, messageId: number) => {
-    setCache(partnerId, (messages: Message[]) =>
+  remove: (chatId: number, messageId: number) => {
+    setCache(chatId, (messages: Message[]) =>
       messages.filter((message) => message.id !== messageId),
     );
   },

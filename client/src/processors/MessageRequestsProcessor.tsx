@@ -93,8 +93,7 @@ const MessageRequestsProcessor = () => {
         case 'MESSAGE_DELETE':
           {
             const { message } = payload;
-            const partnerId = getMessagePartnerId(message);
-            messagesCache.remove(partnerId, message.id);
+            messagesCache.remove(message.chatId, message.id);
           }
           break;
 

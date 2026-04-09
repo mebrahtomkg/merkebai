@@ -31,7 +31,6 @@ export const MessageContainer = styled.div<{
   $isOutgoing: boolean;
   $messageType: MessageType;
 }>`
-  max-width: 65%;
   border-radius: 20px;
   ${({ $messageType }) =>
     ($messageType === 'audio' || $messageType === 'file') &&
@@ -49,6 +48,7 @@ export const MessageContainer = styled.div<{
   ${(props) =>
     props.$isOutgoing
       ? css`
+          max-width: 65%;
           border-bottom-right-radius: 0px;
           outline-color: var(--bg-msg-sent);
           color: var(--fg-msg-sent);

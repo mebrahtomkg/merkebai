@@ -10,7 +10,7 @@ export const Content = styled.span`
   font-weight: 500;
   line-height: 1.35;
   color: inherit;
-  word-break: break-all;
+  word-break: break-word;
 `;
 
 export const TextMsgMetaContainer = styled.div`

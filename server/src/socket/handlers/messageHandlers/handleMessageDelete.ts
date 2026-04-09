@@ -2,12 +2,10 @@ import { Acknowledgement, AuthenticatedSocket } from '@/types';
 import { isPositiveInteger } from '@/utils';
 import { deleteMessage } from '@/services';
 import { MessageDeleteError } from '@/services/deleteMessage';
-import { emitToUser } from '@/socket/emitter';
 import handleSocketError from '@/socket/handleSocketError';
 
 interface MessageDeletePayload {
   messageId: number;
-  deleteForReceiver?: boolean;
 }
 
 const handleMessageDelete = async (
@@ -25,7 +23,7 @@ const handleMessageDelete = async (
 
     const userId = socket.userId as number;
 
-    const { messageId, deleteForReceiver } = payload;
+    const { messageId } = payload;
 
     if (!isPositiveInteger(messageId)) {
       return acknowledgement({
@@ -34,23 +32,15 @@ const handleMessageDelete = async (
       });
     }
 
-    const { shouldNotifyPartner, partnerId } = await deleteMessage({
+    await deleteMessage({
       userId,
       messageId,
-      deleteForReceiver,
     });
 
     acknowledgement({
       status: 'ok',
       message: 'Message deleted successfully.',
     });
-
-    if (shouldNotifyPartner) {
-      emitToUser(partnerId, 'message_deleted', {
-        partnerId: userId,
-        messageId,
-      });
-    }
   } catch (err) {
     if (err instanceof MessageDeleteError) {
       acknowledgement({
