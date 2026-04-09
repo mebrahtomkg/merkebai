@@ -59,8 +59,7 @@ const messagesCache = {
   },
 
   update: (message: Message) => {
-    const partnerId = getMessagePartnerId(message);
-    setCache(partnerId, (messages: Message[]) =>
+    setCache(message.chatId, (messages: Message[]) =>
       messages.map((oldMessage) =>
         oldMessage.id === message.id ? message : oldMessage,
       ),

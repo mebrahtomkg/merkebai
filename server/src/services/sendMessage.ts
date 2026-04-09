@@ -123,15 +123,10 @@ const sendMessage = async (payload: MessageSendPayload) => {
 
     await transaction.commit();
 
-    try {
-      doAiApiCall({
-        userId,
-        chatId: chat.id,
-        content: content as string,
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    doAiApiCall({
+      userId,
+      chatId: chat.id,
+    });
 
     return {
       message: filteredMessage,

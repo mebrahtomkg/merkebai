@@ -58,6 +58,7 @@ const Chat: FC = () => {
             <ChatMessages
               chatId={chatId}
               intersectionObserverRootRef={messagesListContainerRef}
+              scrollMessagesListToBottom={scrollMessagesListToBottom}
             />
           )}
 
