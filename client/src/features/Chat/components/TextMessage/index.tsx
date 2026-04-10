@@ -4,6 +4,7 @@ import MessageMeta from '../MessageMeta';
 import { Message } from '@/types';
 import { MessageInfo } from '../../types';
 import { useMessageContent } from '../../hooks';
+import AiContent from './AiContent';
 
 interface TextMessageProps {
   message: Message;
@@ -17,7 +18,11 @@ const TextMessage: FC<TextMessageProps> = ({ message, messageInfo }) => {
 
   return (
     <TextMessageStyled $isOutgoing={isOutgoing}>
-      <Content>{content}</Content>
+      {message.isAiMessage ? (
+        <AiContent markdown={content as string} />
+      ) : (
+        <Content>content</Content>
+      )}
       <HiddenMeta>
         <MessageMeta message={message} />
       </HiddenMeta>

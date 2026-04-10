@@ -54,6 +54,7 @@ export const MessageContainer = styled.div<{
           color: var(--fg-msg-sent);
         `
       : css`
+          max-width: 100%;
           border-bottom-left-radius: 0px;
           outline-color: var(--bg-msg-received);
           color: var(--fg-msg-received);
