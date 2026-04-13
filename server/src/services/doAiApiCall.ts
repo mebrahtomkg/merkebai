@@ -1,12 +1,12 @@
 import { Message } from '@/models';
 import { emitToUser } from '@/socket/emitter';
 import { filterMessageData } from '@/utils';
-import { GoogleGenAI } from '@google/genai';
-import { Content } from '@google/genai/node';
 import createNewMessage from './createNewMessage';
+import OpenAI from 'openai';
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
+const client = new OpenAI({
+  apiKey: process.env.POE_API_KEY,
+  baseURL: 'https://api.poe.com/v1',
 });
 
 interface AiApiCallPayload {
@@ -33,28 +33,29 @@ const doAiApiCall = async (payload: AiApiCallPayload) => {
 
     const filteredMessage = filterMessageData(message);
 
-    const contents: Content[] = latestMessages.reverse().map((message) => ({
-      role: message.isAiMessage ? 'model' : 'user',
-      parts: [{ text: message.content as string }],
-    }));
-
     try {
-      const response = await ai.models.generateContentStream({
-        model: 'gemini-3.1-flash-lite-preview',
-        contents,
+      const response = await client.responses.create({
+        model: 'gemini-2.5-flash',
+        stream: true,
+        input: latestMessages.reverse().map((message) => ({
+          role: message.isAiMessage ? 'assistant' : 'user',
+          content: message.content as string,
+        })),
       });
 
       let fullAiContent = '';
 
-      for await (const chunk of response) {
-        const text = chunk.text;
+      for await (const event of response) {
+        if (event.type === 'response.output_text.delta') {
+          const text = event.delta;
 
-        fullAiContent += text;
+          fullAiContent += text;
 
-        emitToUser(userId, 'message_updated', {
-          ...filteredMessage,
-          content: fullAiContent,
-        });
+          emitToUser(userId, 'message_updated', {
+            ...filteredMessage,
+            content: fullAiContent,
+          });
+        }
       }
 
       await Message.update(
