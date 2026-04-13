@@ -1,4 +1,4 @@
-import { useMessageRequests, useMessageUtils, useStableValue } from '@/hooks';
+import { useMessageRequests, useStableValue } from '@/hooks';
 import { Message, MessageRequest } from '@/types';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect } from 'react';
@@ -17,8 +17,6 @@ const MessageRequestsProcessor = () => {
   const request = useStableValue(useMessageRequests(selectFirstRequest));
 
   const navigate = useNavigate();
-
-  const { getMessagePartnerId } = useMessageUtils();
 
   const { mutate, isPending } = useMutation({
     mutationFn: (req: MessageRequest) => {

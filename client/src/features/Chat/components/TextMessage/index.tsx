@@ -21,7 +21,7 @@ const TextMessage: FC<TextMessageProps> = ({ message, messageInfo }) => {
       {message.isAiMessage ? (
         <AiContent markdown={content as string} />
       ) : (
-        <Content>content</Content>
+        <Content>{content}</Content>
       )}
       <HiddenMeta>
         <MessageMeta message={message} />

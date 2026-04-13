@@ -22,9 +22,7 @@ import ChatInfo from './components/ChatInfo';
 const Chat: FC = () => {
   const params = useParams();
 
-  const chatId = params?.chatId
-    ? Number.parseInt(params.chatId, 10)
-    : undefined;
+  const chatId = params.chatId;
 
   const messagesListContainerRef = useRef<HTMLDivElement>(null);
 

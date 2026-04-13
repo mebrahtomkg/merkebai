@@ -16,7 +16,7 @@ export class MessageSendError extends Error {
 interface BaseMessageSendPayload {
   messageType: 'text' | 'attachment';
   userId: number;
-  chatId?: number;
+  chatId?: string;
 }
 
 interface TextMessageSendPayload extends BaseMessageSendPayload {
@@ -40,8 +40,6 @@ const sendMessage = async (payload: MessageSendPayload) => {
   try {
     const { messageType, userId, chatId } = payload;
 
-    const senderId = userId;
-
     let content: string | null = null;
 
     if (messageType === 'text') {
@@ -60,24 +58,21 @@ const sendMessage = async (payload: MessageSendPayload) => {
         { userId },
         {
           transaction,
-          lock: transaction.LOCK.UPDATE,
         },
       );
     } else {
       chat = await Chat.findOne({
         where: { id: chatId },
         transaction,
-        lock: transaction.LOCK.UPDATE,
       });
 
       if (!chat) {
-        throw new MessageSendError('Chat not found', 404);
+        throw new MessageSendError('Chat not found!', 404);
       }
     }
 
     const sender = await User.findOne({
-      where: { id: senderId },
-      limit: 1,
+      where: { id: userId },
       transaction,
     });
 
@@ -93,10 +88,12 @@ const sendMessage = async (payload: MessageSendPayload) => {
       });
     }
 
+    console.log(chat.toJSON());
+
     const message = await Message.create(
       {
-        isAiMessage: false,
         chatId: chat.id,
+        isAiMessage: false,
         content,
         attachmentId: attachment?.id || null,
       },

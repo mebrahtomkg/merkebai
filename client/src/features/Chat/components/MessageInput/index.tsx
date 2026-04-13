@@ -19,7 +19,7 @@ import {
 } from '@/store/useMessageRequestsStore';
 
 interface MessageInputProps {
-  chatId?: number;
+  chatId?: string;
 }
 
 const MessageInput: FC<MessageInputProps> = ({ chatId }) => {

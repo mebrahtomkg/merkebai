@@ -8,9 +8,11 @@ import {
 import sequelize from '@/config/db';
 import User from './User';
 import Message from './Message';
+import { v7 as uuidv7 } from 'uuid';
 
 class Chat extends Model<InferAttributes<Chat>, InferCreationAttributes<Chat>> {
-  declare id: CreationOptional<number>;
+  declare secretId: CreationOptional<number>;
+  declare id: CreationOptional<string>;
   declare userId: number;
   declare title: string | null;
   declare lastMessageId: number | null;
@@ -21,11 +23,18 @@ class Chat extends Model<InferAttributes<Chat>, InferCreationAttributes<Chat>> {
 
 Chat.init(
   {
-    id: {
+    secretId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
+    },
+
+    id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      unique: true,
+      defaultValue: () => uuidv7(),
     },
 
     userId: {

@@ -13,7 +13,7 @@ const chatsCache = {
     setCache((chats) => [...chats, chat]);
   },
 
-  incrementChatUnseenMessagesCount: (chatId: number) => {
+  incrementChatUnseenMessagesCount: (chatId: string) => {
     setCache((chats) =>
       chats.map((chat) =>
         chat.id === chatId
@@ -26,7 +26,7 @@ const chatsCache = {
     );
   },
 
-  updateChatLastMessage: (chatId: number) => {
+  updateChatLastMessage: (chatId: string) => {
     const messages = queryClient.getQueryData<Message[]>([
       QUERY_KEY_MESSAGES,
       chatId,
@@ -44,7 +44,7 @@ const chatsCache = {
     );
   },
 
-  setChatUnseenMessagesCount: (chatId: number, unseenMessagesCount: number) => {
+  setChatUnseenMessagesCount: (chatId: string, unseenMessagesCount: number) => {
     setCache((chats) =>
       chats.map((chat) =>
         chat.id === chatId ? { ...chat, unseenMessagesCount } : chat,
@@ -52,7 +52,7 @@ const chatsCache = {
     );
   },
 
-  getChat: (chatId: number) => {
+  getChat: (chatId: string) => {
     return queryClient
       .getQueryData<Chat[]>([QUERY_KEY_CHATS])
       ?.find((chat) => chat.id === chatId);

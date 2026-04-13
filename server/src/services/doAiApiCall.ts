@@ -11,7 +11,7 @@ const ai = new GoogleGenAI({
 
 interface AiApiCallPayload {
   userId: number;
-  chatId: number;
+  chatId: string;
 }
 
 const doAiApiCall = async (payload: AiApiCallPayload) => {

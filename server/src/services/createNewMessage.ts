@@ -4,7 +4,7 @@ import { emitToUser } from '@/socket/emitter';
 import { filterMessageData } from '@/utils';
 
 interface MessageCreationPayload {
-  chatId: number;
+  chatId: string;
   content: string;
   isAiMessage: boolean;
   userId: number;
@@ -16,7 +16,8 @@ const createNewMessage = async (payload: MessageCreationPayload) => {
   try {
     const { chatId, content, isAiMessage, userId } = payload;
 
-    const chat = await Chat.findByPk(chatId, {
+    const chat = await Chat.findOne({
+      where: { id: chatId },
       transaction,
     });
 

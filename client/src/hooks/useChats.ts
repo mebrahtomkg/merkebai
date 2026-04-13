@@ -25,15 +25,15 @@ const useChats = (): Chat[] => {
     const serverChats = data || [];
 
     // Use map to avoid duplicate chats
-    const map = new Map<number, Chat>();
+    const map = new Map<string, Chat>();
 
     serverChats.forEach((chat) => {
       map.set(chat.id, chat);
     });
 
     msgSendRequests.forEach((req) => {
-      map.set(req.requestId, {
-        id: req.requestId,
+      map.set(`${req.requestId}`, {
+        id: `${req.requestId}`,
         lastMessage: createPendingMessage(req),
       });
     });

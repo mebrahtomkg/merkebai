@@ -3,7 +3,7 @@ import BaseMessage from '../BaseMessage';
 import usePendingMessages from './usePendingMessages';
 
 interface PendingMessagesProps {
-  chatId: number;
+  chatId: string;
   intersectionObserverRootRef: RefObject<HTMLDivElement | null>;
   scrollMessagesListToBottom: () => void;
 }

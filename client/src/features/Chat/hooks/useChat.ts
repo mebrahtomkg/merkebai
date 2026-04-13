@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useChats } from '@/hooks';
 
-const useChat = (chatId?: number) => {
+const useChat = (chatId?: string) => {
   const chats = useChats();
 
   const chat = useMemo(

@@ -22,6 +22,7 @@ Chat.belongsTo(Message, {
 
 Message.belongsTo(Chat, {
   foreignKey: 'chatId',
+  targetKey: 'id',
   as: 'chat',
 });
 

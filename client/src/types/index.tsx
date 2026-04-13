@@ -32,7 +32,7 @@ export interface Attachment {
 export interface Message {
   id: number;
   isAiMessage?: boolean;
-  chatId: number;
+  chatId: string;
   content: string | null;
   isSeen: boolean;
   createdAt: number;
@@ -41,7 +41,7 @@ export interface Message {
 }
 
 export interface Chat {
-  id: number;
+  id: string;
   title?: string;
   lastMessage?: Message;
   unseenMessagesCount?: number;
@@ -64,7 +64,7 @@ export interface TextMessageSendRequest extends BaseMessageRequest {
   timestamp: number;
   payload: {
     content: string;
-    chatId?: number;
+    chatId?: string;
   };
 }
 
@@ -73,7 +73,7 @@ export interface FileMessageSendRequest extends BaseMessageRequest {
   timestamp: number;
   payload: {
     fileId: number;
-    chatId?: number;
+    chatId?: string;
     caption?: string;
     width?: number;
     height?: number;
@@ -99,7 +99,7 @@ export interface MessageDeleteRequest extends BaseMessageRequest {
 export interface ChatDeleteRequest extends BaseMessageRequest {
   requestType: 'CHAT_DELETE';
   payload: {
-    chatId: number;
+    chatId: string;
     deleteForReceiver?: boolean;
   };
 }

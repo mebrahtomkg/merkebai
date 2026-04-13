@@ -1,13 +1,11 @@
-import { isPositiveInteger } from '@/utils';
 import { Acknowledgement, AuthenticatedSocket } from '@/types';
-import { emitToUser } from '@/socket/emitter';
 import { sendMessage } from '@/services';
 import { MessageSendError } from '@/services/sendMessage';
 import handleSocketError from '@/socket/handleSocketError';
 
 interface MessageSendPayload {
   content: string;
-  chatId?: number;
+  chatId?: string;
 }
 
 const handleMessageSend = async (

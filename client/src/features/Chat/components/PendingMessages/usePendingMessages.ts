@@ -3,7 +3,7 @@ import { Message, MessageRequest } from '@/types';
 import { useCallback, useMemo } from 'react';
 import { createPendingMessage } from '@/utils';
 
-const usePendingMessages = (chatId: number) => {
+const usePendingMessages = (chatId: string) => {
   const selector = useCallback(
     (requests: MessageRequest[]) =>
       requests.filter(

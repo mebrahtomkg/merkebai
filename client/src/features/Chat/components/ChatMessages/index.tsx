@@ -3,7 +3,7 @@ import BaseMessage from '../BaseMessage';
 import { useChatMessages } from '../../hooks';
 
 interface ChatMessagesProps {
-  chatId: number;
+  chatId: string;
   intersectionObserverRootRef: RefObject<HTMLDivElement | null>;
   scrollMessagesListToBottom: () => void;
 }

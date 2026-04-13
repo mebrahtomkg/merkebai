@@ -3,7 +3,7 @@ import { get } from '@/api';
 import { Message } from '@/types';
 import { QUERY_KEY_MESSAGES } from '@/constants';
 
-const useChatMessages = (chatId: number) => {
+const useChatMessages = (chatId: string) => {
   const { data } = useQuery({
     queryKey: [QUERY_KEY_MESSAGES, chatId],
     queryFn: () => get<Message[]>(`/messages/${chatId}`),

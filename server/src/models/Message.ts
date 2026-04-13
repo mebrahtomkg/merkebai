@@ -14,7 +14,7 @@ class Message extends Model<
   InferCreationAttributes<Message>
 > {
   declare id: CreationOptional<number>;
-  declare chatId: number;
+  declare chatId: string;
   declare isAiMessage: boolean;
   declare content: string | null;
   declare attachmentId: number | null;
@@ -35,7 +35,7 @@ Message.init(
     },
 
     chatId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
     },
 

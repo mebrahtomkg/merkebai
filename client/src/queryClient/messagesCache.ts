@@ -1,18 +1,11 @@
 import { QUERY_KEY_CHATS, QUERY_KEY_MESSAGES } from '@/constants';
-import { Chat, Message, User } from '@/types';
+import { Chat, Message } from '@/types';
 import queryClient from './queryClient';
 import accountCache from './accountCache';
 import chatsCache from './chatsCache';
 
-const getMessagePartnerId = (message: Message) => {
-  const account = accountCache.get();
-  return message.senderId === account.id
-    ? message.receiverId
-    : message.senderId;
-};
-
 const setCache = (
-  chatId: number,
+  chatId: string,
   setterFn: (messages: Message[]) => Message[],
 ) => {
   queryClient.setQueryData<Message[]>(
@@ -66,7 +59,7 @@ const messagesCache = {
     );
   },
 
-  remove: (chatId: number, messageId: number) => {
+  remove: (chatId: string, messageId: number) => {
     setCache(chatId, (messages: Message[]) =>
       messages.filter((message) => message.id !== messageId),
     );

@@ -8,12 +8,10 @@ const listChatMessages = async (
   next: NextFunction,
 ) => {
   try {
-    const chatId = parseInt(
-      typeof req.params.chatId === 'string' ? req.params.chatId.trim() : '',
-      10,
-    );
+    const chatId =
+      typeof req.params.chatId === 'string' ? req.params.chatId.trim() : null;
 
-    if (!isPositiveInteger(chatId)) {
+    if (!chatId) {
       res.status(400).json({
         message: 'Invalid chat id.',
       });

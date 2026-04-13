@@ -1,13 +1,12 @@
 import { messagesCache } from '@/queryClient';
-import { Message, User } from '@/types';
+import { Message } from '@/types';
 
 interface MessageReceivePayload {
   message: Message;
-  sender: User;
 }
 
-const handleMessageReceive = ({ message, sender }: MessageReceivePayload) => {
-  messagesCache.add(message, sender);
+const handleMessageReceive = ({ message }: MessageReceivePayload) => {
+  messagesCache.add(message);
 };
 
 export default handleMessageReceive;
