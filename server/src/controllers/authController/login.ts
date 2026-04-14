@@ -38,7 +38,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
       return;
     }
 
-    const user = await User.scope('withProfilePhoto').findOne({
+    const user = await User.findOne({
       where: { email },
     });
 
