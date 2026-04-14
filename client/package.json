@@ -2,6 +2,7 @@
   "name": "theaiservice-frontend",
   "version": "1.0.0",
   "author": "Mebrahtom Kidane",
+  "packageManager": "pnpm@10.14.0",
   "scripts": {
     "dev": "NODE_ENV=development rspack serve",
     "build": "NODE_ENV=production rspack build",

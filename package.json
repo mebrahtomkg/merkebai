@@ -2,6 +2,7 @@
   "name": "theaiservice",
   "version": "1.0.0",
   "author": "Mebrahtom Kidane",
+  "packageManager": "pnpm@10.14.0",
   "scripts": {
     "lint": "biome lint ./server/src ./client/src",
     "lint:fix:safe": "biome lint --write ./server/src ./client/src",
