@@ -17,7 +17,7 @@ const startServer = async () => {
   initSocket(httpServer);
 
   httpServer.listen(PORT, () => {
-    console.log(`SemayChat server running on port ${PORT}`);
+    console.log(`TheAiService server running on port ${PORT}`);
   });
 };
 

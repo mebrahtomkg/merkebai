@@ -1,9 +1,4 @@
-import {
-  DeleteIcon,
-  DownloadIcon,
-  EditIcon,
-  ReplyIcon,
-} from '@/components/icons';
+import { BackIcon, DeleteIcon, DownloadIcon } from '@/components/icons';
 import { FC, RefObject, useMemo, useRef } from 'react';
 import {
   AudioMessage,
@@ -47,7 +42,7 @@ const BaseMessage: FC<BaseMessageProps> = ({
 }) => {
   const messageInfo = useMessageInfo(message);
   const { type, isOutgoing } = messageInfo;
-  const { edit, reply, downloadFile } = useMessageActions(message);
+  const { downloadFile } = useMessageActions(message);
 
   const {
     openDeleteConfirm,
@@ -69,24 +64,13 @@ const BaseMessage: FC<BaseMessageProps> = ({
   const menuItems = useMemo(() => {
     const items: IMenuItem[] = [
       <MenuItem
-        key={'reply'}
-        icon={<ReplyIcon />}
-        label="Reply"
-        action={reply}
+        key={'copy'}
+        icon={<BackIcon />}
+        label="Copy"
+        action={() => undefined}
         onClose={closeContextMenu}
       />,
     ];
-    if (type === 'text' && isOutgoing) {
-      items.push(
-        <MenuItem
-          key={'edit'}
-          icon={<EditIcon />}
-          label="Edit"
-          action={edit}
-          onClose={closeContextMenu}
-        />,
-      );
-    }
     if (type !== 'text') {
       items.push(
         <MenuItem
@@ -108,15 +92,7 @@ const BaseMessage: FC<BaseMessageProps> = ({
       />,
     );
     return items;
-  }, [
-    reply,
-    type,
-    isOutgoing,
-    edit,
-    downloadFile,
-    openDeleteConfirm,
-    closeContextMenu,
-  ]);
+  }, [type, downloadFile, openDeleteConfirm, closeContextMenu]);
 
   const messageComponent = useMemo(() => {
     switch (type) {
@@ -155,7 +131,7 @@ const BaseMessage: FC<BaseMessageProps> = ({
   const handleMessageClick =
     type === 'audio' || type === 'file' || type === 'photo'
       ? undefined
-      : handleContextMenu;
+      : undefined;
 
   const handleMessageContextMenu =
     type === 'audio' || type === 'file' ? undefined : handleContextMenu;

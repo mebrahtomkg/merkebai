@@ -8,7 +8,7 @@ router.get('/', async (_req: Request, res: Response, next: NextFunction) => {
     // Hit database to check database health too.
     await User.findByPk(1);
 
-    res.status(200).send('semaychat server is running.');
+    res.status(200).send('TheAiService server is running.');
   } catch (err) {
     next(err);
   }
