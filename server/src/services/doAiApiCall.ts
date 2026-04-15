@@ -2,12 +2,8 @@ import { Message } from '@/models';
 import { emitToUser } from '@/socket/emitter';
 import { filterMessageData } from '@/utils';
 import createNewMessage from './createNewMessage';
-import OpenAI from 'openai';
-
-const client = new OpenAI({
-  apiKey: process.env.POE_API_KEY,
-  baseURL: 'https://api.poe.com/v1',
-});
+import { aiApiClient } from '@/config/general';
+import generateChatTitle from './generateChatTitle';
 
 interface AiApiCallPayload {
   userId: number;
@@ -34,7 +30,7 @@ const doAiApiCall = async (payload: AiApiCallPayload) => {
     const filteredMessage = filterMessageData(message);
 
     try {
-      const response = await client.responses.create({
+      const response = await aiApiClient.responses.create({
         model: 'gemini-2.5-flash',
         stream: true,
         input: latestMessages.reverse().map((message) => ({
@@ -64,6 +60,8 @@ const doAiApiCall = async (payload: AiApiCallPayload) => {
         },
         { where: { id: message.id } },
       );
+
+      generateChatTitle({ chatId, userId });
     } catch (error) {
       const errorContent =
         'I had trouble answering your prompt. please try again.';

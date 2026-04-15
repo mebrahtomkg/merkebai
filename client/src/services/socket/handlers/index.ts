@@ -6,6 +6,7 @@ import handleChatDelete from './handleChatDelete';
 import handleMessageMarkAsRead from './handleMessageMarkAsRead';
 import handleUserDisconnect from './handleUserDisconnect';
 import handleUserConnect from './handleUserConnect';
+import handleChatUpdate from './handleChatUpdate';
 
 export const registerHandlers = (socket: Socket) => {
   socket.on('message_received', handleMessageReceive);
@@ -15,4 +16,5 @@ export const registerHandlers = (socket: Socket) => {
   socket.on('message_marked_as_read', handleMessageMarkAsRead);
   socket.on('user_connected', handleUserConnect);
   socket.on('user_disconnected', handleUserDisconnect);
+  socket.on('chat_updated', handleChatUpdate);
 };

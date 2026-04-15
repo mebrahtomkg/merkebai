@@ -13,6 +13,12 @@ const chatsCache = {
     setCache((chats) => [...chats, chat]);
   },
 
+  update: (chat: Chat) => {
+    setCache((chats: Chat[]) =>
+      chats.map((oldChat) => (oldChat.id === chat.id ? chat : oldChat)),
+    );
+  },
+
   incrementChatUnseenMessagesCount: (chatId: string) => {
     setCache((chats) =>
       chats.map((chat) =>

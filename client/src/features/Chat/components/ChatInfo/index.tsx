@@ -7,11 +7,13 @@ interface ChatInfoProps {
 }
 
 const ChatInfo: FC<ChatInfoProps> = ({ chat }) => {
+  const { title } = chat;
+
   return (
     <ChatInfoStyled>
       <UserContainer>
         <TitleContainer>
-          <Title>Title of chat</Title>
+          <Title>{title || 'New Chat'}</Title>
         </TitleContainer>
       </UserContainer>
     </ChatInfoStyled>

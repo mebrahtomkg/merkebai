@@ -24,6 +24,8 @@ interface ChatItemProps {
 }
 
 const ChatItem: FC<ChatItemProps> = ({ chat }) => {
+  const { title } = chat;
+
   const navigate = useNavigate();
 
   const lastMessage = chat.lastMessage;
@@ -44,7 +46,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat }) => {
     <ChatItemStyled type="button" onClick={handleClick}>
       <ChatItemInfoContainer>
         <TitleContainer>
-          <Title>Title</Title>
+          <Title>{title || 'New Chat'}</Title>
           {dateTime && <ChatItemDateTime>{dateTime}</ChatItemDateTime>}
         </TitleContainer>
 

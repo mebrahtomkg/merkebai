@@ -26,6 +26,14 @@ Message.belongsTo(Chat, {
   as: 'chat',
 });
 
+Chat.addScope('withLastMessage', {
+  include: {
+    model: Message,
+    as: 'lastMessage',
+    required: true,
+  },
+});
+
 Message.addScope('withChat', {
   include: {
     model: Chat,

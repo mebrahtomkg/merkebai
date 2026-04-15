@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import OpenAI from 'openai';
 
 console.log('=============== SemayChat ========================');
 
@@ -52,3 +53,8 @@ if (ALLOWED_ORIGINS.length) {
 }
 
 export const SOCKET_USER_TIME_TO_LIVE = 45000; // 45seconds
+
+export const aiApiClient = new OpenAI({
+  apiKey: process.env.POE_API_KEY,
+  baseURL: 'https://api.poe.com/v1',
+});
