@@ -22,7 +22,7 @@ const doAiApiCall = async (payload: AiApiCallPayload) => {
 
     const message = await createNewMessage({
       chatId,
-      content: 'Please wait...',
+      content: 'Thinking...',
       isAiMessage: true,
       userId,
     });

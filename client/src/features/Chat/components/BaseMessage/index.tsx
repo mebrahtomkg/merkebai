@@ -26,7 +26,6 @@ import {
   WithAnimation,
 } from '@/Animation';
 import ConfirmDialog from '@/components/ConfirmDialog';
-import CheckBox from '@/components/Checkbox';
 import useDeleteMessage from './useDeleteMessage';
 
 interface BaseMessageProps {
@@ -47,8 +46,6 @@ const BaseMessage: FC<BaseMessageProps> = ({
   const {
     openDeleteConfirm,
     isDeleteConfirmVisible,
-    isDeleteForReceiver,
-    toggleIsDeleteForReceiver,
     handleMessageDelete,
     closeDeleteConfirm,
   } = useDeleteMessage(message);
@@ -175,15 +172,7 @@ const BaseMessage: FC<BaseMessageProps> = ({
             onConfirm={handleMessageDelete}
             onClose={closeDeleteConfirm}
             animationStyle={style}
-          >
-            {isOutgoing && (
-              <CheckBox
-                label="Also delete for receiver"
-                isChecked={isDeleteForReceiver}
-                onToggle={toggleIsDeleteForReceiver}
-              />
-            )}
-          </ConfirmDialog>
+          />
         )}
       />
     </MessageStyled>
