@@ -19,6 +19,10 @@ const chatsCache = {
     );
   },
 
+  remove: (chatId: string) => {
+    setCache((chats: Chat[]) => chats.filter((chat) => chat.id !== chatId));
+  },
+
   incrementChatUnseenMessagesCount: (chatId: string) => {
     setCache((chats) =>
       chats.map((chat) =>

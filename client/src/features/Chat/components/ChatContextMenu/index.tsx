@@ -38,24 +38,15 @@ const ChatContextMenu: FC<ChatContextMenuProps> = ({ chat }) => {
     [],
   );
 
-  const [isDeleteForReceiver, setIsDeleteForReceiver] = useState(false);
-
-  const toggleIsDeleteForReceiver = useCallback(
-    () => setIsDeleteForReceiver((prevValue) => !prevValue),
-    [],
-  );
-
   const deleteChat = useCallback(
     () =>
       addChatDeleteRequest({
         chatId: chat.id,
-        deleteForReceiver: isDeleteForReceiver,
       }),
-    [chat.id, isDeleteForReceiver],
+    [chat.id],
   );
 
   const startDeleteChatFlow = useCallback(() => {
-    setIsDeleteForReceiver(false);
     setActiveConfirmDialog('delete-chat');
   }, []);
 
@@ -100,13 +91,7 @@ const ChatContextMenu: FC<ChatContextMenuProps> = ({ chat }) => {
             onConfirm={deleteChat}
             onClose={closeConfirmDialog}
             animationStyle={style}
-          >
-            <CheckBox
-              isChecked={isDeleteForReceiver}
-              onToggle={toggleIsDeleteForReceiver}
-              label="Also delete for receiver"
-            />
-          </ConfirmDialog>
+          />
         )}
       />
     </>

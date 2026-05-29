@@ -43,8 +43,7 @@ const MessageRequestsProcessor = () => {
 
         case 'CHAT_DELETE':
           return emitWithAck('delete_chat', {
-            chatPartnerId: payload.chatPartnerId,
-            deleteForReceiver: payload.deleteForReceiver,
+            chatId: payload.chatId,
           });
 
         case 'MESSAGE_MARK_AS_READ':
@@ -96,10 +95,9 @@ const MessageRequestsProcessor = () => {
           break;
 
         case 'CHAT_DELETE':
-          queryClient.setQueryData(
-            [QUERY_KEY_MESSAGES, payload.chatPartnerId],
-            [],
-          );
+          queryClient.setQueryData([QUERY_KEY_MESSAGES, payload.chatId], []);
+          chatsCache.remove(payload.chatId);
+          navigate(`/chat`);
           break;
 
         case 'MESSAGE_MARK_AS_READ': {

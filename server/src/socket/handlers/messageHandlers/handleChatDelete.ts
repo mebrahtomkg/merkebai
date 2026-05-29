@@ -1,13 +1,10 @@
 import { Acknowledgement, AuthenticatedSocket } from '@/types';
-import { isPositiveInteger } from '@/utils';
-import { emitToUser } from '@/socket/emitter';
 import { deleteChat } from '@/services';
 import { ChatDeleteError } from '@/services/deleteChat';
 import handleSocketError from '@/socket/handleSocketError';
 
 interface ChatDeletePayload {
-  chatPartnerId: number;
-  deleteForReceiver?: boolean;
+  chatId: string;
 }
 
 const handleChatDelete = async (
@@ -24,9 +21,9 @@ const handleChatDelete = async (
     }
 
     const userId = socket.userId as number;
-    const { chatPartnerId, deleteForReceiver } = payload;
+    const { chatId } = payload;
 
-    if (!isPositiveInteger(chatPartnerId)) {
+    if (typeof chatId !== 'string' || !chatId) {
       return acknowledgement({
         status: 'error',
         message: 'Invalid chat partner id.',
@@ -35,21 +32,13 @@ const handleChatDelete = async (
 
     await deleteChat({
       userId,
-      partnerId: chatPartnerId,
-      deleteForReceiver,
+      chatId,
     });
 
     acknowledgement({
       status: 'ok',
       message: 'Chat deleted successfully.',
     });
-
-    if (deleteForReceiver) {
-      emitToUser(chatPartnerId, 'chat_deleted', {
-        partnerId: userId,
-        partnerMessagesDeleted: deleteForReceiver,
-      });
-    }
   } catch (error) {
     if (error instanceof ChatDeleteError) {
       acknowledgement({

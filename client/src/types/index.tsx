@@ -100,7 +100,6 @@ export interface ChatDeleteRequest extends BaseMessageRequest {
   requestType: 'CHAT_DELETE';
   payload: {
     chatId: string;
-    deleteForReceiver?: boolean;
   };
 }
 
