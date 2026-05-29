@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 export const ChatInfoStyled = styled.div`
   flex-grow: 2;
   margin-left: 2rem;
+  min-width: 0;
 
   @media (min-width: 768px) {
     margin-left: 1rem;
@@ -16,14 +17,18 @@ export const UserContainer = styled.div`
   cursor: pointer;
 `;
 
-export const TitleContainer = styled.div``;
+export const TitleContainer = styled.div`
+  min-width: 0;
+`;
 
 export const Title = styled.h3`
-  line-height: 1;
-  margin-bottom: 0.3rem;
+  min-width: 0;
   color: var(--fg-primary);
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 1.3rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Status = styled.span<{ $isOnline: boolean }>`

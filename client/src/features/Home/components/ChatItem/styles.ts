@@ -17,7 +17,7 @@ export const ChatItemStyled = styled.button`
 
 export const ChatItemInfoContainer = styled.div`
   position: relative;
-  height: 5.1rem;
+  height: 5.5rem;
   margin-left: 0.6rem;
   flex-grow: 3;
   overflow: hidden;
@@ -60,11 +60,12 @@ export const UnseenMessagesCount = styled.div`
   border-radius: 50%;
   min-width: var(--msg-count-min-size);
   min-height: var(--msg-count-min-size);
+  aspect-ratio: 1/1;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #fff;
   background-color: var(--bg-unseen-msg-count);
 `;

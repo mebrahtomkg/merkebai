@@ -7,16 +7,15 @@ export const HomeStyled = styled.div`
   min-width: var(--big-modal-width);
   overflow: hidden;
   background-color: var(--bg-primary);
+  border-right: 1px solid;
+  border-color: var(--fg-border);
 `;
 
 export const HeaderContainer = styled.div`
-  height: 3.5rem;
+  height: 5rem;
   display: flex;
   align-items: center;
-  padding: 0 1rem;
-  background-color: var(--bg-secondary);
-  border-bottom: 1px solid;
-  border-color: var(--fg-border);
+  justify-content: center;
 `;
 
 export const ChatListContainer = styled.div`

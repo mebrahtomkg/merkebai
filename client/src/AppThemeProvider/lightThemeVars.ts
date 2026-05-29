@@ -8,7 +8,7 @@ const lightThemeVars = css`
   --fg-border: #c4cedb;
   --fg-error: #ef4444;
   --fg-msg-sent: #ffffff;
-  --fg-msg-received: #0f172a;
+  --fg-msg-received: #000000;
   --fg-msg-sent-time: #e9d5ff;
   --fg-msg-received-time: #64748b;
   --fg-msg-sent-parent-sender: #ffffff;
@@ -22,12 +22,12 @@ const lightThemeVars = css`
   --bg-primary: #ffffff;
   --bg-secondary: #f1f5f9;
   --bg-secondary-hover: #e2e8f0;
-  --bg-action: #7c3aed;
-  --bg-action-hover: #6d28d9;
+  --bg-action: #6366f1;
+  --bg-action-hover: #5457ec;
   --bg-action-disabled: #c4b5fd;
   --bg-hover: #f1f5f9;
-  --bg-msg-sent: #8842ff;
-  --bg-msg-received: #e5ecf2;
+  --bg-msg-sent: #6366f1;
+  --bg-msg-received: #eff4f9;
   --bg-msg-sent-parent: #510bbe;
   --bg-msg-received-parent: #d0d8e3;
   --bg-scrollbar: rgba(148, 163, 184, 0.2);
@@ -40,7 +40,7 @@ const lightThemeVars = css`
   --bg-avatar-5: linear-gradient(135deg, #ef4444 0%, #db2777 100%);
   --bg-avatar-6: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
   --bg-avatar-7: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
-  --bg-unseen-msg-count: #7c3aed;
+  --bg-unseen-msg-count: #4f52f7;
 `;
 
 export default lightThemeVars;

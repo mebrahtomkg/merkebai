@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { BackIcon } from './icons';
 
 const BackLinkStyled = styled(Link)`
+  flex-shrink: 0;
   width: 2rem;
   padding: 0.4rem;
   background-color: transparent;

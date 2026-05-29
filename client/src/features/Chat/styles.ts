@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const ChatStyled = styled.div`
   flex-grow: 1;
-  margin-left: 0.1rem;
   height: 100vh;
   overflow: hidden;
   display: flex;
@@ -10,8 +9,9 @@ export const ChatStyled = styled.div`
 `;
 
 export const ChatHeader = styled.div`
-  height: 3.5rem;
-  padding: 0.5rem 0;
+  --chat-header-h: 3rem;
+  min-height: var(--chat-header-h);
+  height: var(--chat-header-h);
   display: flex;
   align-items: center;
   justify-content: space-between;
