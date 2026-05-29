@@ -106,7 +106,7 @@ export interface ChatDeleteRequest extends BaseMessageRequest {
 export interface MessageMarkAsReadRequest extends BaseMessageRequest {
   requestType: 'MESSAGE_MARK_AS_READ';
   payload: {
-    chatPartnerId: number;
+    chatId: string;
     messageId: number;
   };
 }

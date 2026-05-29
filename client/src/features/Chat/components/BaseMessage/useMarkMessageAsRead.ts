@@ -1,4 +1,3 @@
-import { useAccount } from '@/hooks';
 import { addMessageMarkAsReadRequest } from '@/store/useMessageRequestsStore';
 import { Message } from '@/types';
 import { RefObject, useCallback, useEffect } from 'react';
@@ -13,14 +12,10 @@ const useMarkMessageAsRead = (
   intersectionObserverRootRef: RefObject<HTMLDivElement | null>,
   message: Message,
 ) => {
-  const { id: selfId } = useAccount();
-
-  const isReceivedMessage = message.receiverId === selfId;
-
   // Only non pending and received messages which are not seen (already marked as red)
   // can be marked as read
   const canMarkAsReadThisMessage =
-    message.id > 0 && isReceivedMessage && !message.isSeen;
+    message.id > 0 && message.isAiMessage && !message.isSeen;
 
   const handleIntersectionObserver: IntersectionObserverCallback = useCallback(
     (entries, observer) => {
@@ -34,7 +29,7 @@ const useMarkMessageAsRead = (
         observer.disconnect();
 
         addMessageMarkAsReadRequest({
-          chatPartnerId: message.senderId,
+          chatId: message.chatId,
           messageId: message.id,
         });
       }

@@ -1,5 +1,5 @@
 import { Op } from 'sequelize';
-import { Message } from '@/models';
+import { Chat, Message } from '@/models';
 
 export class MessageMarkAsReadError extends Error {
   constructor(message: string) {
@@ -10,22 +10,36 @@ export class MessageMarkAsReadError extends Error {
 
 interface MessageMarkAsReadProps {
   userId: number;
-  chatPartnerId: number;
+  chatId: number;
   messageId: number;
 }
 
 const markMessageAsRead = async ({
   userId,
-  chatPartnerId,
+  chatId,
   messageId,
 }: MessageMarkAsReadProps) => {
+  const chat = await Chat.findOne({
+    where: { id: chatId },
+  });
+
+  if (!chat) {
+    throw new MessageMarkAsReadError('Chat not found!');
+  }
+
+  if (chat.userId !== userId) {
+    throw new MessageMarkAsReadError(
+      'This is not your chat to mark message as read.',
+    );
+  }
+
   await Message.update(
     { isSeen: true },
     {
       where: {
-        receiverId: userId,
-        senderId: chatPartnerId,
+        chatId,
         isSeen: false,
+        isAiMessage: true,
         id: {
           [Op.lte]: messageId,
         },
@@ -35,8 +49,8 @@ const markMessageAsRead = async ({
 
   const unseenMessagesCount = await Message.count({
     where: {
-      receiverId: userId,
-      senderId: chatPartnerId,
+      chatId,
+      isAiMessage: true,
       isSeen: false,
     },
   });

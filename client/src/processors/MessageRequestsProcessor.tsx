@@ -48,7 +48,7 @@ const MessageRequestsProcessor = () => {
 
         case 'MESSAGE_MARK_AS_READ':
           return emitWithAck('mark_message_as_read', {
-            chatPartnerId: payload.chatPartnerId,
+            chatId: payload.chatId,
             messageId: payload.messageId,
           });
       }
@@ -103,14 +103,10 @@ const MessageRequestsProcessor = () => {
         case 'MESSAGE_MARK_AS_READ': {
           const result = data as { unseenMessagesCount: number };
           chatsCache.setChatUnseenMessagesCount(
-            req.payload.chatPartnerId,
+            req.payload.chatId,
             result.unseenMessagesCount,
           );
-          messagesCache.markAsRead(
-            req.payload.chatPartnerId,
-            req.payload.messageId,
-            'received',
-          );
+          messagesCache.markAsRead(req.payload.chatId, req.payload.messageId);
           break;
         }
       }

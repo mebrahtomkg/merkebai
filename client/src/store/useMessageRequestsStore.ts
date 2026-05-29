@@ -90,9 +90,9 @@ const deduplicateRequests = (requests: MessageRequest[]) => {
   );
 
   // Use map for deduplicate process for performance advantage.
-  const map = new Map<number, MessageMarkAsReadRequest>();
+  const map = new Map<string, MessageMarkAsReadRequest>();
   for (const req of messageMarkAsReadRequests) {
-    const key = req.payload.chatPartnerId;
+    const key = req.payload.chatId;
     const existingReq = map.get(key);
 
     // If the request is not in the map(or it is undefined in any case), add it and

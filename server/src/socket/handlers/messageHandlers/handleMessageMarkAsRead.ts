@@ -1,11 +1,10 @@
 import { Acknowledgement, AuthenticatedSocket } from '@/types';
 import { isPositiveInteger } from '@/utils';
-import { emitToUser } from '@/socket/emitter';
 import handleSocketError from '@/socket/handleSocketError';
 import { markMessageAsRead } from '@/services';
 
 interface MessageMarkAsReadPayload {
-  chatPartnerId: number;
+  chatId: number;
   messageId: number;
 }
 
@@ -24,12 +23,12 @@ const handleMessageMarkAsRead = async (
 
     const userId = socket.userId as number;
 
-    const { chatPartnerId, messageId } = payload;
+    const { chatId, messageId } = payload;
 
-    if (!isPositiveInteger(chatPartnerId)) {
+    if (typeof chatId !== 'string' || !chatId) {
       return acknowledgement({
         status: 'error',
-        message: 'Invalid chat partner id.',
+        message: 'Invalid chat id.',
       });
     }
 
@@ -42,7 +41,7 @@ const handleMessageMarkAsRead = async (
 
     const { unseenMessagesCount } = await markMessageAsRead({
       userId,
-      chatPartnerId,
+      chatId,
       messageId,
     });
 
@@ -50,11 +49,6 @@ const handleMessageMarkAsRead = async (
       status: 'ok',
       data: { unseenMessagesCount },
       message: 'Message marked as read successfully.',
-    });
-
-    emitToUser(chatPartnerId, 'message_marked_as_read', {
-      partnerId: userId,
-      messageId,
     });
   } catch (error) {
     handleSocketError(error as Error, acknowledgement);
