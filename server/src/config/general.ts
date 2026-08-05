@@ -54,7 +54,22 @@ if (ALLOWED_ORIGINS.length) {
 
 export const SOCKET_USER_TIME_TO_LIVE = 45000; // 45seconds
 
+const AI_BASE_URL = process.env.AI_BASE_URL;
+const AI_API_KEY = process.env.AI_API_KEY;
+
+if (!AI_BASE_URL) {
+  throw new Error(
+    'AI_BASE_URL not provided. Please set your ai base url in env vars.',
+  );
+}
+
+if (!AI_API_KEY) {
+  throw new Error(
+    'AI_API_KEY not provided. Please set your ai api key in env vars.',
+  );
+}
+
 export const aiApiClient = new OpenAI({
-  apiKey: process.env.POE_API_KEY,
-  baseURL: 'https://api.poe.com/v1',
+  apiKey: AI_API_KEY,
+  baseURL: AI_BASE_URL,
 });
