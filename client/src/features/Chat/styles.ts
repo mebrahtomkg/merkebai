@@ -5,6 +5,7 @@ export const ChatStyled = styled.div`
   height: 100vh;
   overflow: hidden;
   display: flex;
+  justify-content: center;
   flex-direction: column;
 `;
 
@@ -60,4 +61,11 @@ export const ChatFooter = styled.div`
   padding-left: 0.3rem;
   padding-right: 0.2rem;
   background-color: inherit;
+`;
+
+export const IntroText = styled.h3`
+  text-align: center;
+  width: 100%;
+  margin-bottom: 3rem;
+  font-size: 2rem;
 `;

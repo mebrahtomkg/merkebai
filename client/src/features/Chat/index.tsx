@@ -10,6 +10,7 @@ import {
   ChatMessagesListContainer,
   ChatStyled,
   Gap,
+  IntroText,
 } from './styles';
 
 const Chat: FC = () => {
@@ -37,29 +38,33 @@ const Chat: FC = () => {
         </ChatHeader>
       )}
 
-      <ChatMessagesListContainer ref={messagesListContainerRef}>
-        <ChatMessagesList>
-          <Gap />
+      {chatId && (
+        <ChatMessagesListContainer ref={messagesListContainerRef}>
+          <ChatMessagesList>
+            <Gap />
 
-          {chatId && (
-            <ChatMessages
-              chatId={chatId}
-              intersectionObserverRootRef={messagesListContainerRef}
-              scrollMessagesListToBottom={scrollMessagesListToBottom}
-            />
-          )}
+            {chatId && (
+              <ChatMessages
+                chatId={chatId}
+                intersectionObserverRootRef={messagesListContainerRef}
+                scrollMessagesListToBottom={scrollMessagesListToBottom}
+              />
+            )}
 
-          {chatId && (
-            <PendingMessages
-              chatId={chatId}
-              intersectionObserverRootRef={messagesListContainerRef}
-              scrollMessagesListToBottom={scrollMessagesListToBottom}
-            />
-          )}
+            {chatId && (
+              <PendingMessages
+                chatId={chatId}
+                intersectionObserverRootRef={messagesListContainerRef}
+                scrollMessagesListToBottom={scrollMessagesListToBottom}
+              />
+            )}
 
-          <Gap />
-        </ChatMessagesList>
-      </ChatMessagesListContainer>
+            <Gap />
+          </ChatMessagesList>
+        </ChatMessagesListContainer>
+      )}
+
+      {!chatId && <IntroText>Hello! What's on your mind?</IntroText>}
 
       <ChatFooter>
         <MessageInput chatId={chatId} />
