@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const ChatItemStyled = styled.div`
+export const ChatItemStyled = styled.div<{ $isCurrentlyOpenedChat: boolean }>`
   position: relative;
   width: 100%;
   padding: 0.1rem 0.7rem 0.1rem 1rem;
@@ -10,6 +10,12 @@ export const ChatItemStyled = styled.div`
   color: var(--fg-primary);
   border-bottom: 1px solid;
   border-color: var(--bg-hover);
+
+  ${(props) =>
+    props.$isCurrentlyOpenedChat &&
+    css`
+      background-color: var(--bg-hover);
+    `}
 
   &:hover {
     background-color: var(--bg-hover);

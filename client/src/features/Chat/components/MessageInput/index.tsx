@@ -97,7 +97,7 @@ const MessageInput: FC<MessageInputProps> = ({ chatId }) => {
       <MessageInputStyled onClick={handleMessageInputClick}>
         <GrowingTextArea
           rows={1}
-          placeholder="Message"
+          placeholder="Ask AI"
           onKeyDown={handleKeyDown}
           value={value}
           onInput={handleInput}

@@ -72,7 +72,7 @@ const BottomMenu = () => {
   const navigate = useNavigate();
 
   const openNewChat = () => {
-    navigate(`/chat`);
+    navigate(`/`);
   };
 
   return (

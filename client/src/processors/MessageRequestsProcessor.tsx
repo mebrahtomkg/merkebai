@@ -78,7 +78,7 @@ const MessageRequestsProcessor = () => {
 
           // It means new chat created. so navigate to it.
           if (!chatExists) {
-            navigate(`/chat/${message.chatId}`);
+            navigate(`/${message.chatId}`);
           }
           break;
         }
@@ -97,7 +97,7 @@ const MessageRequestsProcessor = () => {
         case 'CHAT_DELETE':
           queryClient.setQueryData([QUERY_KEY_MESSAGES, payload.chatId], []);
           chatsCache.remove(payload.chatId);
-          navigate(`/chat`);
+          navigate(`/`);
           break;
 
         case 'MESSAGE_MARK_AS_READ': {

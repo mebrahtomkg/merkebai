@@ -31,12 +31,25 @@ const AuthenticatedApp = () => {
       <MessageRequestsProcessor />
       <AttachmentUploadProcessor />
 
-      {!isMobile && <Home />}
-
       <Routes>
-        <Route index element={isMobile ? <Home /> : null} />
-        <Route path="/chat/:chatId" element={<Chat />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <Home />
+              <Chat />
+            </>
+          }
+        />
+        <Route
+          path="/:chatId"
+          element={
+            <>
+              <Home />
+              <Chat />
+            </>
+          }
+        />
       </Routes>
 
       <WithAnimation

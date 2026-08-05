@@ -16,7 +16,7 @@ import useChatItemInfo from './useChatItemInfo';
 import MessagePreview from './MessagePreview';
 import { ClockIcon, DoubleTickIcon, TickIcon } from '@/components/icons';
 import { useMessageStatus } from '@/features/Chat/hooks';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import ChatContextMenu from '../ChatContextMenu';
 import useShowChildOnHover from './useShowChildOnHover';
 
@@ -26,6 +26,8 @@ interface ChatItemProps {
 }
 
 const ChatItem: FC<ChatItemProps> = ({ chat }) => {
+  const params = useParams();
+
   const { title } = chat;
 
   const navigate = useNavigate();
@@ -41,17 +43,20 @@ const ChatItem: FC<ChatItemProps> = ({ chat }) => {
   const isLastMessageOutgoing = lastMessage && !lastMessage.isAiMessage;
 
   const handleClick = () => {
-    navigate(`/chat/${chat.id}`);
+    navigate(`/${chat.id}`);
   };
 
   const { isChildVisible, handleMouseEnter, handleMouseLeave } =
     useShowChildOnHover();
+
+  const isCurrentlyOpenedChat = chat.id === params.chatId;
 
   return (
     <ChatItemStyled
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
+      $isCurrentlyOpenedChat={isCurrentlyOpenedChat}
     >
       <ChatItemInfoContainer>
         <TitleContainer>
