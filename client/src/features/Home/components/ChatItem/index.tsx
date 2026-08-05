@@ -17,6 +17,8 @@ import MessagePreview from './MessagePreview';
 import { ClockIcon, DoubleTickIcon, TickIcon } from '@/components/icons';
 import { useMessageStatus } from '@/features/Chat/hooks';
 import { useNavigate } from 'react-router';
+import ChatContextMenu from '../ChatContextMenu';
+import useShowChildOnHover from './useShowChildOnHover';
 
 interface ChatItemProps {
   chat: Chat;
@@ -42,8 +44,15 @@ const ChatItem: FC<ChatItemProps> = ({ chat }) => {
     navigate(`/chat/${chat.id}`);
   };
 
+  const { isChildVisible, handleMouseEnter, handleMouseLeave } =
+    useShowChildOnHover();
+
   return (
-    <ChatItemStyled type="button" onClick={handleClick}>
+    <ChatItemStyled
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
+    >
       <ChatItemInfoContainer>
         <TitleContainer>
           <Title>{title || 'New Chat'}</Title>
@@ -73,6 +82,8 @@ const ChatItem: FC<ChatItemProps> = ({ chat }) => {
           )}
         </MessagePreviewContainer>
       </ChatItemInfoContainer>
+
+      {isChildVisible && <ChatContextMenu chat={chat} />}
     </ChatItemStyled>
   );
 };

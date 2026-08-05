@@ -11,6 +11,5 @@ export { default as SmallMoreButton } from './SmallMoreButton';
 export { default as TextMessage } from './TextMessage';
 export { default as VideoMessage } from './VideoMessage';
 export { default as AttachFileButton } from './AttachFileButton';
-export { default as ChatContextMenu } from './ChatContextMenu';
 export { default as PendingMessages } from './PendingMessages';
 export { default as ChatMessages } from './ChatMessages';

@@ -2,12 +2,7 @@ import BackLink from '@/components/BackLink';
 import { useIsMobile } from '@/hooks';
 import { type FC, useRef, useCallback } from 'react';
 import { useParams } from 'react-router';
-import {
-  MessageInput,
-  PendingMessages,
-  ChatMessages,
-  ChatContextMenu,
-} from './components';
+import { MessageInput, PendingMessages, ChatMessages } from './components';
 import {
   ChatFooter,
   ChatHeader,
@@ -16,8 +11,6 @@ import {
   ChatStyled,
   Gap,
 } from './styles';
-import { useChat } from './hooks';
-import ChatInfo from './components/ChatInfo';
 
 const Chat: FC = () => {
   const params = useParams();
@@ -27,8 +20,6 @@ const Chat: FC = () => {
   const messagesListContainerRef = useRef<HTMLDivElement>(null);
 
   const isMobile = useIsMobile();
-
-  const chat = useChat(chatId);
 
   const scrollMessagesListToBottom = useCallback(() => {
     const messagesListContainer = messagesListContainerRef.current;
@@ -40,13 +31,11 @@ const Chat: FC = () => {
 
   return (
     <ChatStyled>
-      <ChatHeader>
-        {isMobile && <BackLink />}
-
-        {chat && <ChatInfo chat={chat} />}
-
-        {chat && <ChatContextMenu chat={chat} />}
-      </ChatHeader>
+      {isMobile && (
+        <ChatHeader>
+          <BackLink />
+        </ChatHeader>
+      )}
 
       <ChatMessagesListContainer ref={messagesListContainerRef}>
         <ChatMessagesList>

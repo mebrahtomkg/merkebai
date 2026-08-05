@@ -3,7 +3,6 @@ import {
   ANIMATION_DIALOG_FAST,
   WithAnimation,
 } from '@/Animation';
-import { MoreButton } from '@/components/buttons';
 import { DeleteIcon } from '@/components/icons';
 import ContextMenu, {
   IMenuItem,
@@ -13,10 +12,10 @@ import ContextMenu, {
 import { addChatDeleteRequest } from '@/store/useMessageRequestsStore';
 import { FC, useCallback, useMemo, useState } from 'react';
 import ConfirmDialog from '@/components/ConfirmDialog';
-import CheckBox from '@/components/Checkbox';
 import { Chat } from '@/types';
+import MoreButton from './MoreButton';
 
-type ActiveConfirmDialog = 'delete-chat' | 'block-user' | 'none';
+type ActiveConfirmDialog = 'delete-chat' | 'none';
 
 interface ChatContextMenuProps {
   chat: Chat;
