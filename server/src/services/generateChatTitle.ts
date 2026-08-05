@@ -43,7 +43,7 @@ const generateChatTitle = async (payload: ChatTitleGeneratePayload) => {
       """
 
       INSTRUCTIONS:
-      1. Create a title that is 2 to 5 words long.
+      1. Create a title that is 5 to 6 words long.
       2. Use Title Case (e.g., "Advanced Python Debugging").
       3. Be specific to the topic; avoid generic titles like "Chat with AI".
       4. Output ONLY the title text. No quotes, no periods, no "Title: " prefix.

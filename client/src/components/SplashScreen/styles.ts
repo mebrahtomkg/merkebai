@@ -37,7 +37,7 @@ export const Dot = styled.div<{ $delay: number }>`
   margin: 0 0.25rem;
   width: 1rem;
   height: 1rem;
-  background-color: #fff;
+  background-color: var(--bg-action);
   border-radius: 50%;
   transform: scale(0.4);
   opacity: 0.3;

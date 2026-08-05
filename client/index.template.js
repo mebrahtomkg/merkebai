@@ -13,7 +13,7 @@ module.exports = (
    <head>
        <meta charset="UTF-8" />
        <meta name="viewport" content="width=device-width, initial-scale=1" />
-       <title>TheAiService</title>
+       <title>MerkebAI</title>
        <style>
           body {
              background: #1b1d23;

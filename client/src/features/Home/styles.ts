@@ -12,10 +12,9 @@ export const HomeStyled = styled.div`
 `;
 
 export const HeaderContainer = styled.div`
-  height: 5rem;
+  padding: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
 `;
 
 export const ChatListContainer = styled.div`

@@ -12,9 +12,8 @@ export const ChatInfoStyled = styled.div`
 
 export const UserContainer = styled.div`
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
-  cursor: pointer;
 `;
 
 export const TitleContainer = styled.div`

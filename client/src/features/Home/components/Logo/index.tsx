@@ -7,7 +7,7 @@ const Logo = () => {
       <LogoIconContainer>
         <LogoIcon />
       </LogoIconContainer>
-      <LogoText>TheAiService</LogoText>
+      <LogoText>MerkebAI</LogoText>
     </LogoStyled>
   );
 };

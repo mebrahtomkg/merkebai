@@ -2,7 +2,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import OpenAI from 'openai';
 
-console.log('=============== SemayChat ========================');
+console.log('=============== MerkebAI ========================');
 
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 console.log('Deployment mode:', process.env.NODE_ENV);
