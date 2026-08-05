@@ -21,7 +21,7 @@ interface AttachFileButtonProps {
 }
 
 const AttachFileButton: FC<AttachFileButtonProps> = ({ onClick }) => (
-  <AttachFileButtonStyled type="button" onClick={onClick}>
+  <AttachFileButtonStyled type="button" disabled={true} onClick={onClick}>
     <AttachmentIcon />
   </AttachFileButtonStyled>
 );
