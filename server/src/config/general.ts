@@ -8,17 +8,25 @@ export const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 console.log('Deployment mode:', process.env.NODE_ENV);
 
 export const MAX_NAME_LENGTH = 15;
-export const MIN_PWD_LENGTH = 4;
+export const MIN_PWD_LENGTH = 6;
 export const MAX_PWD_LENGTH = 20;
 export const MAX_BIO_LENGTH = 80;
 
 export const AUTH_TOKEN_COOKIE_NAME = 'auth_token';
-export const AUTH_TOKEN_AGE = 1000 * 60 * 60 * 60 * 60;
-export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || 'temp-secret-key-1';
+export const AUTH_TOKEN_AGE = 1000 * 60 * 60 * 24 * 30; // 30 days
+
+export const JWT_SECRET_KEY = IS_PRODUCTION
+  ? process.env.JWT_SECRET_KEY
+  : process.env.JWT_SECRET_KEY || 'temp-secret-key-1';
+
+if (!JWT_SECRET_KEY) {
+  throw new Error('JWT_SECRET_KEY not provided. Please set it in env vars.');
+}
+
 console.log('JWT_SECRET_KEY:', JWT_SECRET_KEY);
 
 /** Number of rounds to use for hashing password. */
-export const PASSWORD_HASHING_ROUNDS = 5;
+export const PASSWORD_HASHING_ROUNDS = IS_PRODUCTION ? 10 : 5;
 console.log('PASSWORD_HASHING_ROUNDS:', PASSWORD_HASHING_ROUNDS);
 
 export const MAX_PROFILE_PHOTO_FILE_SIZE = 5 * 1024 * 1024;
