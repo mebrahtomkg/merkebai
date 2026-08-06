@@ -75,15 +75,24 @@ const useAnimation = (isVisible: boolean, options: AnimationOptions) => {
     switch (status) {
       case 'entering':
         clearCleanupTimer();
-        setStyle(finalStyles);
-        setCleanupTimer(() => setStyle(null), duration);
+        // Use double requestAnimationFrame to mitigate DOM update batching.
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setStyle(finalStyles);
+            setCleanupTimer(() => setStyle(null), duration);
+          });
+        });
         break;
 
       case 'exiting':
         clearCleanupTimer();
-        setStyle(initialStyles);
-        setUnmountTimer(() => setIsMounted(false), duration);
-        setCleanupTimer(() => setStyle(null), duration);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setStyle(initialStyles);
+            setUnmountTimer(() => setIsMounted(false), duration);
+            setCleanupTimer(() => setStyle(null), duration);
+          });
+        });
         break;
     }
   }, [
