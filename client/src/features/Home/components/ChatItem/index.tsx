@@ -20,6 +20,7 @@ import { useNavigate, useParams } from 'react-router';
 import ChatContextMenu from '../ChatContextMenu';
 import useShowChildOnHover from './useShowChildOnHover';
 import { useAppStateStore } from '@/store';
+import { useIsMobile } from '@/hooks';
 
 interface ChatItemProps {
   chat: Chat;
@@ -54,6 +55,8 @@ const ChatItem: FC<ChatItemProps> = ({ chat }) => {
     useShowChildOnHover();
 
   const isCurrentlyOpenedChat = chat.id === params.chatId;
+
+  const isMobile = useIsMobile();
 
   return (
     <ChatItemStyled
@@ -92,7 +95,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat }) => {
         </MessagePreviewContainer>
       </ChatItemInfoContainer>
 
-      {isChildVisible && <ChatContextMenu chat={chat} />}
+      {(isChildVisible || isMobile) && <ChatContextMenu chat={chat} />}
     </ChatItemStyled>
   );
 };
