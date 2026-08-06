@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const ChatStyled = styled.div`
+  position: relative;
   flex-grow: 1;
   height: 100vh;
   overflow: hidden;
@@ -10,14 +11,16 @@ export const ChatStyled = styled.div`
 `;
 
 export const ChatHeader = styled.div`
-  --chat-header-h: 3rem;
-  min-height: var(--chat-header-h);
-  height: var(--chat-header-h);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid;
-  border-color: var(--fg-border);
+  border-color: var(--bg-hover-hover);
   background-color: var(--bg-secondary);
   color: var(--fg-secondary);
 `;
@@ -47,7 +50,7 @@ export const ChatMessagesList = styled.div`
 // Setting padding-bottom wasnt creating padding at the end of messages list
 // This component is created to give gap.
 export const Gap = styled.div`
-  height: 1rem;
+  height: 4rem;
   width: 100%;
   background-color: transparent;
 `;

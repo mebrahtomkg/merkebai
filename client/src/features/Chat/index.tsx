@@ -1,4 +1,3 @@
-import BackLink from '@/components/BackLink';
 import { useIsMobile } from '@/hooks';
 import { type FC, useRef, useCallback } from 'react';
 import { useParams } from 'react-router';
@@ -12,6 +11,9 @@ import {
   Gap,
   IntroText,
 } from './styles';
+import SidebarButton from './components/SidebarButton';
+import { useAppStateStore } from '@/store';
+import NewChatButton from './components/NewChatButton';
 
 const Chat: FC = () => {
   const params = useParams();
@@ -21,6 +23,8 @@ const Chat: FC = () => {
   const messagesListContainerRef = useRef<HTMLDivElement>(null);
 
   const isMobile = useIsMobile();
+
+  const openSidebar = useAppStateStore((s) => s.openSidebar);
 
   const scrollMessagesListToBottom = useCallback(() => {
     const messagesListContainer = messagesListContainerRef.current;
@@ -34,7 +38,9 @@ const Chat: FC = () => {
     <ChatStyled>
       {isMobile && (
         <ChatHeader>
-          <BackLink />
+          <SidebarButton onClick={openSidebar} />
+
+          <NewChatButton />
         </ChatHeader>
       )}
 

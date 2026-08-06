@@ -1,0 +1,26 @@
+import { FC } from 'react';
+import styled from 'styled-components';
+import { MenuIcon } from '@/components/icons';
+
+const SidebarButtonStyled = styled.button`
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0.75rem;
+  background-color: var(--bg-hover);
+`;
+
+interface SidebarButtonProps {
+  onClick: () => void;
+}
+
+const SidebarButton: FC<SidebarButtonProps> = ({ onClick }) => (
+  <SidebarButtonStyled
+    type="button"
+    aria-label="open-sidebar"
+    onClick={onClick}
+  >
+    <MenuIcon />
+  </SidebarButtonStyled>
+);
+
+export default SidebarButton;

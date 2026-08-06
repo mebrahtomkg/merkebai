@@ -24,6 +24,10 @@ const AuthenticatedApp = () => {
     (state) => state.isProfileModalVisible,
   );
 
+  const isSidebarVisible = useAppStateStore((state) => state.isSidebarVisible);
+
+  const shouldSidebarVisible = !isMobile || isSidebarVisible;
+
   return (
     <>
       <HeartbeatProcessor />
@@ -36,7 +40,7 @@ const AuthenticatedApp = () => {
           path="/"
           element={
             <>
-              <Home />
+              {shouldSidebarVisible && <Home />}
               <Chat />
             </>
           }
@@ -45,7 +49,7 @@ const AuthenticatedApp = () => {
           path="/:chatId"
           element={
             <>
-              <Home />
+              {shouldSidebarVisible && <Home />}
               <Chat />
             </>
           }
