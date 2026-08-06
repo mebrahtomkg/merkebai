@@ -8,10 +8,14 @@ import { ChatItem } from './components';
 import BottomMenu from './components/BottomMenu';
 import { useChats, useIsMobile } from '@/hooks';
 import Logo from './components/Logo';
-import { MouseEventHandler } from 'react';
+import { CSSProperties, FC, MouseEventHandler } from 'react';
 import { useAppStateStore } from '@/store';
 
-const Home = () => {
+interface HomeProps {
+  animationStyle?: CSSProperties;
+}
+
+const Home: FC<HomeProps> = ({ animationStyle }) => {
   const chats = useChats();
   const isMobile = useIsMobile();
 
@@ -27,7 +31,7 @@ const Home = () => {
 
   return (
     <SidebarOverlay $isMobile={isMobile} onClick={handleOverlayClick}>
-      <SidebarStyled $isMobile={isMobile}>
+      <SidebarStyled $isMobile={isMobile} style={animationStyle}>
         <HeaderContainer>
           <Logo />
         </HeaderContainer>

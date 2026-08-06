@@ -60,3 +60,13 @@ export const ANIMATION_SLIDE_IN: AnimationOptions = {
     timingFunction: ['ease-out', 'ease-out'],
   },
 };
+
+export const ANIMATION_SIDEBAR: AnimationOptions = {
+  initialStyles: { opacity: 1, transform: 'translateX(-100%)' },
+  finalStyles: { opacity: 1, transform: 'translateX(0)' },
+  transition: {
+    property: ['transform', 'opacity'],
+    duration: [200, 200],
+    timingFunction: ['ease-out', 'ease-out'],
+  },
+};

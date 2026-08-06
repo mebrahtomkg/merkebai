@@ -8,7 +8,11 @@ import {
 import { Route, Routes } from 'react-router';
 import Chat from '@/features/Chat';
 import { useIsMobile } from '@/hooks';
-import { ANIMATION_SLIDE_IN, WithAnimation } from '@/Animation';
+import {
+  ANIMATION_SIDEBAR,
+  ANIMATION_SLIDE_IN,
+  WithAnimation,
+} from '@/Animation';
 import { useAppStateStore } from '@/store';
 import Settings from '@/features/Settings';
 import Profile from '@/features/Settings/Profile';
@@ -28,6 +32,17 @@ const AuthenticatedApp = () => {
 
   const shouldSidebarVisible = !isMobile || isSidebarVisible;
 
+  const mainComponent = (
+    <>
+      <WithAnimation
+        isVisible={shouldSidebarVisible}
+        options={ANIMATION_SIDEBAR}
+        render={(style) => <Home animationStyle={style} />}
+      />
+      <Chat />
+    </>
+  );
+
   return (
     <>
       <HeartbeatProcessor />
@@ -36,24 +51,8 @@ const AuthenticatedApp = () => {
       <AttachmentUploadProcessor />
 
       <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              {shouldSidebarVisible && <Home />}
-              <Chat />
-            </>
-          }
-        />
-        <Route
-          path="/:chatId"
-          element={
-            <>
-              {shouldSidebarVisible && <Home />}
-              <Chat />
-            </>
-          }
-        />
+        <Route path="/" element={mainComponent} />
+        <Route path="/:chatId" element={mainComponent} />
       </Routes>
 
       <WithAnimation

@@ -10,7 +10,7 @@ export const SidebarOverlay = styled.div<{ $isMobile: boolean }>`
           right: 0;
           bottom: 0;
           z-index: 3;
-          background-color: rgb(0 0 0 / 28%);
+          background-color: rgb(0 0 0 / 30%);
         `
       : css``}
 `;
