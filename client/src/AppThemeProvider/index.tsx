@@ -22,7 +22,9 @@ const AppThemeProvider: FC<AppThemeProviderProps> = ({ children }) => {
   const theme = useThemeStore();
 
   return (
-    <AppThemeProviderStyled $theme={theme}>{children}</AppThemeProviderStyled>
+    <AppThemeProviderStyled $theme={theme.theme}>
+      {children}
+    </AppThemeProviderStyled>
   );
 };
 

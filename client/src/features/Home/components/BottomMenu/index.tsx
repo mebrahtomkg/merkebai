@@ -96,7 +96,7 @@ const BottomMenu = () => {
 
         <MenuItemButton type="button" onClick={toggleTheme}>
           <IconContainer>
-            {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+            {theme.theme === 'light' ? <MoonIcon /> : <SunIcon />}
           </IconContainer>
         </MenuItemButton>
       </BottomMenuStyled>
