@@ -1,4 +1,4 @@
-import { BackIcon, DeleteIcon, DownloadIcon } from '@/components/icons';
+import { CopyIcon, DeleteIcon, DownloadIcon } from '@/components/icons';
 import { FC, RefObject, useMemo, useRef } from 'react';
 import {
   AudioMessage,
@@ -41,7 +41,7 @@ const BaseMessage: FC<BaseMessageProps> = ({
 }) => {
   const messageInfo = useMessageInfo(message);
   const { type, isOutgoing } = messageInfo;
-  const { downloadFile } = useMessageActions(message);
+  const { downloadFile, copy } = useMessageActions(message);
 
   const {
     openDeleteConfirm,
@@ -62,9 +62,9 @@ const BaseMessage: FC<BaseMessageProps> = ({
     const items: IMenuItem[] = [
       <MenuItem
         key={'copy'}
-        icon={<BackIcon />}
+        icon={<CopyIcon />}
         label="Copy"
-        action={() => undefined}
+        action={copy}
         onClose={closeContextMenu}
       />,
     ];
@@ -89,7 +89,7 @@ const BaseMessage: FC<BaseMessageProps> = ({
       />,
     );
     return items;
-  }, [type, downloadFile, openDeleteConfirm, closeContextMenu]);
+  }, [type, downloadFile, copy, openDeleteConfirm, closeContextMenu]);
 
   const messageComponent = useMemo(() => {
     switch (type) {

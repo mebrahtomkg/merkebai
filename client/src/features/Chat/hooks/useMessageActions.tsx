@@ -35,8 +35,20 @@ const useMessageActions = (message: Message) => {
     if (message.createdAt) setMessageInputState({ mode: 'reply', message });
   }, [message]);
 
+  const copy = useCallback(async () => {
+    try {
+      if (message.content) {
+        await navigator.clipboard.writeText(message.content);
+        console.log('Copied to clipboard');
+      }
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  }, [message.content]);
+
   return {
     edit,
+    copy,
     reply,
     downloadFile,
     deleteMessage,
