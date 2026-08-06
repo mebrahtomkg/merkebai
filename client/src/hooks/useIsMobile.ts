@@ -1,11 +1,14 @@
 import { useState, useLayoutEffect } from 'react';
 
-const useIsMobile = () => {
-  const mediaQuery = window.matchMedia('(max-width: 744px)');
+const getMediaQuery = () => window.matchMedia('(max-width: 744px)');
 
-  const [isMobile, setIsMobile] = useState(mediaQuery.matches);
+const useIsMobile = () => {
+  // Get result immediately, though modification needed for future SSR
+  const [isMobile, setIsMobile] = useState(getMediaQuery().matches);
 
   useLayoutEffect(() => {
+    const mediaQuery = getMediaQuery();
+
     const handleMediaQueryChange = (event: MediaQueryListEvent) => {
       setIsMobile(event.matches);
     };
@@ -15,7 +18,7 @@ const useIsMobile = () => {
     return () => {
       mediaQuery.removeEventListener('change', handleMediaQueryChange);
     };
-  }, [mediaQuery]);
+  }, []);
 
   return isMobile;
 };
