@@ -62,11 +62,23 @@ export const ANIMATION_SLIDE_IN: AnimationOptions = {
 };
 
 export const ANIMATION_SIDEBAR: AnimationOptions = {
-  initialStyles: { opacity: 1, transform: 'translateX(-100%)' },
-  finalStyles: { opacity: 1, transform: 'translateX(0)' },
+  initialStyles: {
+    transform: 'translateX(-100%)',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    opacity: 0,
+  },
+  finalStyles: {
+    transform: 'translateX(0)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    opacity: 1,
+  },
   transition: {
-    property: ['transform', 'opacity'],
-    duration: [200, 200],
-    timingFunction: ['ease-out', 'ease-out'],
+    property: ['transform', 'background-color', 'opacity'],
+    duration: [360, 300, 250],
+    timingFunction: [
+      'cubic-bezier(0.16, 1, 0.3, 1)',
+      'cubic-bezier(0.25, 1, 0.5, 1)',
+      'ease-out',
+    ],
   },
 };

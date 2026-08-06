@@ -30,8 +30,15 @@ const Home: FC<HomeProps> = ({ animationStyle }) => {
   };
 
   return (
-    <SidebarOverlay $isMobile={isMobile} onClick={handleOverlayClick}>
-      <SidebarStyled $isMobile={isMobile} style={animationStyle}>
+    <SidebarOverlay
+      $isMobile={isMobile}
+      onClick={handleOverlayClick}
+      style={{ ...animationStyle, transform: undefined }}
+    >
+      <SidebarStyled
+        $isMobile={isMobile}
+        style={{ ...animationStyle, backgroundColor: undefined }}
+      >
         <HeaderContainer>
           <Logo />
         </HeaderContainer>
