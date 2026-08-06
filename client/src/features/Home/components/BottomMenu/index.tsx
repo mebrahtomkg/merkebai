@@ -26,6 +26,8 @@ type Action = 'openProfile' | 'openSettings' | 'openContacts';
 const BottomMenu = () => {
   const action = useRef<Action | null>(null);
 
+  const closeSidebar = useAppStateStore((state) => state.closeSidebar);
+
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const openMenu = useCallback(() => setIsMenuVisible(true), []);
   const closeMenu = useCallback(() => setIsMenuVisible(false), []);
@@ -72,6 +74,7 @@ const BottomMenu = () => {
   const navigate = useNavigate();
 
   const openNewChat = () => {
+    closeSidebar();
     navigate(`/`);
   };
 

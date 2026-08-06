@@ -19,6 +19,7 @@ import { useMessageStatus } from '@/features/Chat/hooks';
 import { useNavigate, useParams } from 'react-router';
 import ChatContextMenu from '../ChatContextMenu';
 import useShowChildOnHover from './useShowChildOnHover';
+import { useAppStateStore } from '@/store';
 
 interface ChatItemProps {
   chat: Chat;
@@ -27,6 +28,8 @@ interface ChatItemProps {
 
 const ChatItem: FC<ChatItemProps> = ({ chat }) => {
   const params = useParams();
+
+  const closeSidebar = useAppStateStore((state) => state.closeSidebar);
 
   const { title } = chat;
 
@@ -43,6 +46,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat }) => {
   const isLastMessageOutgoing = lastMessage && !lastMessage.isAiMessage;
 
   const handleClick = () => {
+    closeSidebar();
     navigate(`/${chat.id}`);
   };
 

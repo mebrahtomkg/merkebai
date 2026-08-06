@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const SettingsModal = styled.div`
   position: absolute;
   inset: 0;
+  z-index: 4;
   padding: 1rem;
   width: var(--big-modal-width);
   background-color: var(--bg-primary);

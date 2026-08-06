@@ -1,13 +1,11 @@
 import { useState, useLayoutEffect } from 'react';
 
 const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const mediaQuery = window.matchMedia('(max-width: 744px)');
+
+  const [isMobile, setIsMobile] = useState(mediaQuery.matches);
 
   useLayoutEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 744px)');
-
-    setIsMobile(mediaQuery.matches);
-
     const handleMediaQueryChange = (event: MediaQueryListEvent) => {
       setIsMobile(event.matches);
     };
@@ -17,7 +15,7 @@ const useIsMobile = () => {
     return () => {
       mediaQuery.removeEventListener('change', handleMediaQueryChange);
     };
-  }, []);
+  }, [mediaQuery]);
 
   return isMobile;
 };

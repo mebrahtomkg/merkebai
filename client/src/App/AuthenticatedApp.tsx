@@ -7,7 +7,6 @@ import {
 } from '@/processors';
 import { Route, Routes } from 'react-router';
 import Chat from '@/features/Chat';
-import { useIsMobile } from '@/hooks';
 import {
   ANIMATION_SIDEBAR,
   ANIMATION_SLIDE_IN,
@@ -16,10 +15,9 @@ import {
 import { useAppStateStore } from '@/store';
 import Settings from '@/features/Settings';
 import Profile from '@/features/Settings/Profile';
+import useSidebarVisibility from './useSidebarVisibility';
 
 const AuthenticatedApp = () => {
-  const isMobile = useIsMobile();
-
   const isSettingsModalVisible = useAppStateStore(
     (state) => state.isSettingsModalVisible,
   );
@@ -28,17 +26,16 @@ const AuthenticatedApp = () => {
     (state) => state.isProfileModalVisible,
   );
 
-  const isSidebarVisible = useAppStateStore((state) => state.isSidebarVisible);
-
-  const shouldSidebarVisible = !isMobile || isSidebarVisible;
+  const { isSidebarVisible } = useSidebarVisibility();
 
   const mainComponent = (
     <>
       <WithAnimation
-        isVisible={shouldSidebarVisible}
+        isVisible={isSidebarVisible}
         options={ANIMATION_SIDEBAR}
         render={(style) => <Home animationStyle={style} />}
       />
+
       <Chat />
     </>
   );
