@@ -65,7 +65,7 @@ export const LinkInfo = styled.span`
   display: block;
   margin-right: 0.8rem;
   font-size: 0.95rem;
-  color: #e6e8eb;
+  color: var(--fg-primary);
 `;
 
 export const ButtonsContainer = styled.div`
