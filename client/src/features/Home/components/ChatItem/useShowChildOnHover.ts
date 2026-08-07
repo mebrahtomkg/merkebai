@@ -8,7 +8,9 @@ const useShowChildOnHover = () => {
   }, []);
 
   const handleMouseLeave: MouseEventHandler = useCallback((e) => {
-    setIsChildVisible(false);
+    if (e.target === e.currentTarget) {
+      setIsChildVisible(false);
+    }
   }, []);
 
   return {

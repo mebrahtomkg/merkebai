@@ -1,4 +1,4 @@
-import { useAccountInfo } from '@/hooks';
+import { useAccountInfo, useHardwareBack } from '@/hooks';
 import { WithAnimation } from '@/Animation';
 import NameEditor from './NameEditor';
 import { useState } from 'react';
@@ -11,6 +11,7 @@ const NameSettings = () => {
   const [isEditorVisible, setIsEditorVisible] = useState(false);
   const openEditor = () => setIsEditorVisible(true);
   const closeEditor = () => setIsEditorVisible(false);
+  useHardwareBack(isEditorVisible, closeEditor);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useLogout } from '@/hooks';
+import { useHardwareBack, useLogout } from '@/hooks';
 import {
   BottomMenuStyled,
   IconContainer,
@@ -31,6 +31,7 @@ const BottomMenu = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const openMenu = useCallback(() => setIsMenuVisible(true), []);
   const closeMenu = useCallback(() => setIsMenuVisible(false), []);
+  useHardwareBack(isMenuVisible, closeMenu);
 
   const openSettingsModal = useAppStateStore((s) => s.openSettingsModal);
   const openProfileModal = useAppStateStore((s) => s.openProfileModal);

@@ -4,11 +4,13 @@ import { ANIMATION_EDITOR_MODAL } from '../../constants';
 import SettingsItem from '../SettingsItem';
 import PasswordEditor from './PasswordEditor';
 import ActionButton from '../ActionButton';
+import { useHardwareBack } from '@/hooks';
 
 const PasswordSettings = () => {
   const [isEditorVisible, setIsEditorVisible] = useState(false);
   const openEditor = () => setIsEditorVisible(true);
   const closeEditor = () => setIsEditorVisible(false);
+  useHardwareBack(isEditorVisible, closeEditor);
 
   return (
     <>

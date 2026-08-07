@@ -6,6 +6,7 @@ import {
   useState,
 } from 'react';
 import { MenuPosition } from './types';
+import { useHardwareBack } from '@/hooks';
 
 const useContextMenu = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -69,6 +70,8 @@ const useContextMenu = () => {
       };
     }
   }, [isVisible, closeMenu]);
+
+  useHardwareBack(isVisible, closeMenu);
 
   return {
     handleContextMenu,

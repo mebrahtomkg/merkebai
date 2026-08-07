@@ -16,15 +16,24 @@ import { useAppStateStore } from '@/store';
 import Settings from '@/features/Settings';
 import Profile from '@/features/Settings/Profile';
 import useSidebarVisibility from './useSidebarVisibility';
+import { useHardwareBack } from '@/hooks';
 
 const AuthenticatedApp = () => {
   const isSettingsModalVisible = useAppStateStore(
     (state) => state.isSettingsModalVisible,
   );
+  const closeSettingsModal = useAppStateStore(
+    (state) => state.closeSettingsModal,
+  );
+  useHardwareBack(isSettingsModalVisible, closeSettingsModal);
 
   const isProfileModalVisible = useAppStateStore(
     (state) => state.isProfileModalVisible,
   );
+  const closeProfileModal = useAppStateStore(
+    (state) => state.closeProfileModal,
+  );
+  useHardwareBack(isProfileModalVisible, closeProfileModal);
 
   const { isSidebarVisible } = useSidebarVisibility();
 

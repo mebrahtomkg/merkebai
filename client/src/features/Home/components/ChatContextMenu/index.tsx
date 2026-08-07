@@ -14,6 +14,7 @@ import { FC, useCallback, useMemo, useState } from 'react';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import { Chat } from '@/types';
 import MoreButton from './MoreButton';
+import { useHardwareBack } from '@/hooks';
 
 type ActiveConfirmDialog = 'delete-chat' | 'none';
 
@@ -36,6 +37,8 @@ const ChatContextMenu: FC<ChatContextMenuProps> = ({ chat }) => {
     () => setActiveConfirmDialog('none'),
     [],
   );
+
+  useHardwareBack(activeConfirmDialog === 'delete-chat', closeConfirmDialog);
 
   const deleteChat = useCallback(
     () =>

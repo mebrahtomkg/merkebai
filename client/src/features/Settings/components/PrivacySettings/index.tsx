@@ -1,6 +1,6 @@
 import { FC, RefObject, useCallback, useMemo, useRef, useState } from 'react';
 import { SettingsCategoryContainerBox } from '../../styles';
-import { useAccount } from '@/hooks';
+import { useAccount, useHardwareBack } from '@/hooks';
 import { PRIVACY_SETTINGS } from './constants';
 import { ANIMATION_DIALOG_FAST, WithAnimation } from '@/Animation';
 import { VISIBILITY_OPTION_LABELS } from '../../constants';
@@ -30,6 +30,8 @@ const PrivacySettings: FC<PrivacySettingsProps> = ({ parentModalRef }) => {
     () => setIsPrivacyEditorVisible(false),
     [],
   );
+
+  useHardwareBack(isPrivacyEditorVisible, closePrivacyEditor);
 
   const handleVisibilitySelect = useCallback(
     (settingkey: IPrivacySetting['settingkey'], value: VisibilityOption) => {

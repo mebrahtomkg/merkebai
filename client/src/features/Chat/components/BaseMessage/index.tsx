@@ -27,6 +27,7 @@ import {
 } from '@/Animation';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import useDeleteMessage from './useDeleteMessage';
+import { useHardwareBack } from '@/hooks';
 
 interface BaseMessageProps {
   message: Message;
@@ -49,6 +50,8 @@ const BaseMessage: FC<BaseMessageProps> = ({
     handleMessageDelete,
     closeDeleteConfirm,
   } = useDeleteMessage(message);
+
+  useHardwareBack(isDeleteConfirmVisible, closeDeleteConfirm);
 
   const {
     isContextMenuVisible,
