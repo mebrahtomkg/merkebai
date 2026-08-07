@@ -8,6 +8,7 @@ import {
   ChatMessagesList,
   ChatMessagesListContainer,
   ChatStyled,
+  DynamicBottomGap,
   Gap,
   IntroText,
 } from './styles';
@@ -47,7 +48,7 @@ const Chat: FC = () => {
       {chatId && (
         <ChatMessagesListContainer ref={messagesListContainerRef}>
           <ChatMessagesList>
-            <Gap />
+            <Gap key={'top-gap'} />
 
             {chatId && (
               <ChatMessages
@@ -65,7 +66,7 @@ const Chat: FC = () => {
               />
             )}
 
-            <Gap />
+            <DynamicBottomGap key={'bottom-gap'} />
           </ChatMessagesList>
         </ChatMessagesListContainer>
       )}

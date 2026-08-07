@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const ChatStyled = styled.div`
   position: relative;
@@ -51,6 +51,12 @@ export const ChatMessagesList = styled.div`
 // This component is created to give gap.
 export const Gap = styled.div`
   height: 4rem;
+  width: 100%;
+  background-color: transparent;
+`;
+
+export const DynamicBottomGap = styled.div`
+  height: 60vh;
   width: 100%;
   background-color: transparent;
 `;
