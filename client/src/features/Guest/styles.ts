@@ -6,24 +6,7 @@ export const GuestContainer = styled.div`
   height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
-  background-image:
-    radial-gradient(
-      circle at center,
-      rgba(7, 197, 242, 0.15) 0%,
-      rgba(0, 0, 0, 0.4) 60%,
-      rgba(0, 0, 0, 0.9) 100%
-    ),
-    radial-gradient(#763ed9c7 1px, transparent 1px),
-    radial-gradient(#0894b6bd 1px, transparent 1px);
-  background-size:
-    100% 100%,
-    20px 20px,
-    20px 20px;
-  background-position:
-    0 0,
-    0 0,
-    10px 10px;
-  background-attachment: fixed;
+  background-color: var(--bg-primary);
 `;
 
 export const GuestStyled = styled.div`
@@ -37,10 +20,12 @@ export const GuestStyled = styled.div`
 
 export const FormStyled = styled.div`
   width: 19rem;
+  border: 1px solid;
+  border-color: var(--fg-border);
   border-radius: 10px;
-  background-color: rgb(11 13 20 / 94%);
   backdrop-filter: blur(5px);
   padding: 1.8rem;
+  background-color: var(--bg-primary);
 
   @media (min-width: 375px) {
     width: 20rem;
@@ -53,7 +38,7 @@ export const FormTitle = styled.h2`
   text-align: center;
   font-size: 1.5rem;
   font-weight: 500;
-  color: #ffffffd4;
+  color: var(--fg-primary);
 `;
 
 export const FormLinkContainer = styled.div`
@@ -69,9 +54,10 @@ export const FormLink = styled(Link)`
   font-size: 1.2rem;
   font-weight: 500;
   text-decoration: underline;
+
   &:hover {
     text-decoration: underline;
-    color: #c4b0ff;
+    color: var(--fg-action-hover);
   }
 `;
 

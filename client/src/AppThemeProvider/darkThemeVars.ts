@@ -16,6 +16,7 @@ const darkThemeVars = css`
   --fg-msg-sent-parent-type: #aaa6ff;
   --fg-msg-received-parent-type: #cbb2ff;
   --fg-action: #a78bfa;
+  --fg-action-hover: #cec0f7;
   --fg-user-status: #a78bfa;
   --fg-tab: #ffffff;
   --bg-page: #0f172a;
