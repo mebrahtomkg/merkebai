@@ -94,6 +94,7 @@ const sendMessage = async (payload: MessageSendPayload) => {
       {
         chatId: chat.id,
         isAiMessage: false,
+        isCompleted: true,
         content,
         attachmentId: attachment?.id || null,
       },

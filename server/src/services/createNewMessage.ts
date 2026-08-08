@@ -29,6 +29,7 @@ const createNewMessage = async (payload: MessageCreationPayload) => {
       {
         chatId,
         isAiMessage,
+        isCompleted: !isAiMessage,
         content,
         attachmentId: null,
       },

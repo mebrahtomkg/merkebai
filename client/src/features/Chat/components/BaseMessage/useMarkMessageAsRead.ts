@@ -1,3 +1,4 @@
+import { useTimer } from '@/hooks';
 import { addMessageMarkAsReadRequest } from '@/store/useMessageRequestsStore';
 import { Message } from '@/types';
 import { RefObject, useCallback, useEffect } from 'react';
@@ -12,10 +13,14 @@ const useMarkMessageAsRead = (
   intersectionObserverRootRef: RefObject<HTMLDivElement | null>,
   message: Message,
 ) => {
-  // Only non pending and received messages which are not seen (already marked as red)
-  // can be marked as read
+  const { setTimer } = useTimer();
+
+  // Only AI messages which are completed and not seen can be marked as read.
   const canMarkAsReadThisMessage =
-    message.id > 0 && message.isAiMessage && !message.isSeen;
+    message.id > 0 &&
+    message.isAiMessage &&
+    message.isCompleted &&
+    !message.isSeen;
 
   const handleIntersectionObserver: IntersectionObserverCallback = useCallback(
     (entries, observer) => {
@@ -28,13 +33,16 @@ const useMarkMessageAsRead = (
       if (entry.isIntersecting) {
         observer.disconnect();
 
-        addMessageMarkAsReadRequest({
-          chatId: message.chatId,
-          messageId: message.id,
-        });
+        // Add a small delay to let the browser scroll smoothly.
+        setTimer(() => {
+          addMessageMarkAsReadRequest({
+            chatId: message.chatId,
+            messageId: message.id,
+          });
+        }, 1000);
       }
     },
-    [canMarkAsReadThisMessage, message],
+    [canMarkAsReadThisMessage, message.chatId, message.id, setTimer],
   );
 
   useEffect(() => {

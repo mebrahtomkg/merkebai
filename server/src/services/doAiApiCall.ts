@@ -57,9 +57,16 @@ const doAiApiCall = async (payload: AiApiCallPayload) => {
       await Message.update(
         {
           content: fullAiContent,
+          isCompleted: true,
         },
         { where: { id: message.id } },
       );
+
+      emitToUser(userId, 'message_updated', {
+        ...filteredMessage,
+        content: fullAiContent,
+        isCompleted: true,
+      });
 
       generateChatTitle({ chatId, userId });
     } catch (error) {

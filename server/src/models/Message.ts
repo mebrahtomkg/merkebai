@@ -16,6 +16,7 @@ class Message extends Model<
   declare id: CreationOptional<number>;
   declare chatId: string;
   declare isAiMessage: boolean;
+  declare isCompleted: boolean;
   declare content: string | null;
   declare attachmentId: number | null;
   declare isSeen: CreationOptional<boolean>;
@@ -43,6 +44,11 @@ Message.init(
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
+    },
+
+    isCompleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
     },
 
     content: {
