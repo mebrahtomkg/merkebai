@@ -9,7 +9,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
   try {
     if (req.userId) {
       res.status(400).json({
-        message: 'You are already signedup',
+        message: 'You are already logged in.',
       });
       return;
     }
@@ -27,7 +27,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
 
     if (await User.findOne({ where: { email } })) {
       res.status(409).json({
-        message: 'The eamil already exists.',
+        message: 'The email already exists.',
       });
       return;
     }
@@ -36,7 +36,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
 
     setLogInCookie(res, user.id);
 
-    res.status(200).json({
+    res.status(201).json({
       success: true,
       data: filterUserData(user.toJSON()),
       message: 'Signup successful',

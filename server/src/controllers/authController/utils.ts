@@ -22,8 +22,5 @@ export const setLogInCookie = (res: Response, userId: number) => {
 };
 
 export const setLogOutCookie = (res: Response) => {
-  res.cookie(AUTH_TOKEN_COOKIE_NAME, '_NULL_', {
-    ...baseCookieOptions,
-    expires: new Date(Date.now() - 90000000),
-  });
+  res.clearCookie(AUTH_TOKEN_COOKIE_NAME, baseCookieOptions);
 };

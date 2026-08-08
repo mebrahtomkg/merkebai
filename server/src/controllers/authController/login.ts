@@ -30,14 +30,14 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
 
     if (!user) {
       res.status(404).json({
-        message: 'No user found with the specified email.',
+        message: 'Invalid credentials!',
       });
       return;
     }
 
     if (!(await verifyPassword(password, user.password))) {
       res.status(401).json({
-        message: 'Incorrect password!',
+        message: 'Invalid credentials!',
       });
       return;
     }
