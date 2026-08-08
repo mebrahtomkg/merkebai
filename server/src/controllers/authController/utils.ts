@@ -1,38 +1,29 @@
 import {
-  MAX_NAME_LENGTH,
-  MAX_PWD_LENGTH,
-  MIN_PWD_LENGTH,
+  AUTH_TOKEN_AGE,
+  AUTH_TOKEN_COOKIE_NAME,
+  IS_PRODUCTION,
 } from '@/config/general';
+import { createAuthToken } from '@/utils';
+import { CookieOptions, Response } from 'express';
 
-export const checkEmail = (userEmail: string) => {
-  if (typeof userEmail !== 'string') return false;
-
-  const email = userEmail.split('@');
-  if (email.length !== 2) return false;
-
-  const [id, domain] = email;
-  if (!/^\w+([.-]?\w+)*$/.test(id)) return false;
-
-  const index = domain.lastIndexOf('.');
-  if (index === -1) return false;
-
-  const domainId = domain.substring(0, index);
-  if (!/^\w+([.-]?\w+)*$/.test(domainId)) return false;
-
-  const domainExt = domain.substring(index);
-  return /^\.\w{1,6}$/.test(domainExt);
+const baseCookieOptions: CookieOptions = {
+  httpOnly: true,
+  secure: IS_PRODUCTION,
+  sameSite: IS_PRODUCTION ? 'none' : 'lax',
 };
 
-export const checkPassword = (password: string) => {
-  if (typeof password !== 'string') return false;
+export const setLogInCookie = (res: Response, userId: number) => {
+  const token = createAuthToken(userId);
 
-  return password.length >= MIN_PWD_LENGTH && password.length <= MAX_PWD_LENGTH;
+  res.cookie(AUTH_TOKEN_COOKIE_NAME, token, {
+    ...baseCookieOptions,
+    expires: new Date(Date.now() + AUTH_TOKEN_AGE),
+  });
 };
 
-export const checkFirstName = (name: string) => {
-  if (typeof name !== 'string') return false;
-
-  if (name.length === 0) return false;
-
-  return name.length <= MAX_NAME_LENGTH;
+export const setLogOutCookie = (res: Response) => {
+  res.cookie(AUTH_TOKEN_COOKIE_NAME, '_NULL_', {
+    ...baseCookieOptions,
+    expires: new Date(Date.now() - 90000000),
+  });
 };

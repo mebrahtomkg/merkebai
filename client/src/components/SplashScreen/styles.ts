@@ -2,7 +2,7 @@ import styled, { css, keyframes } from 'styled-components';
 
 export const SplashScreenStyled = styled.div`
   width: 100vw;
-  height: 100dvh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,11 +1,9 @@
-import { AUTH_TOKEN_COOKIE_NAME } from '@/config/general';
 import { Request, Response, NextFunction } from 'express';
+import { setLogOutCookie } from './utils';
 
 const logout = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    res.cookie(AUTH_TOKEN_COOKIE_NAME, '_null_', {
-      expires: new Date(Date.now() - 90000000),
-    });
+    setLogOutCookie(res);
 
     res.status(200).json({
       success: true,

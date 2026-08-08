@@ -1,11 +1,7 @@
-import { checkEmail, checkPassword } from './utils';
-import {
-  AUTH_TOKEN_COOKIE_NAME,
-  AUTH_TOKEN_AGE,
-  IS_PRODUCTION,
-} from '@/config/general';
+import { setLogInCookie } from './utils';
 import { User } from '@/models';
-import { createAuthToken, filterUserData, verifyPassword } from '@/utils';
+import { logInSchema } from '@/schemas';
+import { filterUserData, verifyPassword } from '@/utils';
 import { Request, Response, NextFunction } from 'express';
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
@@ -17,26 +13,16 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
       return;
     }
 
-    const { body } = req;
+    const parseResult = logInSchema.safeParse(req.body);
 
-    const email = typeof body?.email === 'string' ? body.email.trim() : null;
-
-    if (!checkEmail(email)) {
+    if (!parseResult.success) {
       res.status(400).json({
-        message: 'Invalid email',
+        message: parseResult.error.issues[0].message,
       });
       return;
     }
 
-    const password =
-      typeof body.password === 'string' ? body.password.trim() : null;
-
-    if (!checkPassword(password)) {
-      res.status(400).json({
-        message: 'Invalid password',
-      });
-      return;
-    }
+    const { email, password } = parseResult.data;
 
     const user = await User.findOne({
       where: { email },
@@ -56,14 +42,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
       return;
     }
 
-    const token = createAuthToken(user.id);
-
-    res.cookie(AUTH_TOKEN_COOKIE_NAME, token, {
-      expires: new Date(Date.now() + AUTH_TOKEN_AGE),
-      httpOnly: true,
-      secure: IS_PRODUCTION,
-      sameSite: IS_PRODUCTION ? 'none' : 'lax',
-    });
+    setLogInCookie(res, user.id);
 
     res.status(200).json({
       success: true,
