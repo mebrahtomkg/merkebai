@@ -1,5 +1,24 @@
 import styled, { css } from 'styled-components';
 
+export const MoreButtonStyled = styled.button<{ $isMobile: boolean }>`
+  position: absolute;
+  right: 1rem;
+  width: 2.3rem;
+  aspect-ratio: 1/1;
+  padding: 0.7rem;
+  background-color: var(--bg-hover-hover);
+  border-radius: 50%;
+
+  ${(props) =>
+    props.$isMobile
+      ? css`
+          display: block;
+        `
+      : css`
+          display: none;
+        `}
+`;
+
 export const ChatItemStyled = styled.div<{ $isCurrentlyOpenedChat: boolean }>`
   position: relative;
   width: 100%;
@@ -19,6 +38,10 @@ export const ChatItemStyled = styled.div<{ $isCurrentlyOpenedChat: boolean }>`
 
   &:hover {
     background-color: var(--bg-hover);
+  }
+
+  &:hover ${MoreButtonStyled} {
+    display: block;
   }
 `;
 

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import {
   ChatItemDateTime,
   ChatItemInfoContainer,
@@ -12,15 +12,27 @@ import {
   UnseenMessagesCount,
 } from './styles';
 import { Chat } from '@/types';
-import useChatItemInfo from './useChatItemInfo';
 import MessagePreview from './MessagePreview';
-import { ClockIcon, DoubleTickIcon, TickIcon } from '@/components/icons';
-import { useMessageStatus } from '@/features/Chat/hooks';
-import { useNavigate, useParams } from 'react-router';
-import ChatContextMenu from '../ChatContextMenu';
-import useShowChildOnHover from './useShowChildOnHover';
-import { useAppStateStore } from '@/store';
-import { useIsMobile } from '@/hooks';
+import {
+  ClockIcon,
+  DeleteIcon,
+  DoubleTickIcon,
+  TickIcon,
+} from '@/components/icons';
+import { useHardwareBack } from '@/hooks';
+import ContextMenu, {
+  IMenuItem,
+  MenuItem,
+  useContextMenu,
+} from '@/components/ContextMenu';
+import {
+  ANIMATION_CONTEXT_MENU_FAST,
+  ANIMATION_DIALOG_FAST,
+  WithAnimation,
+} from '@/Animation';
+import ConfirmDialog from '@/components/ConfirmDialog';
+import MoreButton from './MoreButton';
+import useChatItem from './useChatItem';
 
 interface ChatItemProps {
   chat: Chat;
@@ -28,40 +40,46 @@ interface ChatItemProps {
 }
 
 const ChatItem: FC<ChatItemProps> = ({ chat }) => {
-  const params = useParams();
+  const {
+    title,
+    dateTime,
+    lastMessage,
+    unseenMessagesCount,
+    isLastMessageOutgoing,
+    isCurrentlyOpenedChat,
+    lastMessageStatus,
+    deleteChat,
+    handleClick,
+  } = useChatItem(chat);
 
-  const closeSidebar = useAppStateStore((state) => state.closeSidebar);
+  const {
+    isContextMenuVisible,
+    handleMoreButtonClick,
+    contextMenuPosition,
+    closeContextMenu,
+  } = useContextMenu();
 
-  const { title } = chat;
+  const [isCfmDialogVisible, setIsCfmDialogVisible] = useState(false);
+  const openCfmDialog = useCallback(() => setIsCfmDialogVisible(true), []);
+  const closeCfmDialog = useCallback(() => setIsCfmDialogVisible(false), []);
+  useHardwareBack(isCfmDialogVisible, closeCfmDialog);
 
-  const navigate = useNavigate();
+  const menuItemsList = useMemo(() => {
+    const menuItems: IMenuItem[] = [
+      <MenuItem
+        key={'delete-chat'}
+        icon={<DeleteIcon />}
+        label="Delete Chat"
+        action={openCfmDialog}
+        onClose={closeContextMenu}
+      />,
+    ];
 
-  const lastMessage = chat.lastMessage;
-
-  const lastMessageStatus = useMessageStatus(lastMessage?.id || 0);
-
-  const { dateTime } = useChatItemInfo(chat);
-
-  const unseenMessagesCount = chat.unseenMessagesCount || 0;
-
-  const isLastMessageOutgoing = lastMessage && !lastMessage.isAiMessage;
-
-  const handleClick = () => {
-    closeSidebar();
-    navigate(`/${chat.id}`);
-  };
-
-  const { isChildVisible, handleMouseEnter, handleMouseLeave } =
-    useShowChildOnHover();
-
-  const isCurrentlyOpenedChat = chat.id === params.chatId;
-
-  const isMobile = useIsMobile();
+    return menuItems;
+  }, [openCfmDialog, closeContextMenu]);
 
   return (
     <ChatItemStyled
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       $isCurrentlyOpenedChat={isCurrentlyOpenedChat}
     >
@@ -95,7 +113,34 @@ const ChatItem: FC<ChatItemProps> = ({ chat }) => {
         </MessagePreviewContainer>
       </ChatItemInfoContainer>
 
-      {(isChildVisible || isMobile) && <ChatContextMenu chat={chat} />}
+      <MoreButton onClick={handleMoreButtonClick} />
+
+      <WithAnimation
+        isVisible={isContextMenuVisible}
+        options={ANIMATION_CONTEXT_MENU_FAST}
+        render={(style) => (
+          <ContextMenu
+            menuItems={menuItemsList}
+            position={contextMenuPosition}
+            onClose={closeContextMenu}
+            animationStyle={style}
+          />
+        )}
+      />
+
+      <WithAnimation
+        isVisible={isCfmDialogVisible}
+        options={ANIMATION_DIALOG_FAST}
+        render={(style) => (
+          <ConfirmDialog
+            title="Delete Chat"
+            message="Are you sure to delete all messages in this chat?"
+            onConfirm={deleteChat}
+            onClose={closeCfmDialog}
+            animationStyle={style}
+          />
+        )}
+      />
     </ChatItemStyled>
   );
 };

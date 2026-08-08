@@ -32,7 +32,7 @@ const useHardwareBack = (isVisible: boolean, onClose: () => void) => {
   useEffect(() => {
     // 3. If back hardware is pressed, close the modal.
     const handlePopState = (e: PopStateEvent) => {
-      if (e.state?.modalId !== modalId) {
+      if (isVisibleRef.current && e.state?.modalId !== modalId) {
         onClose();
         isVisibleRef.current = false;
       }
