@@ -52,15 +52,17 @@ export const MESSAGE_FILES_BUCKET = 'message-files';
 export const PORT = 3000;
 console.log('Server port:', PORT);
 
-export const ALLOWED_ORIGINS =
+const allowedOrigins =
   process.env.ALLOWED_ORIGINS?.split(',') ||
-  (!IS_PRODUCTION ? ['http://localhost:8080'] : []);
+  (IS_PRODUCTION ? [] : ['http://localhost:8080']);
 
-if (ALLOWED_ORIGINS.length) {
-  console.log('Allowed origins:', ALLOWED_ORIGINS.join('  '));
+if (allowedOrigins.length) {
+  console.log('Allowed origins:', allowedOrigins.join('  '));
 } else {
   console.warn('No allowed origin(s) is/are provided. Browsers maynot work!');
 }
+
+export const ALLOWED_ORIGINS = allowedOrigins;
 
 export const SOCKET_USER_TIME_TO_LIVE = 45000; // 45seconds
 
