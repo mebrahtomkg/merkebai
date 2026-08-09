@@ -15,13 +15,15 @@ export const MAX_BIO_LENGTH = 80;
 export const AUTH_TOKEN_COOKIE_NAME = 'auth_token';
 export const AUTH_TOKEN_AGE = 1000 * 60 * 60 * 24 * 30; // 30 days
 
-export const JWT_SECRET_KEY = IS_PRODUCTION
+export const jwtSecretKey = IS_PRODUCTION
   ? process.env.JWT_SECRET_KEY
   : process.env.JWT_SECRET_KEY || 'temp-secret-key-1';
 
-if (!JWT_SECRET_KEY) {
+if (!jwtSecretKey) {
   throw new Error('JWT_SECRET_KEY not provided. Please set it in env vars.');
 }
+
+export const JWT_SECRET_KEY = jwtSecretKey;
 
 console.log('JWT_SECRET_KEY:', JWT_SECRET_KEY);
 
