@@ -9,7 +9,7 @@ const initSocket = () => {
   if (isInitialized) throw Error('Socket already initialized!');
   isInitialized = true;
 
-  const socket = io(API_BASE_URL.replace('/api', ''), {
+  const socket = io(API_BASE_URL, {
     withCredentials: true,
   });
 

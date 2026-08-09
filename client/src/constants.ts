@@ -4,7 +4,7 @@ export const IS_PRODUCTION = window.IS_PRODUCTION;
 
 export const API_BASE_URL = IS_PRODUCTION
   ? window.API_URL
-  : `${document.location.protocol}//${document.location.hostname}:3000/api`;
+  : `${document.location.protocol}//${document.location.hostname}:3000`;
 
 export const DEFAULT_THEME: Theme = 'light';
 

@@ -35,10 +35,10 @@ app.use(bodyParser.json());
 app.use(performAuth);
 app.use('/', rootRoutes);
 app.use('/admin', adminRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/users', authGuard, userRoutes);
-app.use('/api/chats', authGuard, chatRoutes);
-app.use('/api/messages', authGuard, messageRoutes);
+app.use('/auth', authRoutes);
+app.use('/users', authGuard, userRoutes);
+app.use('/chats', authGuard, chatRoutes);
+app.use('/messages', authGuard, messageRoutes);
 app.use(errorHandler);
 
 export default app;
