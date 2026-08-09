@@ -88,8 +88,6 @@ const sendMessage = async (payload: MessageSendPayload) => {
       });
     }
 
-    console.log(chat.toJSON());
-
     const message = await Message.create(
       {
         chatId: chat.id,

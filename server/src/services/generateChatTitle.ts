@@ -54,9 +54,6 @@ const generateChatTitle = async (payload: ChatTitleGeneratePayload) => {
       input: [{ role: 'user', content: prompt }],
     });
 
-    console.log('prompt', prompt);
-    console.log('response', response.output_text);
-
     // Clean up the response to ensure it's a "Perfect Title"
     const title = response.output_text
       .replace(/^(Title|Topic|Subject):\s+/i, '')
@@ -70,8 +67,6 @@ const generateChatTitle = async (payload: ChatTitleGeneratePayload) => {
       );
       return;
     }
-
-    console.log('title', title);
 
     await Chat.update(
       { title },
