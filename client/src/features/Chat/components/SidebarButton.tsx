@@ -3,10 +3,14 @@ import styled from 'styled-components';
 import { MenuIcon } from '@/components/icons';
 
 const SidebarButtonStyled = styled.button`
-  width: 2.6rem;
-  height: 2.6rem;
-  padding: 0.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.65rem;
+  border: 1px solid;
   background-color: var(--bg-hover);
+  border-color: var(--fg-border);
+  border-radius: 5px;
+  margin: 0.1rem;
 `;
 
 interface SidebarButtonProps {
