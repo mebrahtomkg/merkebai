@@ -71,7 +71,7 @@ const Chat: FC = () => {
         </ChatMessagesListContainer>
       )}
 
-      {!chatId && <IntroText>Hello! What's on your mind?</IntroText>}
+      {!chatId && <IntroText>What's on your mind?</IntroText>}
 
       <ChatFooter>
         <MessageInput chatId={chatId} />
