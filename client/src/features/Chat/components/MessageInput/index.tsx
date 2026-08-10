@@ -17,6 +17,7 @@ import {
   addMessageUpdateRequest,
   addTextMessageSendRequest,
 } from '@/store/useMessageRequestsStore';
+import { useIsMobile } from '@/hooks';
 
 interface MessageInputProps {
   chatId?: string;
@@ -25,6 +26,8 @@ interface MessageInputProps {
 const MessageInput: FC<MessageInputProps> = ({ chatId }) => {
   const { textAreaRef, value, setValue, handleInput, focusTextArea } =
     useMessageTextArea();
+
+  const isMobile = useIsMobile();
 
   const messageInputState = useMessageInputStateStore();
 
@@ -36,8 +39,11 @@ const MessageInput: FC<MessageInputProps> = ({ chatId }) => {
     } else {
       setValue('');
     }
-    focusTextArea();
-  }, [messageInputState, setValue, focusTextArea]);
+
+    if (!isMobile) {
+      focusTextArea();
+    }
+  }, [isMobile, messageInputState, setValue, focusTextArea]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <reset message input state>
   useEffect(() => {
