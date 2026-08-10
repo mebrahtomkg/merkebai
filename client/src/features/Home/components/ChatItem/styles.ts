@@ -37,12 +37,14 @@ export const ChatItemStyled = styled.div<{ $isCurrentlyOpenedChat: boolean }>`
       background-color: var(--bg-hover);
     `}
 
-  &:hover {
-    background-color: var(--bg-hover);
-  }
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--bg-hover);
+    }
 
-  &:hover ${MoreButtonStyled} {
-    display: block;
+    &:hover ${MoreButtonStyled} {
+      display: block;
+    }
   }
 `;
 

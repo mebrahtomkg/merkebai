@@ -4,6 +4,7 @@ const styles = css`
   * {
     box-sizing: border-box;
     color: inherit;
+    -webkit-tap-highlight-color: transparent;
   }
 
   html {
