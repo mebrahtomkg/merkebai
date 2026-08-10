@@ -6,16 +6,17 @@ export const MoreButtonStyled = styled.button<{ $isMobile: boolean }>`
   width: 2.3rem;
   aspect-ratio: 1/1;
   padding: 0.7rem;
-  background-color: var(--bg-hover-hover);
   border-radius: 50%;
 
   ${(props) =>
     props.$isMobile
       ? css`
           display: block;
+          background-color: var(--bg-hover);
         `
       : css`
           display: none;
+          background-color: var(--bg-hover-hover);
         `}
 `;
 

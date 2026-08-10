@@ -15,6 +15,7 @@ export const ConfirmDialogOverlay = styled.div`
 
 export const ConfirmDialogStyled = styled.div`
   padding: 1rem;
+  margin: 1rem;
   border-radius: 10px;
   background-color: var(--bg-primary);
   border: 1px solid;
@@ -30,6 +31,7 @@ export const DialogMessage = styled.p`
   margin-bottom: 1.5rem;
   font-size: 1rem;
   font-weight: 500;
+  text-align: center;
 `;
 
 export const DialogButtonsContainer = styled.div`
