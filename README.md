@@ -5,7 +5,7 @@
 **MerkebAI** is an open-source, production-grade, real-time AI chat application. Engineered to be highly resilient and reliable, the system ensures that the interface remains fluid and data remains consistent, even during live AI response streaming and over unstable networks.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/08ba9551-303a-4a5b-8ba1-7f71e303a3b2" alt="MerkebAI Preview" width="800">
+  <img src="https://cdn.mebrahtom.com/merkeb-ai-preview-light.png" alt="MerkebAI Preview" width="800">
 </p>
 
 ## 2. Features
