@@ -155,49 +155,66 @@ pnpm run prettier:format
 
 ## 7. Configuration
 
-This project requires **zero configuration** to get started. However, it is highly configurable via environment variables to suit production-grade deployments.
+This project is designed to require **zero configuration** for local development. However, it provides extensive environment variables to customize the deployment for production environments.
 
 ### 7.1 Backend (Server) Configuration
 
-To customize the backend of the app, create a `.env` file in the `server` directory, and use the following environment variables.
+To configure the backend runtime for local development, create a `.env` file in the `server` directory. For production deployments, set these variables directly within your hosting provider's environment configuration dashboard (e.g., Render, AWS, Heroku).
 
-- **`JWT_SECRET_KEY`**: Secret key used to sign JSON Web Tokens for authentication.
+- **`JWT_SECRET_KEY`**
 
-  - Default: `temp-secret-key-1`
-  - Required in production
+  - **Required:** Yes (in Production).
+  - **Default:** `temp-secret-key-1` (in Development).
+  - **Description:** The secret key used to cryptographically sign JSON Web Tokens for authentication.
 
-- **`ALLOWED_ORIGINS`**: Comma-separated list of allowed CORS origins. In production, ensure this is explicitly set to your frontend domain to prevent unauthorized cross-origin requests.
+- **`ALLOWED_ORIGINS`**
 
-  - Default: `http://localhost:8080` in development
+  - **Required:** Yes (in Production to prevent unauthorized cross-origin requests).
+  - **Default:** `http://localhost:8080` (in Development).
+  - **Description:** A comma-separated list of allowed CORS origins (e.g., `https://yourdomain.com`).
 
-- **`DATABASE_DIALECT`**: The database system to use.
+- **`DATABASE_DIALECT`**
 
-  - Options:
+  - **Required:** No.
+  - **Default:** `sqlite`.
+  - **Description:** The database engine to use. Supported options are `sqlite` (ideal for local development) and `postgres` (recommended for production).
 
-    1. `sqlite`: Ideal for local development. No external setup is required. The database file is stored locally.
+- **`SQLITE_DATABASE_DIR`**
 
-    2. `postgres`: Recommended for production.
+  - **Required:** No.
+  - **Default:** A `database` folder located at the root of the server directory.
+  - **Description:** The absolute path to the directory where the local SQLite database file will be stored. This is only used if `DATABASE_DIALECT` is set to `sqlite`.
 
-  - Default: `sqlite`
+- **`POSTGRES_DATABASE_URI`**
 
-- **`SQLITE_DATABASE_DIR`**: Absolute path to the directory where the SQLite database file will be stored.
+  - **Required:** Yes, but **only** if `DATABASE_DIALECT` is set to `postgres`.
+  - **Description:** The full connection string for your PostgreSQL database (e.g., `postgresql://user:password@host:port/database`).
 
-  - Default: `server/database`
+- **`AI_BASE_URL`**
 
-- **`POSTGRES_DATABASE_URI`**: The connection string for PostgreSQL. (Required if dialect is `postgres`)
+  - **Required:** Yes.
+  - **Description:** The base URL for the AI provider's API endpoint.
 
-- **`ADMIN_SECRET_KEY`**: A secret key required to perform administrative tasks remotely via API. (Required if there is a desire to perform administrative tasks via API). Not recommended in production.
+- **`AI_API_KEY`**
+
+  - **Required:** Yes.
+  - **Description:** The API key used to authenticate requests to your chosen AI provider.
+
+- **`ADMIN_SECRET_KEY`**
+  - **Required:** No.
+  - **Description:** A secret key that enables remote administrative tasks via API requests. Use with caution in production.
 
 ### 7.2 Frontend (Client) Configuration
 
-To customize the frontend of the app, create a `.env` file in the `client` directory using the following environment variables:
+To customize the frontend build for local development, create a `.env` file in the `client` directory. For production, define these variables in your edge/hosting provider's dashboard (e.g., Cloudflare Pages, Vercel).
 
-- **`API_URL`**: The base API URL of the app backend. This value is injected into the `window` object and the `Service Worker` to handle API requests and media fetching.
+- **`API_URL`**
 
-  - **In Development:** This option is ignored. The app uses a **Smart API Discovery Mode**. It automatically points to the current network hostname on port 3000 (e.g., if the frontend is served at `http://localhost:8080`, the `API_URL` becomes `http://localhost:3000/api`; if the frontend is served at `http://192.168.1.5:8080`, the `API_URL` becomes `http://192.168.1.5:3000/api`). This allows a developer to test the app on real mobile devices connected to the same Wi-Fi or hotspot without manual configuration.
+  - **Required:** Yes (in Production).
+  - **Description:** The base API URL of the app backend. This value is injected into the application and Service Worker to handle API requests accurately.
+    - **In Development:** This option is ignored. The app uses a **Smart API Discovery Mode**. It automatically points to the current network hostname on port `3000` (e.g., if the frontend is served at `http://localhost:8080`, the `API_URL` becomes `http://localhost:3000`; if the frontend is served at `http://192.168.1.5:8080`, the `API_URL` becomes `http://192.168.1.5:3000`). This allows a developer to test the app on real mobile devices connected to the same Wi-Fi or hotspot without manual configuration.
 
-  - **In Production:** This value is required and is used by the UI and Service Worker to handle all API requests and media fetching.
-
-- **`PUBLIC_PATH`**: Defines the base path for all frontend assets and the `Service Worker` registration. Use this if hosting the application in a subdirectory.
-
-  - **Default:** `/`
+- **`PUBLIC_PATH`**
+  - **Required:** No.
+  - **Default:** `/`.
+  - **Description:** Defines the base URL path for all frontend assets and Service Worker registration. Modify this only if you are hosting the application in a specific subdirectory.
