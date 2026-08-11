@@ -2,7 +2,7 @@
 
 ## 1. Introduction
 
-**MerkebAI** MerkebAI is an open-source, production-grade, real-time AI chat application. Engineered to be highly resilient and reliable, the system ensures that the interface remains fluid and data remains consistent, even during live AI response streaming and over unstable networks.
+**MerkebAI** is an open-source, production-grade, real-time AI chat application. Engineered to be highly resilient and reliable, the system ensures that the interface remains fluid and data remains consistent, even during live AI response streaming and over unstable networks.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/08ba9551-303a-4a5b-8ba1-7f71e303a3b2" alt="MerkebAI Preview" width="800">
@@ -81,7 +81,7 @@ The system is built to handle the complexities of a fast, reliable AI chat appli
 
 - **Viewport-Aware Context Menus:** A dynamic context menu component automatically calculates its placement based on the current screen dimensions, ensuring that interactive options remain fully visible and do not overflow the viewport edges.
 
-- **Declarative Animation Engine:** The application synchronizes the UI component lifecycle with hardware-accelerated CSS transitions, delivering smooth visual feedback when interface elements mount or unmount.
+- **Declarative Custom Animation Engine:** The application synchronizes the UI component lifecycle with hardware-accelerated `CSS` transitions. The custom `useAnimation` hook strategically utilizes double `requestAnimationFrame` to mitigate DOM update batching, and strictly manages cleanup timers to prevent lingering animation styles from breaking layout positioning. Aggressive memoization prevents infinite re-render cycles.
 
 - **Zero-Lag Theming:** The application transitions between light and dark themes instantaneously by dynamically injecting CSS variable blocks directly into the document root, bypassing heavy render cycles.
 
