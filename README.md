@@ -2,7 +2,7 @@
 
 ## 1. Introduction
 
-**MerkebAI** is a high-performance, resilient, real-time AI chat platform engineered for reliability, privacy, and seamless data synchronization. Built upon the robust foundation of the SemayChat codebase, MerkebAI is specifically tailored for advanced AI interactions. The system is built with a focus on architectural integrity, ensuring that the interface remains fluid and the data remains consistent, even under the demands of complex media handling, AI response streaming, and unreliable networks.
+**MerkebAI** MerkebAI is an open-source, production-grade, real-time AI chat application. Engineered to be highly resilient and reliable, the system ensures that the interface remains fluid and data remains consistent, even during live AI response streaming and over unstable networks.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/08ba9551-303a-4a5b-8ba1-7f71e303a3b2" alt="MerkebAI Preview" width="800">
@@ -10,83 +10,82 @@
 
 ## 2. Features
 
-The platform provides a comprehensive suite of features designed for a modern AI chat experience. These capabilities are implemented with a focus on user autonomy and intuitive interaction.
+The platform delivers a comprehensive suite of features designed for a modern, production-grade AI chat experience, prioritizing user autonomy and intuitive interaction.
 
-- **High-end, Attractive UI/UX:** Modern aesthetics and animated user interfaces.
+- **Premium UI/UX:** Modern aesthetics with fluid animations for a highly responsive and engaging interface.
 
-- **Real-Time AI Messaging & Streaming:** Instantaneous exchange of text messages with live streaming of AI responses (powered by models like Gemini 2.5 Flash).
+- **Real-Time AI Messaging & Streaming:** Instantaneous message exchange featuring live, low-latency streaming of AI responses.
 
-- **Smart Chat Title Generation:** Automatically generates concise, context-aware titles for your conversations using a lightweight AI model.
+- **Smart Chat Title Generation:** Automatically generates concise, context-aware titles for conversations using lightweight AI processing.
 
-- **Mobile-Optimized Navigation:** Features a custom hardware back-button integration (`useHardwareBack`) that seamlessly manages mobile navigation stacks, allowing users to close modals and sidebars using their device's native back button.
+- **Mobile-Optimized Navigation:** Includes custom hardware back-button integration (`useHardwareBack`) that gracefully manages mobile navigation stacks, allowing users to dismiss modals and sidebars using native device controls.
 
-- **Secure JWT Authentication:** Industry-standard authentication using JSON Web Tokens (JWT) stored in `httpOnly` and `Secure` cookies to prevent XSS and ensure session integrity.
+- **Secure JWT Authentication:** Employs industry-standard JSON Web Tokens (JWT) stored in `httpOnly` and `Secure` cookies to mitigate XSS vulnerabilities and guarantee session integrity.
 
-- **Persistent State:** All conversations and generated titles are persisted, ensuring a continuous experience across devices and browser refreshes.
+- **Persistent State Management:** Automatically saves all conversations and metadata, ensuring a seamless, continuous experience across devices and browser sessions.
 
-- **Ability to Clear Messaging History:** Users can delete individual messages and entire chats.
+- **Granular History Control:** Empowers users with complete data autonomy, providing the ability to seamlessly delete individual messages or clear entire chat histories.
 
-- **Theming:** The application supports both dark and light themes seamlessly.
+- **Dynamic Theming:** Seamlessly supports and transitions between light and dark modes based on user preference.
 
 ## 3. Live Demo & Distributed Architecture
 
-The live demo serves as a reference for a **distributed, cloud-native architecture**. It demonstrates that MerkebAI is a resilient system capable of operating across geographically separated infrastructure providers while maintaining sub-second latency.
+The live demo showcases a **distributed, cloud-native architecture**. It demonstrates MerkebAI's ability to operate reliably across decoupled infrastructure providers while maintaining low latency.
 
 ### 3.1 Deployment Stack
 
-- **Frontend (Edge Layer):** Hosted on **Cloudflare Pages** via an automated **CI/CD pipeline**. Every push to the main branch triggers an atomic build, distributing the UI across Cloudflare’s global edge network for instant loading.
+- **Frontend (Edge Layer):** Hosted on **Cloudflare Pages** with an automated CI/CD pipeline for global edge distribution and fast load times.
 
-- **Backend (Compute Layer):** Deployed on **Render** using a managed deployment workflow. The backend handles real-time socket connections, AI API streaming, and business logic.
+- **Backend (Compute Layer):** Deployed on **Render**, handling real-time socket connections, AI API streaming, and core business logic.
 
-- **Database (Persistence Layer):** **PostgreSQL** hosted on **Supabase**. This provides a managed, high-performance relational database that eliminates manual maintenance and ensures data consistency at scale.
+- **Database (Persistence Layer):** **PostgreSQL** hosted on **Supabase**, providing a managed, reliable relational database to ensure data consistency.
 
-- **Service Monitoring:** Integrated with **UptimeRobot** for continuous health auditing. This system monitors service availability and provides real-time alerts to ensure high-reliability standards.
+- **Service Monitoring:** Integrated with **UptimeRobot** for continuous health monitoring and uptime alerts.
 
-### 3.2 Distributed System Proof-of-Concept
+### 3.2 Distributed System Design
 
-The production instance proves the platform's ability to function as a **decoupled distributed system**. By separating the UI (Cloudflare), the Logic (Render), and the Data/Storage (Supabase), the architecture eliminates single points of failure. This setup demonstrates how each component can scale independently based on demand.
+The deployment serves as a practical example of a **decoupled system**. By separating the frontend UI (Cloudflare), backend logic (Render), and database storage (Supabase), the architecture allows each layer to be maintained and scaled independently based on demand.
 
 ### 3.3 Explore the Live Demo
 
-**Access the fully functional production instance here:**
+**Access the functional production instance here:**
 **[MerkebAI Live Demo](https://merkebai.mebrahtom.com)**
 
 ## 4. Technologies Used
 
-The technology stack selection was strategic, prioritizing type safety, modularity, and database flexibility. Each technology serves a specific, well-defined purpose in the application's lifecycle.
+The technology stack prioritizes type safety, modularity, and deployment flexibility across the entire application lifecycle.
 
-- **`TypeScript` (98% Codebase):** The application utilizes `TypeScript` across the entire stack to enforce strict typing and developer confidence.
-- **`React` (Frontend Framework):** The frontend is built on `React` for component-based UI logic.
-- **`Styled Components`:** `Styled Components` are used exclusively for styling, providing a CSS-in-JS solution.
-- **`React Query` & `Zustand`:** Manage asynchronous server-state and local client-side UI state with a minimal memory footprint.
-- **`React Router`:** Used as the routing library in the application.
-- **`Node.js` & `ExpressJS`:** The backend runtime environment and framework, leveraging non-blocking I/O to handle high-concurrency messaging and AI streaming efficiently.
-- **`Socket.io`:** Serves as the real-time transport layer, enabling bi-directional, low-latency communication (crucial for streaming AI text deltas).
-- **`Sequelize ORM`:** Provides full support for `PostgreSQL`, `MySQL`, and `SQLite`, allowing for flexible deployment environments.
-- **`OpenAI SDK`:** Utilized as a flexible client to interface with AI endpoints (configured to connect to Gemini models).
-- **`Zod`:** Used as a schema validation tool and library.
+- **`TypeScript`:** Enforces strict typing across the entire codebase.
+- **`React`:** Powers the component-based user interface.
+- **`Styled Components`:** Provides a modular, component-level CSS-in-JS styling solution.
+- **`React Query` & `Zustand`:** Handle asynchronous server state and local UI state with a minimal memory footprint.
+- **`React Router`:** Manages client-side routing.
+- **`React Markdown` & `Remark GFM`:** Parse and render structured AI responses with support for GitHub Flavored Markdown.
+- **`Node.js` & `ExpressJS`:** Backend runtime and web framework optimized for asynchronous streaming and real-time requests.
+- **`Socket.io`:** Serves as the transport layer for bi-directional, low-latency streaming of messages.
+- **`Sequelize ORM`:** Manages database operations with support for `PostgreSQL`, `MySQL`, and `SQLite`.
+- **`OpenAI SDK`:** Provides a flexible client interface to integrate with compatible AI model endpoints.
+- **`Zod`:** Ensures runtime type safety and schema validation.
 
 ## 5. Architectural Details
 
-The architecture is designed to manage the complexity inherent in a large-scale AI messaging application.
+The system is built to handle the complexities of a fast, reliable AI chat application, balancing technical robustess with a smooth user experience.
 
-- **AI Streaming & Title Generation Pipeline:** When a user sends a prompt, the backend initiates a streaming connection with the AI provider. Text deltas are instantly piped to the client via `Socket.io` for a real-time typing effect. Once the response completes, an asynchronous background job is triggered to generate a contextual title for the chat without blocking the user's workflow.
+- **AI Streaming & Background Tasks:** When a user sends a prompt, the system streams the AI's response in real-time for immediate feedback. Once the reply completes, an asynchronous background task generates a context-aware chat title without interrupting the user's workflow.
 
-- **Queue-Based Message Request System:** The application decouples user actions from immediate API calls. Actions like sending or deleting messages are transformed into "request" objects and pushed into a global `Zustand` store queue, ensuring strict message ordering (`FIFO`) and UI fluidity.
+- **Queue-Based Message Handling:** To maintain a responsive interface, actions like sending or deleting messages are placed in a processing queue. This ensures strict message ordering (`FIFO`) and prevents the UI from freezing during server communication.
 
-- **ACID-Compliant Transaction Management & Concurrency Control:** To guarantee absolute data integrity, the backend employs a strict transactional architecture for all state-mutating operations. Whether creating a new chat, saving an AI response, or handling attachments, every action is wrapped in a `Sequelize` managed transaction.
+- **Transactional Data Integrity:** Every state-mutating operation, such as creating a chat or saving a message, is wrapped in database transactions. If any part of the process fails, the system safely rolls back the action to prevent corrupted or orphaned data.
 
-- **Hardware Back Button Interception:** A custom React hook (`useHardwareBack`) intelligently manipulates the browser's History API. When modals or sidebars open, it pushes a temporary state to the history stack. If the user presses the physical back button on a mobile device, the application intercepts the `popstate` event to close the UI element instead of navigating away from the app.
+- **Mobile Navigation Integration:** A custom hook integrates directly with a mobile device's hardware back button. If a modal or sidebar is open, pressing the native back button intercepts the browser history to safely close the UI element rather than navigating away from the application entirely.
 
-- **Custom Rspack Build Pipeline & Service Worker Orchestration:** The application utilizes a bespoke Rspack plugin to manage the compilation and injection lifecycle of the Service Worker, handling content-based hashing for robust cache busting.
+- **Viewport-Aware Context Menus:** A dynamic context menu component automatically calculates its placement based on the current screen dimensions, ensuring that interactive options remain fully visible and do not overflow the viewport edges.
 
-- **Viewport-Aware Context Menu System:** The app has its own custom low-level highly intelligent context menu UI component that dynamically calculates optimal menu placement to prevent screen overflow.
+- **Declarative Animation Engine:** The application synchronizes the UI component lifecycle with hardware-accelerated CSS transitions, delivering smooth visual feedback when interface elements mount or unmount.
 
-- **Declarative Lifecycle Animation Engine:** The platform uses a custom-built animation system that synchronizes `React`’s mount/unmount lifecycle with hardware-accelerated `CSS` transitions.
+- **Zero-Lag Theming:** The application transitions between light and dark themes instantaneously by dynamically injecting CSS variable blocks directly into the document root, bypassing heavy render cycles.
 
-- **High-Performance Theming Architecture:** The application implements a "**Zero-Lag**" theming system by dynamically injecting `CSS` variable blocks into the document root based on the user's preference.
-
-- **Environment-Agnostic Configuration Architecture:** The system is engineered with a strict separation between core business logic and infrastructure dependencies.
+- **Environment-Agnostic Configuration:** The core application logic is strictly separated from its infrastructure dependencies. This allows the system to be easily deployed across various hosting environments without requiring significant codebase modifications.
 
 ## 6. Getting Started
 
