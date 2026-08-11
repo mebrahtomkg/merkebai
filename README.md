@@ -2,7 +2,7 @@
 
 ## 1. Introduction
 
-**MerkebAI** is a high-performance, resilient, real-time AI chat platform engineered for reliability, privacy, and seamless data synchronization. The system is built with a focus on architectural integrity, ensuring that the interface remains fluid and the data remains consistent, even under the demands of complex media handling and on unreliable networks.
+**MerkebAI** is a high-performance, resilient, real-time AI chat platform engineered for reliability, privacy, and seamless data synchronization. Built upon the robust foundation of the SemayChat codebase, MerkebAI is specifically tailored for advanced AI interactions. The system is built with a focus on architectural integrity, ensuring that the interface remains fluid and the data remains consistent, even under the demands of complex media handling, AI response streaming, and unreliable networks.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/08ba9551-303a-4a5b-8ba1-7f71e303a3b2" alt="MerkebAI Preview" width="800">
@@ -14,11 +14,15 @@ The platform provides a comprehensive suite of features designed for a modern AI
 
 - **High-end, Attractive UI/UX:** Modern aesthetics and animated user interfaces.
 
-- **Real-Time Messaging:** Instantaneous exchange of text messages with integrated message status indicators (**sent/read**).
+- **Real-Time AI Messaging & Streaming:** Instantaneous exchange of text messages with live streaming of AI responses (powered by models like Gemini 2.5 Flash).
+
+- **Smart Chat Title Generation:** Automatically generates concise, context-aware titles for your conversations using a lightweight AI model.
+
+- **Mobile-Optimized Navigation:** Features a custom hardware back-button integration (`useHardwareBack`) that seamlessly manages mobile navigation stacks, allowing users to close modals and sidebars using their device's native back button.
 
 - **Secure JWT Authentication:** Industry-standard authentication using JSON Web Tokens (JWT) stored in `httpOnly` and `Secure` cookies to prevent XSS and ensure session integrity.
 
-- **Persistent State:** All conversations are persisted, ensuring a continuous experience across devices and browser refreshes.
+- **Persistent State:** All conversations and generated titles are persisted, ensuring a continuous experience across devices and browser refreshes.
 
 - **Ability to Clear Messaging History:** Users can delete individual messages and entire chats.
 
@@ -32,7 +36,7 @@ The live demo serves as a reference for a **distributed, cloud-native architectu
 
 - **Frontend (Edge Layer):** Hosted on **Cloudflare Pages** via an automated **CI/CD pipeline**. Every push to the main branch triggers an atomic build, distributing the UI across Cloudflare’s global edge network for instant loading.
 
-- **Backend (Compute Layer):** Deployed on **Render** using a managed deployment workflow. The backend handles real-time socket connections and API logic, integrated into a continuous delivery pipeline for seamless updates.
+- **Backend (Compute Layer):** Deployed on **Render** using a managed deployment workflow. The backend handles real-time socket connections, AI API streaming, and business logic.
 
 - **Database (Persistence Layer):** **PostgreSQL** hosted on **Supabase**. This provides a managed, high-performance relational database that eliminates manual maintenance and ensures data consistency at scale.
 
@@ -51,55 +55,38 @@ The production instance proves the platform's ability to function as a **decoupl
 
 The technology stack selection was strategic, prioritizing type safety, modularity, and database flexibility. Each technology serves a specific, well-defined purpose in the application's lifecycle.
 
-- **`TypeScript` (98% Codebase):** The application utilizes `TypeScript` across the entire stack to enforce strict typing and developer confidence. This ensures that data structures remain consistent from the database layer to the UI components, significantly reducing runtime exceptions in a codebase of hundrend files.
-
-- **`React` (Frontend Framework):** The frontend is built on `React` for component-based UI logic. `React` facilitates the creation of repeatable, state-based logic stored in custom hooks, making the application more maintainable and resilient.
-
-- **`Styled Components`:** `Styled Components` are used exclusively for styling, providing a CSS-in-JS solution that ensures styles are scoped, maintainable, and dynamically responsive to application state.
-
-- **`React Query`:** `React Query` manages asynchronous server-state, caching, and background synchronization.
-
-- **`Zustand`:** `Zustand` handles local, client-side UI state with a minimal memory footprint and less code relative to `Redux`.
-
-- **`React Router`:** `React Router` is used as the routing library in the application. It typically uses a hash router for enhanced reliability, given that the application is a Single Page Application (`SPA`).
-
-- **`Node.js`:** `Node.js` is the backend runtime environment. The server-side architecture leverages the non-blocking I/O of `Node.js` to handle high-concurrency messaging patterns efficiently.
-
-- **`ExpressJS`:** `Express` was chosen as the backend framework for its minimalist approach and ease of use.
-
-- **`Socket.io`:** This serves as the real-time transport layer, enabling bi-directional, low-latency communication between the client and the server.
-
-- **`Sequelize ORM`:** By utilizing `Sequelize`, the platform remains database-agnostic. It provides full support for `PostgreSQL`, `MySQL`, and `SQLite`, allowing for flexible deployment environments.
-
-- **`Zod`:** `Zod` is used as a schema validation tool and library.
+- **`TypeScript` (98% Codebase):** The application utilizes `TypeScript` across the entire stack to enforce strict typing and developer confidence.
+- **`React` (Frontend Framework):** The frontend is built on `React` for component-based UI logic.
+- **`Styled Components`:** `Styled Components` are used exclusively for styling, providing a CSS-in-JS solution.
+- **`React Query` & `Zustand`:** Manage asynchronous server-state and local client-side UI state with a minimal memory footprint.
+- **`React Router`:** Used as the routing library in the application.
+- **`Node.js` & `ExpressJS`:** The backend runtime environment and framework, leveraging non-blocking I/O to handle high-concurrency messaging and AI streaming efficiently.
+- **`Socket.io`:** Serves as the real-time transport layer, enabling bi-directional, low-latency communication (crucial for streaming AI text deltas).
+- **`Sequelize ORM`:** Provides full support for `PostgreSQL`, `MySQL`, and `SQLite`, allowing for flexible deployment environments.
+- **`OpenAI SDK`:** Utilized as a flexible client to interface with AI endpoints (configured to connect to Gemini models).
+- **`Zod`:** Used as a schema validation tool and library.
 
 ## 5. Architectural Details
 
-The architecture is designed to manage the complexity inherent in a large-scale messaging application, where state synchronization, performance, scalability, and data integrity are paramount.
+The architecture is designed to manage the complexity inherent in a large-scale AI messaging application.
 
-- **Queue-Based Message Request System:** When a user types a message and hits send, the API request isn't triggered directly—that approach is left to toy chat applications. Instead, to achieve true UI responsiveness and robust message delivery, the application decouples user actions from immediate API calls. This allows users to navigate to different chats without worrying if their message has been sent. Actions like sending, editing, or deleting messages are transformed into "request" objects and pushed into a global `Zustand` store queue. Dedicated, independent background processors then sequentially pick up these requests, execute the necessary network operations (e.g., `Socket.io` for real-time events, `HTTP multipart` for file uploads), and update the local cache upon success. This architecture ensures strict message ordering (`FIFO`), maintains UI fluidity, automatically retries pending messages upon network restoration, and keeps requests active even if the user navigates between different chats.
+- **AI Streaming & Title Generation Pipeline:** When a user sends a prompt, the backend initiates a streaming connection with the AI provider. Text deltas are instantly piped to the client via `Socket.io` for a real-time typing effect. Once the response completes, an asynchronous background job is triggered to generate a contextual title for the chat without blocking the user's workflow.
 
-- **ACID-Compliant Transaction Management & Concurrency Control:** To guarantee absolute data integrity, the backend employs a strict transactional architecture for all state-mutating operations. Whether creating a new user, sending a message with attachments, or performing complex chat deletions, every action is wrapped in a `Sequelize` managed transaction. This ensures an "all-or-nothing" execution model—if any part of a complex operation fails, the entire sequence is rolled back. The system also implements a **Two-Phase Resource Cleanup** strategy; physical file deletion (for attachments/photos) is deferred until _after_ the database transaction successfully commits. This prevents data inconsistency where files might be deleted despite a database rollback. Furthermore, critical paths utilize **Row-Level Locking** (`transaction.LOCK.UPDATE`) to prevent race conditions during high-concurrency events (like simultaneous message deletions), ensuring that derived state—such as "last message" pointers—remains mathematically accurate at all times.
+- **Queue-Based Message Request System:** The application decouples user actions from immediate API calls. Actions like sending or deleting messages are transformed into "request" objects and pushed into a global `Zustand` store queue, ensuring strict message ordering (`FIFO`) and UI fluidity.
 
-- **Custom Rspack Build Pipeline & Service Worker Orchestration:** The application utilizes a bespoke Rspack plugin (`AppRspackPlugin`) to manage the compilation and injection lifecycle of the Service Worker. To avoid registration failures, the plugin treats the Service Worker as a specialized asset rather than a standard entry point, ensuring that HMR (Hot Module Replacement) runtime code—which is incompatible with the Service Worker global scope—is never injected. During the build process, the plugin leverages the `SWC` engine to transform TypeScript while dynamically injecting environment-specific variables (such as `API_URL` and `IS_PRODUCTION`). It also handles content-based hashing for robust cache busting, automatically updating the `index.html` template with the correct hashed filename to maintain synchronization between the application and its background caching layer.
+- **ACID-Compliant Transaction Management & Concurrency Control:** To guarantee absolute data integrity, the backend employs a strict transactional architecture for all state-mutating operations. Whether creating a new chat, saving an AI response, or handling attachments, every action is wrapped in a `Sequelize` managed transaction.
 
-- **Viewport-Aware Context Menu System:** The app has its own custom low-level highly intelligent context menu UI component. This decoupled context menu system provides a robust and flexible solution for displaying contextual actions. It supports multiple triggering mechanisms, including traditional right-click and anchor-based interactions (such as a triple-dot icon). At its core, the system incorporates a specialized `Positioning Engine` (powered by `useMenuPositionFixer`). This engine intelligently monitors viewport boundaries and dynamically calculates the optimal menu placement. Its primary function is to prevent screen overflow by automatically flipping the menu's display direction when the trigger event occurs near the edge of the screen, ensuring the menu is always fully visible and accessible to the user.
+- **Hardware Back Button Interception:** A custom React hook (`useHardwareBack`) intelligently manipulates the browser's History API. When modals or sidebars open, it pushes a temporary state to the history stack. If the user presses the physical back button on a mobile device, the application intercepts the `popstate` event to close the UI element instead of navigating away from the app.
 
-- **Declarative Lifecycle Animation Engine:** Instead of heavy external libraries, the platform uses a custom-built animation system that synchronizes `React`’s mount/unmount lifecycle with hardware-accelerated `CSS` transitions. This allows for complex exit animations (animating elements before they leave the DOM) and implements "Style Sanitation" to remove transition styles after completion, preventing side effects like stacking context breaks.
+- **Custom Rspack Build Pipeline & Service Worker Orchestration:** The application utilizes a bespoke Rspack plugin to manage the compilation and injection lifecycle of the Service Worker, handling content-based hashing for robust cache busting.
 
-- **High-Performance Theming Architecture:** The application implements a "**Zero-Lag**" theming system. Instead of prop-drilling theme objects, the `AppThemeProvider` dynamically injects `CSS` variable blocks into the document root based on the user's preference. Components consume these variables directly (e.g., `` `color: var(--fg-primary)` ``), meaning theme toggling (Light/Dark) is handled entirely by the browser's `CSS` engine rather than `React`'s reconciliation process.
+- **Viewport-Aware Context Menu System:** The app has its own custom low-level highly intelligent context menu UI component that dynamically calculates optimal menu placement to prevent screen overflow.
 
-- **Custom-Hook-Based Logic Abstraction:** The system utilizes a specialized hook architecture to decouple UI components from complex side effects. This includes `Ref-based Cleanup` for memory-safe timers and media URLs, `Reference Stability` via deep-comparison hooks to prevent unnecessary re-renders, and `Optimistic UI` patterns that ensure the interface responds instantly while background synchronization handles server reconciliation.
+- **Declarative Lifecycle Animation Engine:** The platform uses a custom-built animation system that synchronizes `React`’s mount/unmount lifecycle with hardware-accelerated `CSS` transitions.
 
-- **Environment-Agnostic Configuration Architecture:** The system is engineered with a strict separation between core business logic and infrastructure dependencies. By leveraging a centralized environment configuration layer, the platform can seamlessly toggle between local development setups (e.g., SQLite, local disk storage) and production-grade cloud ecosystems (e.g., PostgreSQL, Supabase) via simple environment variable changes. This abstraction ensures that the application remains portable and resilient, requiring zero code modifications to adapt to different deployment scales or hosting providers.
+- **High-Performance Theming Architecture:** The application implements a "**Zero-Lag**" theming system by dynamically injecting `CSS` variable blocks into the document root based on the user's preference.
 
-- **Multi-Layered Authentication Strategy:** The system employs a sophisticated two-stage authentication process that separates identity resolution from access enforcement. A global identification middleware (`performAuth`) runs on every request, gracefully verifying JWTs from secure cookies and attaching user identity to the request object without interrupting the flow. This is followed by a strict enforcement layer (`authGuard`), which is selectively deployed as a gatekeeper for protected API routes, ensuring a seamless yet highly secure user experience.
-
-- **Automated SVG Pipeline & Centralized Consumption:** Every **icon** within the application is custom-designed using **Inkscape** to maintain a unique and cohesive visual identity. These assets are integrated via an automated pipeline using **SVGR**. The configuration (via `.svgrrc.js`) is engineered to strip hardcoded dimensions and inject `currentColor` into both the `fill` and `stroke` attributes. This ensures that icons behave like scalable typography—inheriting the color of their parent container and responding instantly to the "Zero-Lag" theming system without additional overrides. These components are exposed through a unified barrel file (`@/components/icons/index.tsx`), creating a centralized public API that simplifies imports and decouples asset locations from component logic.
-
-- **Modular Scalability:** The project is structured into over 400 frontend modules and 120 server-side modules. This high degree of decoupling allows for independent scaling of features and simplifies the maintenance of complex logic.
-
-- **State Synchronization:** The frontend architecture is designed to handle `optimistic updates`, where the UI responds instantly to user actions while the background synchronization layer ensures the server and database are updated in tandem.
+- **Environment-Agnostic Configuration Architecture:** The system is engineered with a strict separation between core business logic and infrastructure dependencies.
 
 ## 6. Getting Started
 
